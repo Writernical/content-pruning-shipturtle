@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — How to Build Pillar | Content Pruning Audit</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0e13;
+    --surface: #14171e;
+    --surface-2: #1a1e27;
+    --surface-3: #222733;
+    --border: #2a2f3b;
+    --border-hover: #3a4050;
+    --text: #e4e7ed;
+    --text-muted: #8b92a5;
+    --text-dim: #5c6377;
+    --accent: #f59e0b;
+    --accent-glow: rgba(245,158,11,0.12);
+    --keep: #34d399;
+    --keep-bg: rgba(52,211,153,0.1);
+    --merge: #fbbf24;
+    --merge-bg: rgba(251,191,36,0.1);
+    --redirect: #f97316;
+    --redirect-bg: rgba(249,115,22,0.1);
+    --delete: #f87171;
+    --delete-bg: rgba(248,113,113,0.1);
+    --rewrite: #a78bfa;
+    --rewrite-bg: rgba(167,139,250,0.1);
+    --repillar: #38bdf8;
+    --repillar-bg: rgba(56,189,248,0.1);
+    --gap: #e879f9;
+    --gap-bg: rgba(232,121,249,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--surface); }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--border-hover); }
+
+  .header { background:var(--surface); border-bottom:1px solid var(--border); padding:24px 40px; position:sticky; top:0; z-index:100; backdrop-filter:blur(20px); }
+  .header-inner { max-width:1600px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .header-left { display:flex; align-items:center; gap:16px; }
+  .logo-mark { width:40px; height:40px; background:linear-gradient(135deg,var(--accent),#ef4444); border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff; }
+  .header h1 { font-size:20px; font-weight:700; letter-spacing:-0.3px; }
+  .header h1 span { color:var(--text-muted); font-weight:400; }
+  .pillar-badge { display:inline-flex; align-items:center; gap:6px; background:var(--accent-glow); border:1px solid rgba(245,158,11,0.3); color:var(--accent); font-size:12px; font-weight:600; padding:4px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:0.5px; }
+  .pillar-badge::before { content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; }
+
+  .stats-bar { max-width:1600px; margin:0 auto; padding:24px 40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:12px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px; transition:border-color .2s; }
+  .stat-card:hover { border-color:var(--border-hover); }
+  .stat-card .label { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px; }
+  .stat-card .value { font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; }
+  .stat-card .sub { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .stat-card.keep .value { color:var(--keep); }
+  .stat-card.merge .value { color:var(--merge); }
+  .stat-card.redirect .value { color:var(--redirect); }
+  .stat-card.rewrite .value { color:var(--rewrite); }
+  .stat-card.repillar .value { color:var(--repillar); }
+
+  .main { max-width:1600px; margin:0 auto; padding:0 40px 60px; }
+  .section { margin-top:32px; }
+  .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:16px; flex-wrap:wrap; }
+  .section-title { font-size:16px; font-weight:700; letter-spacing:-0.2px; display:flex; align-items:center; gap:10px; }
+  .section-title .count { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--surface-3); color:var(--text-muted); padding:2px 8px; border-radius:6px; }
+
+  .filters { display:flex; gap:8px; flex-wrap:wrap; }
+  .filter-btn { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; padding:6px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); cursor:pointer; transition:all .2s; text-transform:uppercase; letter-spacing:.4px; }
+  .filter-btn:hover { border-color:var(--border-hover); color:var(--text); }
+  .filter-btn.active { border-color:var(--accent); color:var(--accent); background:var(--accent-glow); }
+  .filter-btn.active.keep { border-color:var(--keep); color:var(--keep); background:var(--keep-bg); }
+  .filter-btn.active.merge { border-color:var(--merge); color:var(--merge); background:var(--merge-bg); }
+  .filter-btn.active.rewrite { border-color:var(--rewrite); color:var(--rewrite); background:var(--rewrite-bg); }
+  .filter-btn.active.redirect { border-color:var(--redirect); color:var(--redirect); background:var(--redirect-bg); }
+  .filter-btn.active.repillar { border-color:var(--repillar); color:var(--repillar); background:var(--repillar-bg); }
+
+  .table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .table-scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:var(--surface-2); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--text-dim); padding:12px 16px; text-align:left; white-space:nowrap; border-bottom:1px solid var(--border); cursor:pointer; user-select:none; position:sticky; top:0; z-index:2; }
+  thead th:hover { color:var(--text-muted); }
+  tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr:hover { background:var(--surface-2); }
+  tbody td { padding:14px 16px; vertical-align:top; }
+  .page-title { font-weight:500; color:var(--text); max-width:340px; line-height:1.4; }
+  .page-title a { color:inherit; text-decoration:none; border-bottom:1px solid transparent; }
+  .page-title a:hover { color:var(--accent); border-bottom-color:var(--accent); }
+  .page-url { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:4px; }
+
+  .metric { font-family:'JetBrains Mono',monospace; font-weight:500; text-align:right; white-space:nowrap; }
+  .metric.zero { color:var(--delete); opacity:.6; }
+  .metric.low { color:var(--redirect); }
+  .metric.mid { color:var(--text-muted); }
+  .metric.high { color:var(--keep); }
+  .ctr { font-size:11px; color:var(--text-dim); }
+
+  .action-badge { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:4px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:.4px; white-space:nowrap; }
+  .action-badge.keep { background:var(--keep-bg); color:var(--keep); border:1px solid rgba(52,211,153,.2); }
+  .action-badge.merge { background:var(--merge-bg); color:var(--merge); border:1px solid rgba(251,191,36,.2); }
+  .action-badge.redirect { background:var(--redirect-bg); color:var(--redirect); border:1px solid rgba(249,115,22,.2); }
+  .action-badge.rewrite { background:var(--rewrite-bg); color:var(--rewrite); border:1px solid rgba(167,139,250,.2); }
+  .action-badge.repillar { background:var(--repillar-bg); color:var(--repillar); border:1px solid rgba(56,189,248,.2); }
+
+  .reasoning { font-size:12px; color:var(--text-muted); line-height:1.5; max-width:300px; }
+  .merge-target { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--merge); margin-top:4px; display:block; }
+  .intent-tag { font-size:10px; padding:2px 6px; border-radius:4px; display:inline-block; margin-top:4px; font-weight:600; }
+  .intent-tag.valid { background:rgba(52,211,153,.08); color:var(--keep); border:1px solid rgba(52,211,153,.15); }
+  .intent-tag.weak { background:rgba(251,191,36,.08); color:var(--merge); border:1px solid rgba(251,191,36,.15); }
+  .intent-tag.offbrand { background:rgba(248,113,113,.08); color:var(--delete); border:1px solid rgba(248,113,113,.15); }
+  .intent-tag.duplicate { background:rgba(56,189,248,.08); color:var(--repillar); border:1px solid rgba(56,189,248,.15); }
+
+  .cannibal-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:16px; transition:border-color .2s; }
+  .cannibal-card:hover { border-color:var(--border-hover); }
+  .cannibal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:12px; flex-wrap:wrap; }
+  .cannibal-cluster-name { font-weight:700; font-size:15px; display:flex; align-items:center; gap:8px; }
+  .severity { font-size:10px; padding:3px 8px; border-radius:4px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
+  .severity.critical { background:var(--delete-bg); color:var(--delete); }
+  .severity.high { background:var(--redirect-bg); color:var(--redirect); }
+  .severity.medium { background:var(--merge-bg); color:var(--merge); }
+  .cannibal-pages { display:grid; gap:10px; }
+  .cannibal-page { display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:14px; padding:12px 16px; background:var(--surface-2); border-radius:10px; border:1px solid transparent; font-size:13px; }
+  .cannibal-page.winner { border-color:rgba(52,211,153,.3); background:rgba(52,211,153,.04); }
+  .cannibal-page.loser { border-color:rgba(248,113,113,.15); opacity:.75; }
+  .verdict-badge { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; padding:3px 8px; border-radius:4px; white-space:nowrap; }
+  .verdict-badge.winner { background:var(--keep-bg); color:var(--keep); }
+  .verdict-badge.merge-in { background:var(--merge-bg); color:var(--merge); }
+  .verdict-badge.redirect-to { background:var(--redirect-bg); color:var(--redirect); }
+  .cannibal-reasoning { margin-top:14px; padding:14px 18px; background:var(--surface-3); border-radius:10px; font-size:13px; color:var(--text-muted); line-height:1.65; border-left:3px solid var(--accent); }
+
+  .gap-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:12px; display:grid; grid-template-columns:1fr auto; gap:16px; align-items:start; transition:border-color .2s; }
+  .gap-card:hover { border-color:var(--gap); }
+  .gap-title { font-weight:600; font-size:14px; margin-bottom:4px; }
+  .gap-desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+  .gap-keywords { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .gap-kw { font-family:'JetBrains Mono',monospace; font-size:10px; background:var(--gap-bg); color:var(--gap); padding:2px 8px; border-radius:4px; border:1px solid rgba(232,121,249,.2); }
+  .gap-priority { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; padding:4px 10px; border-radius:6px; white-space:nowrap; }
+  .gap-priority.p1 { background:var(--delete-bg); color:var(--delete); }
+  .gap-priority.p2 { background:var(--merge-bg); color:var(--merge); }
+  .gap-priority.p3 { background:var(--surface-3); color:var(--text-muted); }
+
+  .page-subcategory { font-size:10px; padding:2px 6px; border-radius:4px; background:var(--surface-3); color:var(--text-dim); display:inline-block; margin-top:4px; }
+
+  .tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:4px; margin-bottom:24px; width:fit-content; }
+  .tab { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; padding:10px 20px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); cursor:pointer; transition:all .2s; }
+  .tab:hover { color:var(--text); }
+  .tab.active { background:var(--accent); color:#0c0e13; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+  .has-conv { color:var(--keep); }
+
+  .intent-callout { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:24px; border-left:3px solid var(--accent); }
+  .intent-callout h3 { font-size:14px; font-weight:700; margin-bottom:8px; color:var(--accent); }
+  .intent-callout p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+
+  /* Pillar health */
+  .health-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  .health-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; }
+  .health-card h4 { font-size:13px; font-weight:700; margin-bottom:10px; color:var(--accent); text-transform:uppercase; letter-spacing:.5px; }
+  .health-card p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+  .health-card .highlight { color:var(--text); font-weight:600; }
+
+  @media (max-width:900px) {
+    .header { padding:16px 20px; }
+    .stats-bar { padding:16px 20px; grid-template-columns:repeat(3,1fr); }
+    .main { padding:0 20px 40px; }
+    .cannibal-page { grid-template-columns:1fr; }
+    .health-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo-mark">S</div>
+      <div><h1>Content Pruning Audit <span>— How to Build Pillar</span></h1></div>
+    </div>
+    <div class="pillar-badge">Pillar: how-to-build-a-marketplace</div>
+  </div>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="main">
+
+  <div class="health-grid">
+    <div class="health-card">
+      <h4>Pillar Health Summary</h4>
+      <p>This is a <span class="highlight">lean pillar with only 13 child pages</span> — well below the recommended 8–15 cluster minimum for topical authority. However, the pages that exist are generally well-targeted. The pillar has <span class="highlight">2 star performers</span> (#62 at 341 clicks and #53 at 88 clicks), <span class="highlight">2 clear cannibalization pairs</span> (B2B build × 2, Service build × 2), and <span class="highlight">1 cross-pillar duplicate</span> (#63). The main risk is internal competition, not content sprawl.</p>
+    </div>
+    <div class="health-card">
+      <h4>Critical Action Items</h4>
+      <p><span class="highlight">1.</span> Resolve B2B marketplace build cannibalization (#52 vs #53) immediately — both compete for the same SERP. <span class="highlight">2.</span> Merge service marketplace build pages (#55 + #56) into one authoritative guide. <span class="highlight">3.</span> Consolidate the launch timeline pages (#60 + #61) to avoid splitting 'launch quickly' intent. <span class="highlight">4.</span> Remove cross-pillar duplicate (#63). <span class="highlight">5.</span> Fill at least 5 content gaps to reach topical authority threshold.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="audit">Page-by-Page Audit</button>
+    <button class="tab" data-tab="cannibal">Cannibalization Map</button>
+    <button class="tab" data-tab="gaps">Content Gaps</button>
+  </div>
+
+  <!-- TAB 1: AUDIT TABLE -->
+  <div class="tab-content active" id="tab-audit">
+    <div class="intent-callout">
+      <h3>Audit Philosophy: Intent Before Metrics</h3>
+      <p>Every page was evaluated on: <strong>1)</strong> Does real search intent exist for this topic? <strong>2)</strong> Does it align with Shipturtle's ICP? <strong>3)</strong> Is poor performance due to execution failure (title, depth, linking) or topic irrelevance? Zero traffic pages are only redirected when the intent is genuinely off-brand or duplicated elsewhere.</p>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">All Child Pages <span class="count" id="pageCount">13</span></div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="id" style="width:40px">#</th>
+                <th data-sort="title">Page Title</th>
+                <th data-sort="subcat">Sub-Category</th>
+                <th data-sort="clicks" style="text-align:right">Clicks</th>
+                <th data-sort="impressions" style="text-align:right">Impressions</th>
+                <th data-sort="ctr" style="text-align:right">CTR</th>
+                <th data-sort="conversions" style="text-align:right">Conv.</th>
+                <th data-sort="action">Action</th>
+                <th style="min-width:280px">Reasoning & Intent Analysis</th>
+              </tr>
+            </thead>
+            <tbody id="auditBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: CANNIBALIZATION -->
+  <div class="tab-content" id="tab-cannibal">
+    <div class="section">
+      <div class="section-title" style="margin-bottom:20px">Cannibalization Clusters <span class="count" id="cannibalCount"></span></div>
+      <div id="cannibalList"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: GAPS -->
+  <div class="tab-content" id="tab-gaps">
+    <div class="section">
+      <div class="section-title" style="margin-bottom:20px">Content Gaps & New Topic Suggestions <span class="count" id="gapCount"></span></div>
+      <div id="gapList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const pages = [
+  {id:51, title:"How to Build an MVP for Marketplace Apps: Testing Market Demand Effectively", url:"blog/how-to-build-an-mvp-for-marketplace-apps", clicks:18, impressions:12730, conv:0, subcat:"MVP / Validation", action:"keep", intent:"valid",
+    reason:"Unique angle in the pillar — MVP validation is a distinct stage in the build journey. 12.7K impressions with room to grow. 'Marketplace MVP' is a high-intent keyword for early-stage founders. Refresh with a lean canvas template, cost benchmarks, and link to #62 (cost page). Add FAQ schema for 'how to validate a marketplace idea'."},
+
+  {id:52, title:"How to Build a Successful B2B Marketplace: The Ultimate Guide to Choosing the Best Platform in 2025", url:"blog/how-to-build-a-successful-b2b-marketplace-the-ultimate-guide-in-2025", clicks:2, impressions:146, conv:0, subcat:"Build: B2B", action:"merge", intent:"valid",
+    reason:"CANNIBALIZES #53. Only 146 impressions — barely indexed while #53 has 86K impressions on the same topic. Title is bloated (too long for SERP display). The 'choosing the best platform' angle is valuable but doesn't justify a standalone page competing with #53. Merge the platform comparison content into #53 as a dedicated section.", mergeTarget:"→ Merge into #53"},
+
+  {id:53, title:"B2B Marketplace Platform: How to Build Wholesale Marketplaces", url:"blog/building-a-b2b-marketplace-platform", clicks:88, impressions:86613, conv:0, subcat:"Build: B2B", action:"keep", intent:"valid",
+    reason:"PILLAR PERFORMER — 88 clicks, 86.6K impressions. Clear winner for 'how to build a B2B marketplace' intent. Absorb platform comparison content from #52. Expand with wholesale-specific workflows (RFQ, bulk pricing, MOQ), B2B payment terms, and case studies. Add FAQ + How-to schema. This should become the definitive B2B marketplace build guide."},
+
+  {id:54, title:"Building A B2C Marketplace Platform That Can Scale Automatically", url:"blog/building-a-b2c-marketplace-platform", clicks:29, impressions:27044, conv:0, subcat:"Build: B2C", action:"keep", intent:"valid",
+    reason:"Solid performer (29 clicks, 27K impressions). No cannibalization — B2C build is a distinct topic from B2B. 'B2C marketplace platform' is a clear keyword target. Strengthen with scalability benchmarks, auto-scaling architecture examples, and internal links to Marketplace Platform pillar pages. Add comparison: B2C vs B2B build considerations."},
+
+  {id:55, title:"How to Build a Successful Service Marketplace in 2025: Your Step-by-Step Guide", url:"blog/how-to-build-a-successful-service-marketplace-in-2025", clicks:23, impressions:10831, conv:0, subcat:"Build: Service", action:"keep", intent:"valid",
+    reason:"Winner of the service marketplace build cluster — broader keyword scope and more impressions (10.8K vs 8.2K for #56). Absorb the 'no-code' angle from #56 as a dedicated section. The combined page targets: 'how to build a service marketplace', 'service marketplace no code', 'service marketplace step by step'. Expand with booking system requirements, provider onboarding workflows, and service-specific commission models."},
+
+  {id:56, title:"How to Build a Service Marketplace Without Writing a Single Line of Code", url:"blog/how-to-build-a-service-marketplace-without-writing-a-single-line-of-code", clicks:20, impressions:8240, conv:0, subcat:"Build: Service", action:"merge", intent:"valid",
+    reason:"CANNIBALIZES #55. Both target 'how to build a service marketplace' — Google sees these as overlapping queries. The 'no-code' differentiator is valid but better served as a section within #55 rather than a standalone page. 20 clicks is decent, so preserve the no-code content carefully before merging. 301 redirect after merge.", mergeTarget:"→ Merge into #55"},
+
+  {id:57, title:"The Multi Vendor Ecommerce Marketplace Singapore Has Been Waiting For", url:"blog/build-a-scalable-multi-vendor-ecommerce-platform", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT, EXECUTION FAILURE — 'Multi vendor ecommerce platform Singapore' has real search demand (Singapore is a top ecommerce hub in Southeast Asia). Two problems: (1) the editorial title is completely invisible to search engines — 'has been waiting for' is meaningless for SEO; (2) the URL slug ('build-a-scalable-multi-vendor-ecommerce-platform') doesn't even mention Singapore, creating title-URL mismatch. Rewrite with clear keyword targeting: 'How to Build a Multi-Vendor Marketplace in Singapore'. Include Singapore-specific payment gateways (PayNow, GrabPay), GST considerations, and local logistics partners. Keep it as a geo-targeted cluster page."},
+
+  {id:58, title:"Build a Website like eBay: Create a Used Goods Marketplace", url:"blog/build-a-website-ebay-used-goods-marketplace", clicks:180, impressions:50556, conv:2, subcat:"Build: Clone", action:"keep", intent:"valid",
+    reason:"HIGH PERFORMER — 180 clicks, 50K impressions, 2 conversions. 'Build a website like eBay' is a proven commercial keyword with strong intent. This page directly drives Shipturtle signups. Refresh with 2026 platform comparisons, add a feature checklist for eBay-like functionality, and strengthen internal links to clone pages in Marketplace Types pillar. Add How-to schema."},
+
+  {id:59, title:"Multi-Vendor Ecommerce Development: A Complete Guide for 2025", url:"blog/multi-vendor-ecommerce-development-a-complete-guide-for-2025", clicks:11, impressions:8905, conv:0, subcat:"General Guide", action:"rewrite", intent:"valid",
+    reason:"Valid intent ('multi-vendor ecommerce development') but underperforming relative to its keyword potential — only 11 clicks on 8.9K impressions (0.12% CTR). The title is generic and competes loosely with #61. This page should differentiate by going deep on the technical development angle: tech stack decisions, API architecture, database design, headless vs monolithic. Rewrite as the technical-audience counterpart to the business-audience guides."},
+
+  {id:60, title:"How to Launch a No Code Marketplace from Scratch Using Shipturtle", url:"blog/how-to-launch-a-no-code-marketplace-from-scratch", clicks:15, impressions:2354, conv:0, subcat:"No-Code Launch", action:"merge", intent:"valid",
+    reason:"CANNIBALIZES #61 on 'launch a marketplace quickly' intent. This page is more Shipturtle-specific (product tutorial) while #61 is broader ('30 days'). The 'no-code marketplace' angle is valuable but should be a section within #61 to create one authoritative 'launch fast' page. Alternatively, if this is meant as a product tutorial/documentation page, move it outside the blog pillar structure entirely.", mergeTarget:"→ Merge into #61"},
+
+  {id:61, title:"How to Launch a Multi-Vendor Online Marketplace Platform in Just 30 Days", url:"blog/how-to-launch-a-multi-vendor-online-marketplace-platform-in-just-30-days", clicks:8, impressions:4739, conv:0, subcat:"Quick Launch", action:"keep", intent:"valid",
+    reason:"Winner of 'launch quickly' cluster — the '30 days' hook is compelling and differentiating. 4.7K impressions is a decent starting position. Absorb the no-code content from #60 to create a comprehensive fast-launch guide. The combined page targets: 'launch marketplace fast', 'no code marketplace', 'marketplace in 30 days'. Add a day-by-day or week-by-week timeline breakdown for AEO."},
+
+  {id:62, title:"7 Examples: How Much Does it Cost to Build an Online Marketplace Website?", url:"blog/cost-to-build-an-online-marketplace-website", clicks:341, impressions:171181, conv:5, subcat:"Cost / Budget", action:"keep", intent:"valid",
+    reason:"STAR PAGE — 341 clicks, 171K impressions, 5 conversions. Second-highest performer across all Shipturtle content. 'Cost to build marketplace' is an extremely high-intent commercial keyword — people searching this are actively evaluating building a marketplace. Protect this page fiercely. Refresh cost figures quarterly, add 2026 benchmarks, create an interactive cost calculator if possible. Ensure every other How to Build page links TO this page. Add FAQ schema with specific cost ranges."},
+
+  {id:63, title:"What Is a Marketplace Development Solution? And Why You Shouldn't Build from Scratch", url:"blog/what-is-a-marketplace-development-solution-and-why-you-shouldnt-build-from-scratch", clicks:7, impressions:9290, conv:0, subcat:"Build vs Buy", action:"redirect", intent:"duplicate",
+    reason:"CROSS-PILLAR DUPLICATE — This exact URL is also assigned to Marketplace Types pillar (S No 5). Having it in two pillars creates internal linking confusion and dilutes topical signals. Decision: Keep in Marketplace Types pillar (where it was re-pillared from) and 301 redirect from this pillar's internal links to the canonical version. Alternatively, absorb the 'build vs buy' argument into #62 (cost page) where it naturally fits as a section.", mergeTarget:"→ 301 to canonical in Marketplace Types / absorb into #62"},
+];
+
+const cannibalizationClusters = [
+  {
+    name: "\"How to Build a B2B Marketplace\" Cluster",
+    severity: "critical",
+    pages: [
+      {id:53, title:"B2B Marketplace Platform: How to Build Wholesale Marketplaces", clicks:88, impressions:86613, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:52, title:"How to Build a Successful B2B Marketplace: Ultimate Guide 2025", clicks:2, impressions:146, verdict:"merge-in", verdictLabel:"MERGE INTO #53"},
+    ],
+    reasoning: "This is the most clear-cut cannibalization in the pillar. Both pages target the identical query: 'how to build a B2B marketplace'. #53 dominates with 86.6K impressions vs just 146 for #52 — a 593x difference. #52's bloated title ('The Ultimate Guide to Choosing the Best Platform in 2025') exceeds SERP display limits and tries to cover too much. Its platform comparison angle is genuinely useful but should become a '5 Best Platforms for B2B Marketplaces' section within #53. After merging, #53 covers the full B2B build journey: concept → platform selection → wholesale workflows → launch. This concentrated authority should push #53 from page 2–3 into page 1 for 'B2B marketplace platform'."
+  },
+  {
+    name: "\"How to Build a Service Marketplace\" Cluster",
+    severity: "high",
+    pages: [
+      {id:55, title:"How to Build a Successful Service Marketplace in 2025", clicks:23, impressions:10831, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:56, title:"How to Build a Service Marketplace Without Code", clicks:20, impressions:8240, verdict:"merge-in", verdictLabel:"MERGE INTO #55"},
+    ],
+    reasoning: "Both pages rank for variations of 'how to build a service marketplace'. The performance gap is narrower here (23 vs 20 clicks), but #55 wins on impressions (10.8K vs 8.2K) and keyword breadth — 'successful service marketplace' captures both technical and non-technical audiences. The 'without code' angle from #56 is a strong differentiator that should become a dedicated 'No-Code Path' section within #55. This gives #55 two build paths (code and no-code), which improves dwell time and AEO answer completeness. The merged page targets: 'how to build a service marketplace', 'service marketplace no code', 'service marketplace step by step guide'."
+  },
+  {
+    name: "\"Launch a Marketplace Quickly\" Cluster",
+    severity: "medium",
+    pages: [
+      {id:61, title:"Launch a Multi-Vendor Marketplace in Just 30 Days", clicks:8, impressions:4739, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:60, title:"Launch a No Code Marketplace from Scratch Using Shipturtle", clicks:15, impressions:2354, verdict:"merge-in", verdictLabel:"MERGE INTO #61"},
+    ],
+    reasoning: "#60 actually has more clicks (15 vs 8), but #61 wins for strategic reasons: (1) the '30 days' hook is memorable and AEO-friendly; (2) #60 is Shipturtle-branded which limits its organic reach (people search 'how to launch marketplace fast', not 'how to launch marketplace using Shipturtle'); (3) #61 has nearly 2x the impressions, suggesting broader keyword coverage. The no-code + Shipturtle-specific content from #60 should become the practical implementation section within #61. Post-merge structure: Week 1–4 timeline → Platform selection → No-code setup with Shipturtle → Launch checklist."
+  },
+];
+
+const contentGaps = [
+  {title:"How to Build a Marketplace on Shopify: The Definitive Guide", desc:"Arguably the single most important missing page for Shipturtle's entire SEO strategy. 'Build marketplace on Shopify' is Shipturtle's #1 commercial keyword. Currently NO page in this pillar directly targets it (the closest is in Marketplace Platform pillar). This needs a dedicated build guide here.", keywords:["how to build a marketplace on shopify","shopify marketplace setup","shopify multi vendor marketplace tutorial"], priority:"p1"},
+  {title:"How to Build a Marketplace App (Mobile-First Guide)", desc:"No content covers mobile marketplace development. Mobile commerce drives 73% of ecommerce sales globally. 'Marketplace app development' is a high-volume keyword with no Shipturtle coverage.", keywords:["how to build a marketplace app","marketplace app development","mobile marketplace platform"], priority:"p1"},
+  {title:"How to Build a Rental Marketplace: Complete Guide", desc:"P2P rental is one of Shipturtle's strongest-performing marketplace types (400 clicks on the type page) but there's no 'how to build' guide for rentals. This is a gap between two pillars that should be filled here.", keywords:["how to build a rental marketplace","rental marketplace platform","p2p rental marketplace development"], priority:"p1"},
+  {title:"How to Build a C2C Marketplace: Step-by-Step Guide", desc:"C2C guide (#7 in Types pillar) gets 412 clicks but is more definitional. This pillar needs a hands-on build guide for C2C marketplaces covering seller onboarding, trust systems, and payment escrow.", keywords:["how to build a c2c marketplace","c2c marketplace development","peer to peer marketplace setup"], priority:"p1"},
+  {title:"How to Build a Marketplace from Scratch vs Using a Platform", desc:"The 'build vs buy' decision is the #1 question marketplace founders ask. #63 touches this but is a duplicate. Create a fresh, definitive comparison: custom dev vs open source vs SaaS (Shopify + Shipturtle).", keywords:["build marketplace from scratch","custom vs saas marketplace","marketplace build or buy decision"], priority:"p1"},
+  {title:"How to Build a Hyperlocal Marketplace: Step-by-Step", desc:"Hyperlocal gets 64 clicks in the Types pillar but no build guide exists. The hyperlocal marketplace software market is growing at 18% CAGR. This fills a clear gap.", keywords:["how to build a hyperlocal marketplace","hyperlocal marketplace development","near me delivery marketplace"], priority:"p2"},
+  {title:"Marketplace Tech Stack Guide: Frontend, Backend, APIs & Integrations", desc:"No technical architecture guide exists. Developers and CTOs searching for 'marketplace tech stack' find nothing on Shipturtle. This supports both organic traffic and bottom-of-funnel credibility.", keywords:["marketplace tech stack","marketplace architecture","marketplace api integrations","ecommerce marketplace backend"], priority:"p2"},
+  {title:"How to Build a Multi-Vendor Marketplace on WooCommerce", desc:"WooCommerce is the #2 ecommerce platform. Shipturtle supports it but has no dedicated build guide in this pillar. 'WooCommerce marketplace' is a high-volume keyword.", keywords:["woocommerce multi vendor marketplace","build marketplace on woocommerce","woocommerce marketplace plugin"], priority:"p2"},
+  {title:"Marketplace Launch Checklist: 50-Point Pre-Launch Guide", desc:"Highly linkable, highly practical asset. No checklist-style content exists. This format is ideal for featured snippets and AI answer extraction.", keywords:["marketplace launch checklist","marketplace pre-launch checklist","online marketplace launch steps"], priority:"p2"},
+  {title:"How to Build a Marketplace for a Specific Country (Geo Template)", desc:"#57 (Singapore) needs a rewrite, but there's a broader opportunity: create a repeatable geo-template for 'build a marketplace in [country]' targeting India, UAE, UK, Australia, etc.", keywords:["build a marketplace in india","start a marketplace in uae","online marketplace uk"], priority:"p3"},
+];
+
+
+// ─── RENDER ───
+function getMetricClass(clicks, impressions) {
+  if (clicks === 0 && impressions === 0) return 'zero';
+  if (clicks < 10) return 'low';
+  if (clicks < 50) return 'mid';
+  return 'high';
+}
+
+function renderStats() {
+  const actions = {};
+  pages.forEach(p => { actions[p.action] = (actions[p.action]||0) + 1; });
+  const totalClicks = pages.reduce((s,p)=>s+p.clicks,0);
+  const totalImpressions = pages.reduce((s,p)=>s+p.impressions,0);
+  const totalConv = pages.reduce((s,p)=>s+p.conv,0);
+
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card"><div class="label">Total Pages</div><div class="value">${pages.length}</div><div class="sub">${totalImpressions.toLocaleString()} total impressions</div></div>
+    <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${totalClicks.toLocaleString()}</div><div class="sub">${totalConv} conversions</div></div>
+    <div class="stat-card keep"><div class="label">Keep</div><div class="value">${actions.keep||0}</div></div>
+    <div class="stat-card merge"><div class="label">Merge</div><div class="value">${actions.merge||0}</div></div>
+    <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">${actions.rewrite||0}</div></div>
+    <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">${actions.redirect||0}</div></div>
+    <div class="stat-card repillar"><div class="label">Gaps to Fill</div><div class="value">${contentGaps.filter(g=>g.priority==='p1').length}</div><div class="sub">P1 priority</div></div>
+  `;
+}
+
+let currentFilter = 'all';
+let currentSort = {key:'id', dir:'asc'};
+
+function renderFilters() {
+  const actions = ['all','keep','merge','rewrite','redirect'];
+  const labels = {all:'All', keep:'Keep', merge:'Merge', rewrite:'Rewrite', redirect:'Redirect'};
+  document.getElementById('filters').innerHTML = actions.map(a =>
+    `<button class="filter-btn ${a!=='all'?a:''} ${currentFilter===a?'active':''}" data-filter="${a}">${labels[a]}</button>`
+  ).join('');
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentFilter=btn.dataset.filter; renderFilters(); renderTable(); });
+  });
+}
+
+function renderTable() {
+  let filtered = currentFilter==='all' ? [...pages] : pages.filter(p=>p.action===currentFilter);
+  filtered.sort((a,b) => {
+    let va=a[currentSort.key], vb=b[currentSort.key];
+    if(currentSort.key==='ctr'){va=a.impressions>0?a.clicks/a.impressions:0;vb=b.impressions>0?b.clicks/b.impressions:0;}
+    if(currentSort.key==='conversions'){va=a.conv;vb=b.conv;}
+    if(currentSort.key==='title'){va=a.title;vb=b.title;}
+    if(currentSort.key==='subcat'){va=a.subcat;vb=b.subcat;}
+    if(currentSort.key==='action'){va=a.action;vb=b.action;}
+    if(typeof va==='string') return currentSort.dir==='asc'?va.localeCompare(vb):vb.localeCompare(va);
+    return currentSort.dir==='asc'?va-vb:vb-va;
+  });
+  document.getElementById('pageCount').textContent = filtered.length;
+  document.getElementById('auditBody').innerHTML = filtered.map(p => {
+    const ctr = p.impressions>0?((p.clicks/p.impressions)*100).toFixed(2):'0.00';
+    const mc = getMetricClass(p.clicks,p.impressions);
+    const intentClass = p.intent==='valid'?'valid':p.intent==='weak'?'weak':p.intent==='duplicate'?'duplicate':'offbrand';
+    const intentLabel = p.intent==='valid'?'✓ Intent Valid':p.intent==='weak'?'⚠ Weak Fit':p.intent==='duplicate'?'⚡ Cross-Pillar Dup':'✗ Off-Brand';
+    return `<tr>
+      <td class="metric" style="text-align:center;color:var(--text-dim)">${p.id}</td>
+      <td>
+        <div class="page-title"><a href="https://www.shipturtle.com/${p.url}" target="_blank">${p.title}</a></div>
+        <div class="page-url">/${p.url}</div>
+      </td>
+      <td><span class="page-subcategory">${p.subcat}</span></td>
+      <td class="metric ${mc}" style="text-align:right">${p.clicks.toLocaleString()}</td>
+      <td class="metric ${mc}" style="text-align:right">${p.impressions.toLocaleString()}</td>
+      <td class="metric" style="text-align:right"><span class="ctr">${ctr}%</span></td>
+      <td class="metric ${p.conv>0?'has-conv':''}" style="text-align:right">${p.conv>0?p.conv:'—'}</td>
+      <td><span class="action-badge ${p.action}">${p.action==='repillar'?'Re-Pillar':p.action}</span></td>
+      <td><div class="reasoning">${p.reason}${p.mergeTarget?'<span class="merge-target">'+p.mergeTarget+'</span>':''}<span class="intent-tag ${intentClass}">${intentLabel}</span></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCannibalization() {
+  document.getElementById('cannibalCount').textContent = cannibalizationClusters.length;
+  document.getElementById('cannibalList').innerHTML = cannibalizationClusters.map(c => `
+    <div class="cannibal-card">
+      <div class="cannibal-header">
+        <div class="cannibal-cluster-name">${c.name}<span class="severity ${c.severity}">${c.severity}</span></div>
+        <span style="font-size:12px;color:var(--text-dim)">${c.pages.length} pages competing</span>
+      </div>
+      <div class="cannibal-pages">
+        ${c.pages.map(p => `
+          <div class="cannibal-page ${p.verdict==='winner'?'winner':'loser'}">
+            <span class="verdict-badge ${p.verdict}">${p.verdictLabel}</span>
+            <span style="font-weight:500">#${p.id} — ${p.title}</span>
+            <span class="metric mid" style="font-size:12px">${p.clicks.toLocaleString()} clicks</span>
+            <span class="metric" style="font-size:12px;color:var(--text-dim)">${p.impressions.toLocaleString()} imp</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="cannibal-reasoning">${c.reasoning}</div>
+    </div>
+  `).join('');
+}
+
+function renderGaps() {
+  document.getElementById('gapCount').textContent = contentGaps.length;
+  document.getElementById('gapList').innerHTML = contentGaps.map(g => `
+    <div class="gap-card">
+      <div>
+        <div class="gap-title">${g.title}</div>
+        <div class="gap-desc">${g.desc}</div>
+        <div class="gap-keywords">${g.keywords.map(k=>`<span class="gap-kw">${k}</span>`).join('')}</div>
+      </div>
+      <span class="gap-priority ${g.priority}">${g.priority==='p1'?'High Priority':g.priority==='p2'?'Medium':'Low'}</span>
+    </div>
+  `).join('');
+}
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc=>tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Sorting
+document.querySelectorAll('thead th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.sort;
+    if(currentSort.key===key) currentSort.dir = currentSort.dir==='asc'?'desc':'asc';
+    else currentSort = {key, dir:key==='clicks'||key==='impressions'||key==='ctr'||key==='conversions'?'desc':'asc'};
+    renderTable();
+  });
+});
+
+renderStats(); renderFilters(); renderTable(); renderCannibalization(); renderGaps();
+</script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — Marketplace Types Pillar | Content Pruning Audit v2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0e13;
+    --surface: #14171e;
+    --surface-2: #1a1e27;
+    --surface-3: #222733;
+    --border: #2a2f3b;
+    --border-hover: #3a4050;
+    --text: #e4e7ed;
+    --text-muted: #8b92a5;
+    --text-dim: #5c6377;
+    --accent: #6c9fff;
+    --accent-glow: rgba(108,159,255,0.15);
+    --keep: #34d399;
+    --keep-bg: rgba(52,211,153,0.1);
+    --merge: #fbbf24;
+    --merge-bg: rgba(251,191,36,0.1);
+    --redirect: #f97316;
+    --redirect-bg: rgba(249,115,22,0.1);
+    --delete: #f87171;
+    --delete-bg: rgba(248,113,113,0.1);
+    --rewrite: #a78bfa;
+    --rewrite-bg: rgba(167,139,250,0.1);
+    --repillar: #38bdf8;
+    --repillar-bg: rgba(56,189,248,0.1);
+    --gap: #e879f9;
+    --gap-bg: rgba(232,121,249,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--surface); }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--border-hover); }
+
+  .header { background:var(--surface); border-bottom:1px solid var(--border); padding:24px 40px; position:sticky; top:0; z-index:100; backdrop-filter:blur(20px); }
+  .header-inner { max-width:1600px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .header-left { display:flex; align-items:center; gap:16px; }
+  .logo-mark { width:40px; height:40px; background:linear-gradient(135deg,var(--accent),#a78bfa); border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff; }
+  .header h1 { font-size:20px; font-weight:700; letter-spacing:-0.3px; }
+  .header h1 span { color:var(--text-muted); font-weight:400; }
+  .pillar-badge { display:inline-flex; align-items:center; gap:6px; background:var(--accent-glow); border:1px solid rgba(108,159,255,0.25); color:var(--accent); font-size:12px; font-weight:600; padding:4px 12px; border-radius:20px; text-transform:uppercase; letter-spacing:0.5px; }
+  .pillar-badge::before { content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; }
+
+  .stats-bar { max-width:1600px; margin:0 auto; padding:24px 40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px; transition:border-color .2s; }
+  .stat-card:hover { border-color:var(--border-hover); }
+  .stat-card .label { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.8px; margin-bottom:6px; }
+  .stat-card .value { font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:600; }
+  .stat-card .sub { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .stat-card.keep .value { color:var(--keep); }
+  .stat-card.merge .value { color:var(--merge); }
+  .stat-card.redirect .value { color:var(--redirect); }
+  .stat-card.delete .value { color:var(--delete); }
+  .stat-card.rewrite .value { color:var(--rewrite); }
+  .stat-card.repillar .value { color:var(--repillar); }
+
+  .main { max-width:1600px; margin:0 auto; padding:0 40px 60px; }
+  .section { margin-top:32px; }
+  .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:16px; flex-wrap:wrap; }
+  .section-title { font-size:16px; font-weight:700; letter-spacing:-0.2px; display:flex; align-items:center; gap:10px; }
+  .section-title .count { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--surface-3); color:var(--text-muted); padding:2px 8px; border-radius:6px; }
+
+  .filters { display:flex; gap:8px; flex-wrap:wrap; }
+  .filter-btn { font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600; padding:6px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); cursor:pointer; transition:all .2s; text-transform:uppercase; letter-spacing:.4px; }
+  .filter-btn:hover { border-color:var(--border-hover); color:var(--text); }
+  .filter-btn.active { border-color:var(--accent); color:var(--accent); background:var(--accent-glow); }
+  .filter-btn.active.keep { border-color:var(--keep); color:var(--keep); background:var(--keep-bg); }
+  .filter-btn.active.merge { border-color:var(--merge); color:var(--merge); background:var(--merge-bg); }
+  .filter-btn.active.redirect { border-color:var(--redirect); color:var(--redirect); background:var(--redirect-bg); }
+  .filter-btn.active.delete { border-color:var(--delete); color:var(--delete); background:var(--delete-bg); }
+  .filter-btn.active.rewrite { border-color:var(--rewrite); color:var(--rewrite); background:var(--rewrite-bg); }
+  .filter-btn.active.repillar { border-color:var(--repillar); color:var(--repillar); background:var(--repillar-bg); }
+
+  .table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .table-scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:var(--surface-2); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--text-dim); padding:12px 16px; text-align:left; white-space:nowrap; border-bottom:1px solid var(--border); cursor:pointer; user-select:none; position:sticky; top:0; }
+  thead th:hover { color:var(--text-muted); }
+  tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr:hover { background:var(--surface-2); }
+  tbody td { padding:14px 16px; vertical-align:top; }
+  .page-title { font-weight:500; color:var(--text); max-width:340px; line-height:1.4; }
+  .page-title a { color:inherit; text-decoration:none; border-bottom:1px solid transparent; }
+  .page-title a:hover { color:var(--accent); border-bottom-color:var(--accent); }
+  .page-url { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-top:4px; }
+
+  .metric { font-family:'JetBrains Mono',monospace; font-weight:500; text-align:right; white-space:nowrap; }
+  .metric.zero { color:var(--delete); opacity:.6; }
+  .metric.low { color:var(--redirect); }
+  .metric.mid { color:var(--text-muted); }
+  .metric.high { color:var(--keep); }
+  .ctr { font-size:11px; color:var(--text-dim); }
+
+  .action-badge { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:4px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:.4px; white-space:nowrap; }
+  .action-badge.keep { background:var(--keep-bg); color:var(--keep); border:1px solid rgba(52,211,153,.2); }
+  .action-badge.merge { background:var(--merge-bg); color:var(--merge); border:1px solid rgba(251,191,36,.2); }
+  .action-badge.redirect { background:var(--redirect-bg); color:var(--redirect); border:1px solid rgba(249,115,22,.2); }
+  .action-badge.delete { background:var(--delete-bg); color:var(--delete); border:1px solid rgba(248,113,113,.2); }
+  .action-badge.rewrite { background:var(--rewrite-bg); color:var(--rewrite); border:1px solid rgba(167,139,250,.2); }
+  .action-badge.repillar { background:var(--repillar-bg); color:var(--repillar); border:1px solid rgba(56,189,248,.2); }
+
+  .reasoning { font-size:12px; color:var(--text-muted); line-height:1.5; max-width:300px; }
+  .merge-target { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--merge); margin-top:4px; display:block; }
+  .intent-tag { font-size:10px; padding:2px 6px; border-radius:4px; display:inline-block; margin-top:4px; font-weight:600; }
+  .intent-tag.valid { background:rgba(52,211,153,.08); color:var(--keep); border:1px solid rgba(52,211,153,.15); }
+  .intent-tag.weak { background:rgba(251,191,36,.08); color:var(--merge); border:1px solid rgba(251,191,36,.15); }
+  .intent-tag.offbrand { background:rgba(248,113,113,.08); color:var(--delete); border:1px solid rgba(248,113,113,.15); }
+
+  .cannibal-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; margin-bottom:16px; transition:border-color .2s; }
+  .cannibal-card:hover { border-color:var(--border-hover); }
+  .cannibal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:12px; flex-wrap:wrap; }
+  .cannibal-cluster-name { font-weight:700; font-size:15px; display:flex; align-items:center; gap:8px; }
+  .severity { font-size:10px; padding:3px 8px; border-radius:4px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
+  .severity.critical { background:var(--delete-bg); color:var(--delete); }
+  .severity.high { background:var(--redirect-bg); color:var(--redirect); }
+  .severity.medium { background:var(--merge-bg); color:var(--merge); }
+  .cannibal-pages { display:grid; gap:10px; }
+  .cannibal-page { display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:14px; padding:12px 16px; background:var(--surface-2); border-radius:10px; border:1px solid transparent; font-size:13px; }
+  .cannibal-page.winner { border-color:rgba(52,211,153,.3); background:rgba(52,211,153,.04); }
+  .cannibal-page.loser { border-color:rgba(248,113,113,.15); opacity:.75; }
+  .verdict-badge { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; padding:3px 8px; border-radius:4px; white-space:nowrap; }
+  .verdict-badge.winner { background:var(--keep-bg); color:var(--keep); }
+  .verdict-badge.merge-in { background:var(--merge-bg); color:var(--merge); }
+  .verdict-badge.redirect-to { background:var(--redirect-bg); color:var(--redirect); }
+  .cannibal-reasoning { margin-top:14px; padding:14px 18px; background:var(--surface-3); border-radius:10px; font-size:13px; color:var(--text-muted); line-height:1.65; border-left:3px solid var(--accent); }
+
+  .gap-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:12px; display:grid; grid-template-columns:1fr auto; gap:16px; align-items:start; transition:border-color .2s; }
+  .gap-card:hover { border-color:var(--gap); }
+  .gap-title { font-weight:600; font-size:14px; margin-bottom:4px; }
+  .gap-desc { font-size:12px; color:var(--text-muted); line-height:1.5; }
+  .gap-keywords { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .gap-kw { font-family:'JetBrains Mono',monospace; font-size:10px; background:var(--gap-bg); color:var(--gap); padding:2px 8px; border-radius:4px; border:1px solid rgba(232,121,249,.2); }
+  .gap-priority { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; padding:4px 10px; border-radius:6px; white-space:nowrap; }
+  .gap-priority.p1 { background:var(--delete-bg); color:var(--delete); }
+  .gap-priority.p2 { background:var(--merge-bg); color:var(--merge); }
+  .gap-priority.p3 { background:var(--surface-3); color:var(--text-muted); }
+
+  .page-subcategory { font-size:10px; padding:2px 6px; border-radius:4px; background:var(--surface-3); color:var(--text-dim); display:inline-block; margin-top:4px; }
+
+  .tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:4px; margin-bottom:24px; width:fit-content; }
+  .tab { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; padding:10px 20px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); cursor:pointer; transition:all .2s; }
+  .tab:hover { color:var(--text); }
+  .tab.active { background:var(--accent); color:#fff; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+  .has-conv { color:var(--keep); }
+
+  /* Intent callout box */
+  .intent-callout { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:24px; border-left:3px solid var(--accent); }
+  .intent-callout h3 { font-size:14px; font-weight:700; margin-bottom:8px; color:var(--accent); }
+  .intent-callout p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+
+  @media (max-width:900px) {
+    .header { padding:16px 20px; }
+    .stats-bar { padding:16px 20px; grid-template-columns:repeat(3,1fr); }
+    .main { padding:0 20px 40px; }
+    .cannibal-page { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo-mark">S</div>
+      <div><h1>Content Pruning Audit <span>— Marketplace Types Pillar</span></h1></div>
+    </div>
+    <div class="pillar-badge">Pillar: types-of-online-marketplaces</div>
+  </div>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="main">
+  <div class="tabs">
+    <button class="tab active" data-tab="audit">Page-by-Page Audit</button>
+    <button class="tab" data-tab="cannibal">Cannibalization Map</button>
+    <button class="tab" data-tab="gaps">Content Gaps</button>
+  </div>
+
+  <!-- TAB 1: AUDIT TABLE -->
+  <div class="tab-content active" id="tab-audit">
+    <div class="intent-callout">
+      <h3>Audit Philosophy: Intent Before Metrics</h3>
+      <p>Zero traffic ≠ zero value. Every page was evaluated on three dimensions: <strong>1)</strong> Does the underlying search intent exist? <strong>2)</strong> Does the topic align with Shipturtle's ICP and positioning? <strong>3)</strong> Is the failure in execution (title, structure, content depth) or in topic relevance? Pages are only recommended for redirect/delete when the intent is genuinely off-brand — not simply because traffic hasn't arrived yet.</p>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">All Child Pages <span class="count" id="pageCount">50</span></div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="id" style="width:40px">#</th>
+                <th data-sort="title">Page Title</th>
+                <th data-sort="subcat">Sub-Category</th>
+                <th data-sort="clicks" style="text-align:right">Clicks</th>
+                <th data-sort="impressions" style="text-align:right">Impressions</th>
+                <th data-sort="ctr" style="text-align:right">CTR</th>
+                <th data-sort="conversions" style="text-align:right">Conv.</th>
+                <th data-sort="action">Action</th>
+                <th style="min-width:280px">Reasoning & Intent Analysis</th>
+              </tr>
+            </thead>
+            <tbody id="auditBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: CANNIBALIZATION -->
+  <div class="tab-content" id="tab-cannibal">
+    <div class="section">
+      <div class="section-title" style="margin-bottom:20px">Cannibalization Clusters <span class="count" id="cannibalCount"></span></div>
+      <div id="cannibalList"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: GAPS -->
+  <div class="tab-content" id="tab-gaps">
+    <div class="section">
+      <div class="section-title" style="margin-bottom:20px">Content Gaps & New Topic Suggestions <span class="count" id="gapCount"></span></div>
+      <div id="gapList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const pages = [
+  // ── DEFINITION CLUSTER ──
+  {id:1, title:"What Is a Multi-Vendor Marketplace? A Beginner's Guide", url:"blog/what-is-a-multi-vendor-marketplace", clicks:40, impressions:30611, conv:0, subcat:"Definition", action:"merge", intent:"valid",
+    reason:"Strong impressions but cannibalizes #2, #3, #4. Merge the 'multi-vendor' specific definitions and unique content into #4 (the broadest definition page). Redirect this URL → #4.", mergeTarget:"→ Merge into #4"},
+  {id:2, title:"What Does Multivendor Marketplace Mean: A Beginner's Guide", url:"blog/what-does-multivendor-marketplace-mean", clicks:5, impressions:13385, conv:0, subcat:"Definition", action:"redirect", intent:"valid",
+    reason:"Near-identical intent to #1 and #4. Lowest clicks in the cluster. The 'multivendor marketplace meaning' query is fully answered by #4. 301 redirect.", mergeTarget:"→ 301 to #4"},
+  {id:3, title:"What Is an Online Marketplace? Definition, Functionality, and Examples", url:"blog/what-is-an-online-marketplace", clicks:5, impressions:10928, conv:0, subcat:"Definition", action:"redirect", intent:"valid",
+    reason:"Overlaps with #4. Low CTR (0.05%). Fold unique 'examples' section into #4 or into #19 (examples page), then redirect.", mergeTarget:"→ 301 to #4"},
+  {id:4, title:"What is a Marketplace? A Complete Guide for eCommerce Store Owners", url:"blog/what-is-a-marketplace", clicks:32, impressions:36622, conv:0, subcat:"Definition", action:"keep", intent:"valid",
+    reason:"Highest impressions in definition cluster. Broadest keyword scope. Designate as the canonical 'what is a marketplace' page. Absorb content from #1, #2, #3. Rewrite to 3,500+ words with FAQ schema, comparison table, and real-world examples."},
+  {id:5, title:"What Is a Marketplace Development Solution? And Why You Shouldn't Build from Scratch", url:"blog/what-is-a-marketplace-development-solution-and-why-you-shouldnt-build-from-scratch", clicks:7, impressions:9290, conv:0, subcat:"Definition", action:"repillar", intent:"valid",
+    reason:"Intent is about build methodology, not marketplace types. Better fit under 'How to Build' pillar where the same URL is already assigned (S No 63). Deduplicate and consolidate there.", mergeTarget:"→ Move to How to Build pillar"},
+
+  // ── TYPE: P2P / RENTAL / C2C / NICHE ──
+  {id:6, title:"All You Can Know: Peer-to-Peer (P2P) Rental Marketplace Platform", url:"blog/peer-to-peer-rental-marketplace", clicks:400, impressions:101240, conv:4, subcat:"Type: P2P/Rental", action:"keep", intent:"valid",
+    reason:"High-performing asset. 400 clicks, 4 conversions, 101K impressions. Core marketplace type content. Refresh with 2026 examples, add FAQ schema, and strengthen links to rental clone page (#49)."},
+  {id:7, title:"C2C Marketplace Guide: Building on Shopify and Other Ecommerce Platform", url:"blog/c2c-marketplace-guide", clicks:412, impressions:112541, conv:7, subcat:"Type: C2C", action:"keep", intent:"valid",
+    reason:"TOP PERFORMER — highest clicks (412) and conversions (7). Protect and expand. Add comparison table vs B2C/B2B. Strengthen internal links to C2C monetization (#22) and Vinted/Poshmark clone pages."},
+  {id:8, title:"The Rise Of Online Barter Exchange: How To Launch A Barter Marketplace", url:"blog/launch-a-barter-marketplace", clicks:58, impressions:14073, conv:1, subcat:"Type: Barter", action:"keep", intent:"valid",
+    reason:"Unique niche topic with no cannibalization. 58 clicks, 1 conversion. Refresh with updated barter platform examples and add FAQ schema."},
+  {id:9, title:"Service Marketplaces Move Fast and Booking Infrastructure Needs to Move Even Faster", url:"blog/scale-multivendor-service-booking-marketplace", clicks:2, impressions:68, conv:0, subcat:"Type: Service", action:"merge", intent:"valid",
+    reason:"Intent (service marketplace booking infrastructure) is valid but the editorial title completely fails SEO — Google can't match this to any query. Only 68 impressions confirms indexing failure. Merge the booking infrastructure angle into #11 as a dedicated section.", mergeTarget:"→ Merge into #11"},
+  {id:10, title:"Building a Hyperlocal Marketplace with Near Me Delivery or Pickup", url:"blog/hyperlocal-marketplace-on-shopify", clicks:64, impressions:33090, conv:0, subcat:"Type: Hyperlocal", action:"keep", intent:"valid",
+    reason:"Solid performance (64 clicks, 33K impressions). 'Hyperlocal marketplace' is a growing keyword cluster. Add FAQ schema, delivery partner examples, and link to hyperlocal landing page (#14)."},
+  {id:11, title:"What is an Online Service Marketplace Platform?", url:"blog/online-service-marketplace-platform", clicks:124, impressions:69885, conv:1, subcat:"Type: Service", action:"keep", intent:"valid",
+    reason:"Strong performer — 124 clicks, 70K impressions, 1 conversion. Canonical service marketplace page. Absorb booking infrastructure content from #9. Add service marketplace platform comparison table."},
+
+  // ── LANDING PAGES ──
+  {id:12, title:"All-In-One Service Marketplace Software", url:"marketplace/services", clicks:7, impressions:995, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'Service marketplace software' is a valid commercial keyword. Page is thin — 995 impressions suggests it's barely indexed. Rewrite with feature comparison matrix, pricing breakdown, and customer testimonials. Differentiate from #11 by making this purely product/conversion-focused."},
+  {id:13, title:"All-In-One Rental Marketplace Software", url:"marketplace/rental", clicks:16, impressions:3824, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'Rental marketplace software' has commercial intent. Some traction (16 clicks). Expand with rental-specific feature matrix (availability calendars, damage deposits, insurance), case studies, and competitor comparison."},
+  {id:14, title:"All-In-One Hyperlocal Marketplace Software", url:"marketplace/hyperlocal", clicks:12, impressions:2369, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'Hyperlocal marketplace software' is a growing search query. Expand with geolocation features, delivery zone setup, last-mile integration details, and hyperlocal-specific case studies."},
+  {id:15, title:"All-In-One Used Goods Marketplace Software", url:"marketplace/usedgoods", clicks:2, impressions:591, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'Used goods marketplace' / 'secondhand marketplace software' has real demand — the resale economy is booming. Page is thin. Rewrite with C2C resale features, condition grading, escrow payment flow, and examples (Vinted, Poshmark, ThredUp clones)."},
+  {id:16, title:"All-In-One Auction Marketplace Software", url:"marketplace/auction", clicks:20, impressions:1478, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'Auction marketplace software' has niche but real intent. 20 clicks is decent for a thin page. Expand with auction-specific features (bidding engine, reserve prices, timed auctions), comparison vs eBay model, and use cases."},
+  {id:17, title:"Build a Powerful B2B Marketplace with Shipturtle", url:"marketplace/b2b", clicks:3, impressions:678, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'B2B marketplace platform' has strong search volume but this page captures almost nothing. Full rewrite with B2B-specific workflows (bulk ordering, RFQ, tiered pricing), feature matrix, and industry-specific examples. Critical page for Shipturtle's B2B positioning."},
+  {id:18, title:"All-In-One Product Marketplace Software", url:"marketplace/product", clicks:0, impressions:0, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"INTENT EXISTS — 'product marketplace software' / 'multi-vendor product marketplace' are valid commercial queries. Zero traffic is an indexation/content depth problem, not an intent problem. This is Shipturtle's most generic product page and should be the strongest. Full rewrite with feature overview, comparison table, and conversion-optimized layout."},
+
+  // ── EXAMPLES / LISTICLES ──
+  {id:19, title:"30+ Examples Of Multi-Vendor Marketplace Platform For Ecommerce", url:"blog/examples-of-multi-vendor-marketplace", clicks:838, impressions:262318, conv:7, subcat:"Examples", action:"keep", intent:"valid",
+    reason:"STAR PAGE — highest traffic in entire pillar (838 clicks, 262K impressions, 7 conversions). Linkable asset. Refresh quarterly with new examples. Add schema markup. Ensure strong internal links TO this page from every cluster article."},
+  {id:20, title:"Top B2B Food Marketplace and Global Wholesale Hub", url:"blog/top-b2b-food-marketplace", clicks:296, impressions:53499, conv:4, subcat:"Examples", action:"keep", intent:"valid",
+    reason:"Strong niche performer. 296 clicks, 4 conversions. Unique keyword territory (B2B food marketplaces). Refresh with 2026 data and new platforms. Link to B2B landing page (#17)."},
+  {id:21, title:"Top Service Marketplace Platforms in 2025", url:"blog/top-service-marketplace-platforms-in-2025", clicks:129, impressions:57634, conv:2, subcat:"Examples", action:"keep", intent:"valid",
+    reason:"Solid listicle. 129 clicks, 2 conversions. Update to '2026', refresh platform list. Internal link to #11 for definitional context and #12 for product CTA."},
+
+  // ── REVENUE / BUSINESS MODELS ──
+  {id:22, title:"Core Monetization Models for C2C Marketplaces", url:"blog/core-monetization-models-for-c2c-marketplaces", clicks:4, impressions:1745, conv:0, subcat:"Revenue Models", action:"merge", intent:"valid",
+    reason:"C2C-specific monetization angle is too narrow for standalone page — only 4 clicks. But the content is valuable. Merge C2C monetization details into #24 as a dedicated section with C2C-specific commission benchmarks.", mergeTarget:"→ Merge into #24"},
+  {id:23, title:"Exploring Revenue Models for Marketplaces in 2025", url:"blog/exploring-revenue-models-for-marketplaces-in-2025", clicks:16, impressions:17931, conv:1, subcat:"Revenue Models", action:"merge", intent:"valid",
+    reason:"Better keyword scope than #22 but weaker than #24. 'Revenue models for marketplaces' queries land on #24 more often. Merge unique 2025-specific insights into #24.", mergeTarget:"→ Merge into #24"},
+  {id:24, title:"Popular Marketplace Business Model", url:"blog/popular-marketplace-business-model", clicks:194, impressions:112073, conv:0, subcat:"Revenue Models", action:"keep", intent:"valid",
+    reason:"Clear winner — 194 clicks, 112K impressions. Absorb #22 and #23. Expand into definitive business model guide with comparison tables, revenue calculators, and case studies."},
+
+  // ── TRENDS ──
+  {id:25, title:"Multi-Vendor Marketplace Statistics: Things You Should Know Before Launch", url:"blog/multi-vendor-marketplace-statistics", clicks:23, impressions:9679, conv:0, subcat:"Data/Stats", action:"rewrite", intent:"valid",
+    reason:"Linkable asset potential — statistics pages attract backlinks naturally. Underperforming at 23 clicks. Rewrite as '50+ Marketplace Statistics for 2026' with original data visualizations, charts, and embeddable infographics. This becomes a backlink magnet."},
+  {id:26, title:"Top eCommerce Trends for 2025 Every Online Store Must Embrace", url:"blog/top-ecommerce-trends-for-2025", clicks:5, impressions:6335, conv:0, subcat:"Trends", action:"merge", intent:"weak",
+    reason:"Triple cannibalization with #27 and #28. 'eCommerce trends' is too broad and off-pillar — doesn't specifically serve marketplace-type topical authority. Merge any marketplace-relevant insights into #28.", mergeTarget:"→ Merge into #28"},
+  {id:27, title:"Key Online Marketplace Industry And Trends in 2025", url:"blog/online-marketplace-industry-trends-2025", clicks:2, impressions:4816, conv:0, subcat:"Trends", action:"redirect", intent:"valid",
+    reason:"Valid intent but lowest performer in trends cluster (2 clicks). 'Marketplace industry trends' is fully covered by #28 with better specificity. 301 redirect.", mergeTarget:"→ 301 to #28"},
+  {id:28, title:"Key Multivendor Marketplace Trends to Watch in 2025 & 2026", url:"blog/multivendor-marketplace-trends-2025-2026", clicks:24, impressions:5549, conv:0, subcat:"Trends", action:"keep", intent:"valid",
+    reason:"Winner of trends cluster — most aligned with pillar topic. Already mentions 2026. Absorb insights from #26 and #27. Full refresh with predictions, data, and emerging marketplace type trends."},
+
+  // ── B2B / STRATEGY ──
+  {id:29, title:"The Rise of Software-Based B2B Models: How SaaS Is Transforming B2B E-commerce", url:"blog/rise-of-software-based-b2b-models", clicks:28, impressions:28027, conv:0, subcat:"Type: B2B", action:"keep", intent:"valid",
+    reason:"Unique thought-leadership angle. 28K impressions, no cannibalization. SaaS + B2B intersection is core to Shipturtle's positioning. Refresh with 2026 SaaS B2B marketplace examples."},
+  {id:30, title:"Launching a Multi-Vendor Marketplace VS D2C Website", url:"blog/launching-a-multi-vendor-marketplace-vs-d2c-website", clicks:26, impressions:16456, conv:1, subcat:"Comparison", action:"keep", intent:"valid",
+    reason:"Clean comparison content with 1 conversion. 'Marketplace vs D2C' is a high-intent commercial query. Add structured comparison table and AEO-optimized answer block."},
+  {id:31, title:"B2B vs C2C Marketplaces: Key Differences, Pros, and Profitability", url:"blog/b2b-vs-c2c-marketplaces", clicks:29, impressions:29657, conv:0, subcat:"Comparison", action:"keep", intent:"valid",
+    reason:"Strong impressions (30K). Core types comparison. Add comparison schema markup. Strengthen links to B2B (#29) and C2C (#7) pages."},
+  {id:32, title:"Product Marketplace vs. Service Marketplace: What's the Difference?", url:"blog/product-marketplace-vs-service-marketplace", clicks:8, impressions:14180, conv:0, subcat:"Comparison", action:"rewrite", intent:"valid",
+    reason:"14K impressions but only 8 clicks = CTR problem (0.06%). The content and intent are right, but title tag and meta description need optimization. Add comparison table, AEO answer block, and improve above-the-fold structure."},
+  {id:35, title:"Key Strategies for Scaling a Two-Sided Marketplace Business Model", url:"blog/scaling-a-two-sided-marketplace-business-model", clicks:43, impressions:30254, conv:0, subcat:"Strategy", action:"keep", intent:"valid",
+    reason:"Solid performance (43 clicks, 30K impressions). 'Two-sided marketplace' is a core concept. Add case studies and internal link to #24 (business models)."},
+  {id:36, title:"How Specialized Marketplaces Are Transforming B2B eCommerce in 2025", url:"blog/how-specialized-marketplaces-are-transforming-b2b-ecommerce-in-2025", clicks:20, impressions:19995, conv:0, subcat:"Type: B2B", action:"keep", intent:"valid",
+    reason:"20K impressions. Unique vertical B2B angle — different from #29. Refresh with 2026 data and examples of specialized B2B verticals."},
+
+  // ── ZERO-TRAFFIC PAGES: INTENT-DRIVEN REASSESSMENT ──
+  {id:33, title:"How To Turn Your Retail Store Into An Online Marketplace", url:"blog/turn-retail-store-Into-online-marketplace", clicks:0, impressions:0, conv:0, subcat:"How-to", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT — 'convert retail store to marketplace' / 'retail to marketplace' maps directly to Shipturtle's core ICP (retail store owners wanting to expand). Zero traffic is a content depth + internal linking failure. Rewrite with step-by-step guide, Shipturtle workflow examples, and a clear keyword target: 'how to turn your store into a marketplace'."},
+  {id:34, title:"How to Sell Internationally from Your Own Marketplace", url:"blog/sell-internationally-from-your-own-marketplace", clicks:0, impressions:0, conv:0, subcat:"Type: Cross-Border", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT — 'cross-border marketplace' / 'international marketplace selling' has real search demand. This page bridges marketplace types (cross-border) and operations. Rewrite to target 'cross-border marketplace' as a marketplace type, with practical multi-currency, multi-language, and shipping examples."},
+  {id:37, title:"How Spain's Fashion Franchises Are Reinventing Ecommerce With Hyperlocal Multi Franchise Marketplaces", url:"blog/build-a-hyperlocal-multi-franchise-fashion-marketplace-spain", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT BURIED IN BAD EXECUTION — The underlying concept is 'franchise marketplace' / 'multi-franchise marketplace', which has real B2B search demand. The editorial title and hyper-narrow geo focus (Spain + fashion + franchise) killed discoverability. Rewrite to target 'franchise marketplace' as a marketplace type. Use Spain as ONE example among several, not the entire framing."},
+  {id:38, title:"The Dating Marketplace Indonesia Was Missing", url:"blog/build-a-dating-marketplace-platform-indonesia", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"redirect", intent:"offbrand",
+    reason:"OFF-BRAND — 'Dating marketplace' doesn't align with Shipturtle's ecommerce/collaborative commerce positioning. Shipturtle powers product, service, and rental marketplaces — not dating platforms. This isn't a traffic problem, it's a positioning problem. 301 redirect to #19 (examples page) to pass any future link equity.", mergeTarget:"→ 301 to #19"},
+  {id:39, title:"Where Offline Success Meets Digital Scale in Modern Marketplaces", url:"blog/build-a-multi-vendor-exhibitor-marketplace-uk", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT HIDDEN BY VAGUE TITLE — URL targets 'exhibitor marketplace' / 'trade show marketplace' which is a legitimate B2B niche (exhibition and event vendor coordination). The editorial title reveals nothing to search engines. Rewrite with clear keyword targeting: 'How to Build an Exhibition & Trade Show Marketplace'. Use UK as one example."},
+  {id:40, title:"The Marketplace Model Transforming Multi Vendor Ecommerce in India", url:"blog/build-a-multi-vendor-ecommerce-marketplace-india", clicks:2, impressions:301, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT — 'multi vendor ecommerce India' has significant search volume. India is one of Shipturtle's key markets. 301 impressions means it's starting to index. The editorial title is the bottleneck. Rewrite with clear keyword targeting: 'Multi-Vendor Ecommerce Marketplace in India: How to Launch and Scale'. Add India-specific payment gateways, shipping partners, and regulatory considerations."},
+  {id:41, title:"The Future Ready Community Commerce Marketplace Model for Canada", url:"blog/canada-peer-to-peer-marketplace-model", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"VALID INTENT — 'community commerce marketplace' is an emerging concept with growing search interest (Karrot, Nextdoor models). 'P2P marketplace Canada' also has geo-specific demand. The editorial title completely obscures the keyword. Rewrite to target 'community commerce marketplace' as a marketplace type concept, using Canada as one regional example. Link to P2P page (#6)."},
+  {id:42, title:"Where UK Developers Turn Digital Projects Into Funded Marketplaces", url:"blog/uk-digital-credit-marketplace-workflows", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"redirect", intent:"offbrand",
+    reason:"OFF-BRAND — 'Digital credit marketplace' is a fintech concept, not ecommerce/collaborative commerce. This doesn't serve Shipturtle's topical authority goals and would confuse the marketplace types pillar's semantic coherence. 301 redirect to #4 (general marketplace definition page).", mergeTarget:"→ 301 to #4"},
+
+  // ── CLONE PAGES ──
+  {id:43, title:"Build your own Poshmark clone marketplace in minutes", url:"clone/poshmark", clicks:15, impressions:2793, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Part of clone landing page series. 'Poshmark clone' has commercial intent. Ensure strong internal links to C2C guide (#7) and examples page (#19)."},
+  {id:44, title:"Build your own TaskRabbit clone marketplace in minutes", url:"clone/taskrabbit", clicks:85, impressions:8867, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Best-performing clone page (85 clicks). 'TaskRabbit clone' is high-intent. Link to service marketplace page (#11). Optimize meta for better CTR."},
+  {id:45, title:"Build a Gumroad clone marketplace in minutes", url:"clone/gumroad", clicks:63, impressions:5790, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Solid (63 clicks). Digital marketplace angle. Link to digital products content in Industry Marketplaces pillar."},
+  {id:46, title:"Build your own Etsy marketplace clone in minutes", url:"clone/etsy", clicks:39, impressions:7601, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"'Etsy clone' is a proven commercial keyword (7.6K impressions). Keep and optimize title/meta for higher CTR."},
+  {id:47, title:"Build an Amazon clone for your e-commerce business", url:"clone/amazon", clicks:44, impressions:8738, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"'Amazon clone' is high-intent (44 clicks). Strengthen content with feature comparison."},
+  {id:48, title:"Build a Vinted clone marketplace in minutes", url:"clone/vinted", clicks:79, impressions:11094, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Second-best clone page (79 clicks). C2C resale trend. Link to C2C guide (#7) and used goods page (#15)."},
+  {id:49, title:"Build an Airbnb marketplace clone in minutes", url:"clone/airbnb", clicks:28, impressions:5786, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Rental marketplace clone. Link to P2P rental page (#6). Optimize meta."},
+  {id:50, title:"Build your Fiverr clone marketplace in minutes", url:"clone/fiverr", clicks:40, impressions:8160, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Good traction (40 clicks). Service marketplace clone — complements TaskRabbit (#44). Link to #11."},
+];
+
+const cannibalizationClusters = [
+  {
+    name: "\"What Is a Marketplace\" Definition Cluster",
+    severity: "critical",
+    pages: [
+      {id:4, title:"What is a Marketplace? A Complete Guide", clicks:32, impressions:36622, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:1, title:"What Is a Multi-Vendor Marketplace? Beginner's Guide", clicks:40, impressions:30611, verdict:"merge-in", verdictLabel:"MERGE INTO #4"},
+      {id:2, title:"What Does Multivendor Marketplace Mean", clicks:5, impressions:13385, verdict:"redirect-to", verdictLabel:"301 → #4"},
+      {id:3, title:"What Is an Online Marketplace? Definition & Examples", clicks:5, impressions:10928, verdict:"redirect-to", verdictLabel:"301 → #4"},
+    ],
+    reasoning: "Why #4 wins: Broadest keyword target ('what is a marketplace') covering the widest search intent funnel. While #1 has slightly more clicks (40 vs 32), #4 has significantly more impressions (36K vs 30K), indicating stronger ranking potential on a broader query set. All four pages target near-identical informational intent — Google is splitting authority across them. Consolidating into one 3,500+ word definitive guide concentrates ranking signals. Action: Absorb multi-vendor-specific definitions from #1, examples section from #3, and all unique content before redirecting. Post-merge, #4 targets: 'what is a marketplace', 'what is a multivendor marketplace', 'online marketplace definition', 'marketplace meaning'."
+  },
+  {
+    name: "Revenue / Business Model Cluster",
+    severity: "high",
+    pages: [
+      {id:24, title:"Popular Marketplace Business Model", clicks:194, impressions:112073, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:23, title:"Exploring Revenue Models for Marketplaces in 2025", clicks:16, impressions:17931, verdict:"merge-in", verdictLabel:"MERGE INTO #24"},
+      {id:22, title:"Core Monetization Models for C2C Marketplaces", clicks:4, impressions:1745, verdict:"merge-in", verdictLabel:"MERGE INTO #24"},
+    ],
+    reasoning: "Why #24 wins: Dominates with 194 clicks and 112K impressions — nearly 6x the combined traffic of #22 and #23. 'Marketplace business model' has stronger commercial intent than 'revenue models' or 'monetization models'. Action: #23's 2025-specific revenue model content becomes a 'Revenue Models Compared' section within #24. #22's C2C-specific monetization angle becomes a 'C2C Monetization Benchmarks' section. Post-merge, #24 covers commission, subscription, freemium, listing fee, lead gen, and transaction models with type-specific benchmarks."
+  },
+  {
+    name: "Marketplace Trends Cluster",
+    severity: "high",
+    pages: [
+      {id:28, title:"Multivendor Marketplace Trends 2025 & 2026", clicks:24, impressions:5549, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:26, title:"Top eCommerce Trends for 2025", clicks:5, impressions:6335, verdict:"merge-in", verdictLabel:"MERGE INTO #28"},
+      {id:27, title:"Online Marketplace Industry Trends 2025", clicks:2, impressions:4816, verdict:"redirect-to", verdictLabel:"301 → #28"},
+    ],
+    reasoning: "Why #28 wins: Most topically aligned — 'multivendor marketplace trends' matches Shipturtle's core positioning and this pillar's scope. #26 is the weakest fit ('eCommerce trends' is too broad, dilutes pillar focus). #27 has decent impressions but lowest clicks (2), suggesting poor title/content match. Action: Merge marketplace-relevant insights from #26 into #28. 301 redirect #27. Post-merge combined impression pool (~16.7K) strengthens the consolidated page. Refresh annually as a recurring content asset."
+  },
+  {
+    name: "Service Marketplace Content Overlap",
+    severity: "medium",
+    pages: [
+      {id:11, title:"What is an Online Service Marketplace Platform?", clicks:124, impressions:69885, verdict:"winner", verdictLabel:"★ KEEP AS CANONICAL"},
+      {id:9, title:"Service Marketplaces Move Fast...", clicks:2, impressions:68, verdict:"merge-in", verdictLabel:"MERGE INTO #11"},
+      {id:12, title:"All-In-One Service Marketplace Software", clicks:7, impressions:995, verdict:"merge-in", verdictLabel:"REWRITE + DIFFERENTIATE"},
+    ],
+    reasoning: "Why #11 wins: Clear authority at 124 clicks and 70K impressions. #9 has virtually no traction (68 impressions) — the editorial title completely fails to match search intent. Its booking infrastructure content should become a section within #11. For #12: This is a product landing page, so it CAN coexist with #11 IF properly differentiated. #11 should be informational/definitional, while #12 should be purely conversion-focused (features, pricing, CTA). If #12 can't be sufficiently differentiated, redirect to #11."
+  },
+];
+
+const contentGaps = [
+  {title:"Horizontal vs Vertical Marketplace — Complete Comparison", desc:"No page covers this fundamental marketplace classification. High search volume, core to topical authority. This is table-stakes content for a 'marketplace types' pillar.", keywords:["horizontal marketplace","vertical marketplace","horizontal vs vertical marketplace"], priority:"p1"},
+  {title:"What is a B2B Marketplace? Definitive Guide", desc:"B2B content is scattered (#17, #29, #36) but no single definitional 'What is a B2B marketplace' page exists. This is a core type that needs its own canonical page.", keywords:["what is a b2b marketplace","b2b marketplace meaning","b2b marketplace examples"], priority:"p1"},
+  {title:"What is a C2C Marketplace? Types, Examples & How to Start", desc:"#7 covers 'C2C guide' but targets building. No clean definitional page for 'what is a C2C marketplace' — a high-volume informational query feeding into the building intent.", keywords:["what is a c2c marketplace","c2c marketplace examples","c2c vs b2c marketplace"], priority:"p1"},
+  {title:"Multi-Vendor Marketplace vs Single-Vendor Store", desc:"Fundamental comparison missing from the pillar. High commercial intent — directly supports Shipturtle's 'why marketplace > single store' positioning.", keywords:["multi-vendor vs single vendor","multivendor marketplace vs ecommerce store","marketplace vs online store"], priority:"p1"},
+  {title:"Managed Marketplace vs Unmanaged Marketplace", desc:"Key operational distinction that determines platform complexity and margin structure. No existing content covers this despite being a common evaluation criterion.", keywords:["managed marketplace","unmanaged marketplace","managed vs unmanaged marketplace"], priority:"p2"},
+  {title:"What is a Niche Marketplace? Benefits & Examples", desc:"Niche/vertical marketplaces are a major trend. No dedicated content despite related coverage in Industry Marketplaces pillar. 35% of consumers now shop at niche marketplaces.", keywords:["niche marketplace","niche marketplace examples","how to build a niche marketplace"], priority:"p2"},
+  {title:"Marketplace Aggregator vs Platform — Key Differences", desc:"No content distinguishing aggregator models (Kayak, Google Shopping) from platform models (Amazon, Etsy). Important for topical completeness and helps readers choose their model.", keywords:["marketplace aggregator","marketplace aggregator vs platform","aggregator business model"], priority:"p2"},
+  {title:"Marketplace Network Effects — How to Build & Measure Them", desc:"Core concept for any marketplace types pillar. 'Network effects' is the #1 reason marketplaces succeed or fail. Currently missing.", keywords:["marketplace network effects","two-sided network effects","marketplace liquidity"], priority:"p2"},
+  {title:"Decentralized Marketplace: Web3 & Blockchain Marketplaces", desc:"Emerging topic with growing search interest. Positions Shipturtle as forward-thinking. No existing coverage.", keywords:["decentralized marketplace","web3 marketplace","blockchain marketplace platform"], priority:"p3"},
+];
+
+
+// ─── RENDER ───
+function getMetricClass(clicks, impressions) {
+  if (clicks === 0 && impressions === 0) return 'zero';
+  if (clicks < 10) return 'low';
+  if (clicks < 50) return 'mid';
+  return 'high';
+}
+
+function renderStats() {
+  const actions = {};
+  pages.forEach(p => { actions[p.action] = (actions[p.action]||0) + 1; });
+  const totalClicks = pages.reduce((s,p)=>s+p.clicks,0);
+  const totalConv = pages.reduce((s,p)=>s+p.conv,0);
+  const zeroPages = pages.filter(p=>p.clicks===0&&p.impressions===0).length;
+  const intentValid = pages.filter(p=>p.intent==='valid').length;
+
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card"><div class="label">Total Pages</div><div class="value">${pages.length}</div><div class="sub">${zeroPages} at 0/0 · ${intentValid} with valid intent</div></div>
+    <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${totalClicks.toLocaleString()}</div><div class="sub">${totalConv} conversions</div></div>
+    <div class="stat-card keep"><div class="label">Keep</div><div class="value">${actions.keep||0}</div></div>
+    <div class="stat-card merge"><div class="label">Merge</div><div class="value">${actions.merge||0}</div></div>
+    <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">${actions.rewrite||0}</div></div>
+    <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">${actions.redirect||0}</div></div>
+    <div class="stat-card repillar"><div class="label">Re-Pillar</div><div class="value">${actions.repillar||0}</div></div>
+  `;
+}
+
+let currentFilter = 'all';
+let currentSort = {key:'id', dir:'asc'};
+
+function renderFilters() {
+  const actions = ['all','keep','merge','rewrite','redirect','repillar'];
+  const labels = {all:'All', keep:'Keep', merge:'Merge', rewrite:'Rewrite', redirect:'Redirect', repillar:'Re-Pillar'};
+  document.getElementById('filters').innerHTML = actions.map(a =>
+    `<button class="filter-btn ${a!=='all'?a:''} ${currentFilter===a?'active':''}" data-filter="${a}">${labels[a]}</button>`
+  ).join('');
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => { currentFilter=btn.dataset.filter; renderFilters(); renderTable(); });
+  });
+}
+
+function renderTable() {
+  let filtered = currentFilter==='all' ? [...pages] : pages.filter(p=>p.action===currentFilter);
+  filtered.sort((a,b) => {
+    let va=a[currentSort.key], vb=b[currentSort.key];
+    if(currentSort.key==='ctr'){va=a.impressions>0?a.clicks/a.impressions:0;vb=b.impressions>0?b.clicks/b.impressions:0;}
+    if(currentSort.key==='conversions'){va=a.conv;vb=b.conv;}
+    if(currentSort.key==='title'){va=a.title;vb=b.title;}
+    if(currentSort.key==='subcat'){va=a.subcat;vb=b.subcat;}
+    if(currentSort.key==='action'){va=a.action;vb=b.action;}
+    if(typeof va==='string') return currentSort.dir==='asc'?va.localeCompare(vb):vb.localeCompare(va);
+    return currentSort.dir==='asc'?va-vb:vb-va;
+  });
+  document.getElementById('pageCount').textContent = filtered.length;
+  document.getElementById('auditBody').innerHTML = filtered.map(p => {
+    const ctr = p.impressions>0?((p.clicks/p.impressions)*100).toFixed(2):'0.00';
+    const mc = getMetricClass(p.clicks,p.impressions);
+    const intentClass = p.intent==='valid'?'valid':p.intent==='weak'?'weak':'offbrand';
+    const intentLabel = p.intent==='valid'?'✓ Intent Valid':p.intent==='weak'?'⚠ Weak Fit':'✗ Off-Brand';
+    return `<tr>
+      <td class="metric" style="text-align:center;color:var(--text-dim)">${p.id}</td>
+      <td>
+        <div class="page-title"><a href="https://www.shipturtle.com/${p.url}" target="_blank">${p.title}</a></div>
+        <div class="page-url">/${p.url}</div>
+      </td>
+      <td><span class="page-subcategory">${p.subcat}</span></td>
+      <td class="metric ${mc}" style="text-align:right">${p.clicks.toLocaleString()}</td>
+      <td class="metric ${mc}" style="text-align:right">${p.impressions.toLocaleString()}</td>
+      <td class="metric" style="text-align:right"><span class="ctr">${ctr}%</span></td>
+      <td class="metric ${p.conv>0?'has-conv':''}" style="text-align:right">${p.conv>0?p.conv:'—'}</td>
+      <td><span class="action-badge ${p.action}">${p.action==='repillar'?'Re-Pillar':p.action}</span></td>
+      <td><div class="reasoning">${p.reason}${p.mergeTarget?'<span class="merge-target">'+p.mergeTarget+'</span>':''}<span class="intent-tag ${intentClass}">${intentLabel}</span></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCannibalization() {
+  document.getElementById('cannibalCount').textContent = cannibalizationClusters.length;
+  document.getElementById('cannibalList').innerHTML = cannibalizationClusters.map(c => `
+    <div class="cannibal-card">
+      <div class="cannibal-header">
+        <div class="cannibal-cluster-name">${c.name}<span class="severity ${c.severity}">${c.severity}</span></div>
+        <span style="font-size:12px;color:var(--text-dim)">${c.pages.length} pages competing</span>
+      </div>
+      <div class="cannibal-pages">
+        ${c.pages.map(p => `
+          <div class="cannibal-page ${p.verdict==='winner'?'winner':'loser'}">
+            <span class="verdict-badge ${p.verdict}">${p.verdictLabel}</span>
+            <span style="font-weight:500">#${p.id} — ${p.title}</span>
+            <span class="metric mid" style="font-size:12px">${p.clicks.toLocaleString()} clicks</span>
+            <span class="metric" style="font-size:12px;color:var(--text-dim)">${p.impressions.toLocaleString()} imp</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="cannibal-reasoning">${c.reasoning}</div>
+    </div>
+  `).join('');
+}
+
+function renderGaps() {
+  document.getElementById('gapCount').textContent = contentGaps.length;
+  document.getElementById('gapList').innerHTML = contentGaps.map(g => `
+    <div class="gap-card">
+      <div>
+        <div class="gap-title">${g.title}</div>
+        <div class="gap-desc">${g.desc}</div>
+        <div class="gap-keywords">${g.keywords.map(k=>`<span class="gap-kw">${k}</span>`).join('')}</div>
+      </div>
+      <span class="gap-priority ${g.priority}">${g.priority==='p1'?'High Priority':g.priority==='p2'?'Medium':'Low'}</span>
+    </div>
+  `).join('');
+}
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc=>tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Sorting
+document.querySelectorAll('thead th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = th.dataset.sort;
+    if(currentSort.key===key) currentSort.dir = currentSort.dir==='asc'?'desc':'asc';
+    else currentSort = {key, dir:key==='clicks'||key==='impressions'||key==='ctr'||key==='conversions'?'desc':'asc'};
+    renderTable();
+  });
+});
+
+renderStats(); renderFilters(); renderTable(); renderCannibalization(); renderGaps();
+</script>
+</body>
+</html>

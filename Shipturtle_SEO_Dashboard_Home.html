@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — SEO Content Pruning Audit | Dashboard Home</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0e13;
+    --surface: #14171e;
+    --surface-2: #1a1e27;
+    --surface-3: #222733;
+    --border: #2a2f3b;
+    --border-hover: #3a4050;
+    --text: #e4e7ed;
+    --text-muted: #8b92a5;
+    --text-dim: #5c6377;
+    --accent: #6c9fff;
+    --accent-glow: rgba(108,159,255,0.15);
+    --keep: #34d399;
+    --keep-bg: rgba(52,211,153,0.1);
+    --merge: #fbbf24;
+    --merge-bg: rgba(251,191,36,0.1);
+    --redirect: #f97316;
+    --redirect-bg: rgba(249,115,22,0.1);
+    --delete: #f87171;
+    --delete-bg: rgba(248,113,113,0.1);
+    --rewrite: #a78bfa;
+    --rewrite-bg: rgba(167,139,250,0.1);
+    --repillar: #38bdf8;
+    --repillar-bg: rgba(56,189,248,0.1);
+    --gap: #e879f9;
+    --gap-bg: rgba(232,121,249,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--surface); }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--border-hover); }
+
+  /* ── Header ── */
+  .header { background:var(--surface); border-bottom:1px solid var(--border); padding:24px 40px; position:sticky; top:0; z-index:100; backdrop-filter:blur(20px); }
+  .header-inner { max-width:1600px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .header-left { display:flex; align-items:center; gap:16px; }
+  .logo-mark { width:44px; height:44px; background:linear-gradient(135deg,var(--accent),#a78bfa); border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; color:#fff; flex-shrink:0; }
+  .header h1 { font-size:22px; font-weight:700; letter-spacing:-0.3px; }
+  .header h1 span { color:var(--text-muted); font-weight:400; }
+  .header-right { display:flex; align-items:center; gap:12px; }
+  .date-badge { display:inline-flex; align-items:center; gap:6px; background:var(--surface-2); border:1px solid var(--border); color:var(--text-muted); font-size:12px; font-weight:500; padding:6px 14px; border-radius:20px; }
+  .date-badge::before { content:''; width:6px; height:6px; background:var(--keep); border-radius:50%; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+
+  /* ── Global Stats ── */
+  .global-stats { max-width:1600px; margin:0 auto; padding:28px 40px 0; display:grid; grid-template-columns:repeat(6,1fr); gap:12px; }
+  .g-stat { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; transition:border-color .2s, transform .2s; }
+  .g-stat:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+  .g-stat .label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; font-weight:600; }
+  .g-stat .value { font-family:'JetBrains Mono',monospace; font-size:28px; font-weight:700; line-height:1.1; }
+  .g-stat .sub { font-size:11px; color:var(--text-muted); margin-top:4px; }
+  .g-stat.total .value { color:var(--accent); }
+  .g-stat.clicks .value { color:var(--keep); }
+  .g-stat.impr .value { color:var(--rewrite); }
+  .g-stat.ctr .value { color:var(--merge); }
+  .g-stat.conv .value { color:var(--repillar); }
+  .g-stat.zero .value { color:var(--delete); }
+
+  /* ── Main ── */
+  .main { max-width:1600px; margin:0 auto; padding:32px 40px 60px; }
+  .section-title { font-size:18px; font-weight:700; letter-spacing:-0.3px; margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+  .section-title .count { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--surface-3); color:var(--text-muted); padding:2px 8px; border-radius:6px; }
+
+  /* ── Pillar Cards ── */
+  .pillar-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(480px, 1fr)); gap:16px; margin-bottom:40px; }
+  .pillar-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:0; overflow:hidden; transition:border-color .25s, transform .25s, box-shadow .25s; cursor:pointer; text-decoration:none; color:inherit; display:block; }
+  .pillar-card:hover { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,.4); }
+  .pillar-card-header { padding:24px 28px 16px; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+  .pillar-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+  .pillar-card-info { flex:1; }
+  .pillar-card-name { font-size:17px; font-weight:700; letter-spacing:-0.2px; margin-bottom:4px; }
+  .pillar-card-url { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); word-break:break-all; }
+  .pillar-open-icon { font-size:18px; color:var(--text-dim); transition:color .2s, transform .2s; margin-top:4px; }
+  .pillar-card:hover .pillar-open-icon { color:var(--accent); transform:translateX(3px); }
+
+  .pillar-metrics { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--border); }
+  .pillar-metric { background:var(--surface); padding:16px 18px; text-align:center; }
+  .pillar-metric .pm-label { font-size:9px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.8px; margin-bottom:4px; font-weight:600; }
+  .pillar-metric .pm-value { font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:600; }
+  .pillar-metric .pm-sub { font-size:10px; color:var(--text-dim); margin-top:2px; }
+
+  .pillar-top-pages { padding:16px 28px 20px; }
+  .pillar-top-label { font-size:10px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.8px; font-weight:600; margin-bottom:10px; }
+  .top-page { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; margin-bottom:4px; transition:background .15s; }
+  .top-page:hover { background:var(--surface-2); }
+  .top-page-rank { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim); width:20px; text-align:right; flex-shrink:0; }
+  .top-page-name { font-size:12px; color:var(--text-muted); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .top-page-clicks { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--keep); flex-shrink:0; }
+
+  /* ── Health bar ── */
+  .health-bar { height:4px; border-radius:2px; display:flex; gap:1px; overflow:hidden; margin:0 28px 20px; }
+  .health-seg { height:100%; transition:flex .3s; }
+  .health-seg.active { background:var(--keep); }
+  .health-seg.zero { background:var(--delete); }
+
+  /* ── Color accents per pillar ── */
+  .pillar-card[data-pillar="types"] .pillar-icon { background:var(--accent-glow); color:var(--accent); }
+  .pillar-card[data-pillar="types"]:hover { border-color:var(--accent); }
+  .pillar-card[data-pillar="build"] .pillar-icon { background:var(--keep-bg); color:var(--keep); }
+  .pillar-card[data-pillar="build"]:hover { border-color:var(--keep); }
+  .pillar-card[data-pillar="industry"] .pillar-icon { background:var(--merge-bg); color:var(--merge); }
+  .pillar-card[data-pillar="industry"]:hover { border-color:var(--merge); }
+  .pillar-card[data-pillar="ops"] .pillar-icon { background:var(--gap-bg); color:var(--gap); }
+  .pillar-card[data-pillar="ops"]:hover { border-color:var(--gap); }
+  .pillar-card[data-pillar="platform"] .pillar-icon { background:var(--rewrite-bg); color:var(--rewrite); }
+  .pillar-card[data-pillar="platform"]:hover { border-color:var(--rewrite); }
+
+  /* ── Comparison Table ── */
+  .compare-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:40px; }
+  .compare-scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:var(--surface-2); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.8px; color:var(--text-dim); padding:14px 18px; text-align:left; white-space:nowrap; border-bottom:1px solid var(--border); }
+  thead th:first-child { padding-left:24px; }
+  tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+  tbody tr:last-child { border-bottom:none; }
+  tbody tr:hover { background:var(--surface-2); }
+  tbody td { padding:16px 18px; vertical-align:middle; }
+  tbody td:first-child { padding-left:24px; font-weight:600; }
+  .metric { font-family:'JetBrains Mono',monospace; font-weight:500; text-align:right; white-space:nowrap; }
+  .bar-cell { padding-right:24px; }
+  .bar-track { height:8px; background:var(--surface-3); border-radius:4px; overflow:hidden; min-width:120px; }
+  .bar-fill { height:100%; border-radius:4px; transition:width .6s ease; }
+
+  /* ── Attention Section ── */
+  .attention-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:12px; margin-bottom:40px; }
+  .attention-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 22px; border-left:3px solid var(--delete); }
+  .attention-card .att-pillar { font-size:10px; color:var(--delete); text-transform:uppercase; letter-spacing:.8px; font-weight:600; margin-bottom:6px; }
+  .attention-card .att-count { font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:700; color:var(--delete); line-height:1.1; }
+  .attention-card .att-label { font-size:12px; color:var(--text-muted); margin-top:2px; }
+
+  /* ── Footer ── */
+  .footer { max-width:1600px; margin:0 auto; padding:20px 40px 40px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .footer-text { font-size:11px; color:var(--text-dim); }
+  .footer-text a { color:var(--accent); text-decoration:none; }
+
+  /* ── Responsive ── */
+  @media(max-width:1200px) {
+    .global-stats { grid-template-columns:repeat(3,1fr); }
+    .pillar-grid { grid-template-columns:1fr; }
+  }
+  @media(max-width:768px) {
+    .global-stats { grid-template-columns:repeat(2,1fr); }
+    .header { padding:16px 20px; }
+    .global-stats, .main { padding-left:20px; padding-right:20px; }
+    .pillar-metrics { grid-template-columns:repeat(3,1fr); }
+    .footer { padding:20px; flex-direction:column; gap:8px; }
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .g-stat { animation:fadeUp .5s ease both; }
+  .g-stat:nth-child(1) { animation-delay:.05s; }
+  .g-stat:nth-child(2) { animation-delay:.1s; }
+  .g-stat:nth-child(3) { animation-delay:.15s; }
+  .g-stat:nth-child(4) { animation-delay:.2s; }
+  .g-stat:nth-child(5) { animation-delay:.25s; }
+  .g-stat:nth-child(6) { animation-delay:.3s; }
+  .pillar-card { animation:fadeUp .5s ease both; }
+  .pillar-card:nth-child(1) { animation-delay:.15s; }
+  .pillar-card:nth-child(2) { animation-delay:.2s; }
+  .pillar-card:nth-child(3) { animation-delay:.25s; }
+  .pillar-card:nth-child(4) { animation-delay:.3s; }
+  .pillar-card:nth-child(5) { animation-delay:.35s; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo-mark">S</div>
+      <h1>Shipturtle <span>/ SEO Content Pruning Audit</span></h1>
+    </div>
+    <div class="header-right">
+      <div class="date-badge">Data as on 02 Feb 2026</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ GLOBAL STATS BAR ═══════════ -->
+<div class="global-stats">
+  <div class="g-stat total">
+    <div class="label">Total Pages</div>
+    <div class="value">192</div>
+    <div class="sub">Across 5 pillars</div>
+  </div>
+  <div class="g-stat clicks">
+    <div class="label">Total Clicks</div>
+    <div class="value">19,167</div>
+    <div class="sub">Organic search</div>
+  </div>
+  <div class="g-stat impr">
+    <div class="label">Impressions</div>
+    <div class="value">2.99M</div>
+    <div class="sub">Search visibility</div>
+  </div>
+  <div class="g-stat ctr">
+    <div class="label">Avg CTR</div>
+    <div class="value">0.64%</div>
+    <div class="sub">Clicks / impressions</div>
+  </div>
+  <div class="g-stat conv">
+    <div class="label">Conversions</div>
+    <div class="value">91</div>
+    <div class="sub">Thank-you submissions</div>
+  </div>
+  <div class="g-stat zero">
+    <div class="label">Zero-Click Pages</div>
+    <div class="value">39</div>
+    <div class="sub">20.3% of all pages</div>
+  </div>
+</div>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<div class="main">
+
+  <!-- ── Pillar Cards ── -->
+  <div class="section-title" style="margin-top:32px;">Pillar Dashboards <span class="count">5 PILLARS</span></div>
+
+  <div class="pillar-grid">
+
+    <!-- ─ 1. Marketplace Types ─ -->
+    <a class="pillar-card" data-pillar="types" href="Shipturtle_Marketplace_Types_Pruning_Audit_v2.html" target="_blank">
+      <div class="pillar-card-header">
+        <div class="pillar-icon">🏪</div>
+        <div class="pillar-card-info">
+          <div class="pillar-card-name">Marketplace Types</div>
+          <div class="pillar-card-url">shipturtle.com/blog/types-of-online-marketplaces</div>
+        </div>
+        <div class="pillar-open-icon">→</div>
+      </div>
+      <div class="pillar-metrics">
+        <div class="pillar-metric"><div class="pm-label">Pages</div><div class="pm-value" style="color:var(--accent);">50</div></div>
+        <div class="pillar-metric"><div class="pm-label">Clicks</div><div class="pm-value" style="color:var(--keep);">3,289</div></div>
+        <div class="pillar-metric"><div class="pm-label">Impressions</div><div class="pm-value" style="color:var(--rewrite);">1.17M</div></div>
+        <div class="pillar-metric"><div class="pm-label">CTR</div><div class="pm-value" style="color:var(--merge);">0.28%</div></div>
+        <div class="pillar-metric"><div class="pm-label">Conversions</div><div class="pm-value" style="color:var(--repillar);">28</div></div>
+      </div>
+      <div class="health-bar">
+        <div class="health-seg active" style="flex:42;"></div>
+        <div class="health-seg zero" style="flex:8;"></div>
+      </div>
+      <div class="pillar-top-pages">
+        <div class="pillar-top-label">Top Performing Pages</div>
+        <div class="top-page"><span class="top-page-rank">1</span><span class="top-page-name">30+ Examples Of Multi-Vendor Marketplace Platform</span><span class="top-page-clicks">838</span></div>
+        <div class="top-page"><span class="top-page-rank">2</span><span class="top-page-name">C2C Marketplace Guide: Building on Shopify</span><span class="top-page-clicks">412</span></div>
+        <div class="top-page"><span class="top-page-rank">3</span><span class="top-page-name">Peer-to-Peer (P2P) Rental Marketplace Platform</span><span class="top-page-clicks">400</span></div>
+      </div>
+    </a>
+
+    <!-- ─ 2. How to Build ─ -->
+    <a class="pillar-card" data-pillar="build" href="Shipturtle_How_To_Build_Pruning_Audit.html" target="_blank">
+      <div class="pillar-card-header">
+        <div class="pillar-icon">🔨</div>
+        <div class="pillar-card-info">
+          <div class="pillar-card-name">How to Build</div>
+          <div class="pillar-card-url">shipturtle.com/blog/how-to-build-a-marketplace</div>
+        </div>
+        <div class="pillar-open-icon">→</div>
+      </div>
+      <div class="pillar-metrics">
+        <div class="pillar-metric"><div class="pm-label">Pages</div><div class="pm-value" style="color:var(--accent);">13</div></div>
+        <div class="pillar-metric"><div class="pm-label">Clicks</div><div class="pm-value" style="color:var(--keep);">742</div></div>
+        <div class="pillar-metric"><div class="pm-label">Impressions</div><div class="pm-value" style="color:var(--rewrite);">392K</div></div>
+        <div class="pillar-metric"><div class="pm-label">CTR</div><div class="pm-value" style="color:var(--merge);">0.19%</div></div>
+        <div class="pillar-metric"><div class="pm-label">Conversions</div><div class="pm-value" style="color:var(--repillar);">7</div></div>
+      </div>
+      <div class="health-bar">
+        <div class="health-seg active" style="flex:12;"></div>
+        <div class="health-seg zero" style="flex:1;"></div>
+      </div>
+      <div class="pillar-top-pages">
+        <div class="pillar-top-label">Top Performing Pages</div>
+        <div class="top-page"><span class="top-page-rank">1</span><span class="top-page-name">How Much Does it Cost to Build an Online Marketplace?</span><span class="top-page-clicks">341</span></div>
+        <div class="top-page"><span class="top-page-rank">2</span><span class="top-page-name">Build a Website like eBay: Used Goods Marketplace</span><span class="top-page-clicks">180</span></div>
+        <div class="top-page"><span class="top-page-rank">3</span><span class="top-page-name">B2B Marketplace Platform: Build Wholesale Marketplaces</span><span class="top-page-clicks">88</span></div>
+      </div>
+    </a>
+
+    <!-- ─ 3. Industry Marketplaces ─ -->
+    <a class="pillar-card" data-pillar="industry" href="Shipturtle_Industry_Marketplaces_Pruning_Audit.html" target="_blank">
+      <div class="pillar-card-header">
+        <div class="pillar-icon">🏭</div>
+        <div class="pillar-card-info">
+          <div class="pillar-card-name">Industry Marketplaces</div>
+          <div class="pillar-card-url">43 vertical industry guides</div>
+        </div>
+        <div class="pillar-open-icon">→</div>
+      </div>
+      <div class="pillar-metrics">
+        <div class="pillar-metric"><div class="pm-label">Pages</div><div class="pm-value" style="color:var(--accent);">43</div></div>
+        <div class="pillar-metric"><div class="pm-label">Clicks</div><div class="pm-value" style="color:var(--keep);">2,022</div></div>
+        <div class="pillar-metric"><div class="pm-label">Impressions</div><div class="pm-value" style="color:var(--rewrite);">513K</div></div>
+        <div class="pillar-metric"><div class="pm-label">CTR</div><div class="pm-value" style="color:var(--merge);">0.39%</div></div>
+        <div class="pillar-metric"><div class="pm-label">Conversions</div><div class="pm-value" style="color:var(--repillar);">20</div></div>
+      </div>
+      <div class="health-bar">
+        <div class="health-seg active" style="flex:33;"></div>
+        <div class="health-seg zero" style="flex:10;"></div>
+      </div>
+      <div class="pillar-top-pages">
+        <div class="pillar-top-label">Top Performing Pages</div>
+        <div class="top-page"><span class="top-page-rank">1</span><span class="top-page-name">Health and Wellness Marketplace: Development &amp; Supplier Mgmt</span><span class="top-page-clicks">251</span></div>
+        <div class="top-page"><span class="top-page-rank">2</span><span class="top-page-name">Sell Eco-Friendly &amp; Sustainable Products Marketplace</span><span class="top-page-clicks">212</span></div>
+        <div class="top-page"><span class="top-page-rank">3</span><span class="top-page-name">Launching an Online Travel Marketplace Platform</span><span class="top-page-clicks">206</span></div>
+      </div>
+    </a>
+
+    <!-- ─ 4. Marketplace Operations & Features ─ -->
+    <a class="pillar-card" data-pillar="ops" href="Shipturtle_Marketplace_Ops_Features_Pruning_Audit.html" target="_blank">
+      <div class="pillar-card-header">
+        <div class="pillar-icon">⚙️</div>
+        <div class="pillar-card-info">
+          <div class="pillar-card-name">Marketplace Operations &amp; Features</div>
+          <div class="pillar-card-url">shipturtle.com/blog/features-to-build-multi-vendor-marketplace</div>
+        </div>
+        <div class="pillar-open-icon">→</div>
+      </div>
+      <div class="pillar-metrics">
+        <div class="pillar-metric"><div class="pm-label">Pages</div><div class="pm-value" style="color:var(--accent);">48</div></div>
+        <div class="pillar-metric"><div class="pm-label">Clicks</div><div class="pm-value" style="color:var(--keep);">10,803</div></div>
+        <div class="pillar-metric"><div class="pm-label">Impressions</div><div class="pm-value" style="color:var(--rewrite);">387K</div></div>
+        <div class="pillar-metric"><div class="pm-label">CTR</div><div class="pm-value" style="color:var(--merge);">2.78%</div></div>
+        <div class="pillar-metric"><div class="pm-label">Conversions</div><div class="pm-value" style="color:var(--repillar);">2</div></div>
+      </div>
+      <div class="health-bar">
+        <div class="health-seg active" style="flex:32;"></div>
+        <div class="health-seg zero" style="flex:16;"></div>
+      </div>
+      <div class="pillar-top-pages">
+        <div class="pillar-top-label">Top Performing Pages</div>
+        <div class="top-page"><span class="top-page-rank">1</span><span class="top-page-name">Build a Marketplace on Shopify in minutes (Homepage)</span><span class="top-page-clicks">9,159</span></div>
+        <div class="top-page"><span class="top-page-rank">2</span><span class="top-page-name">Effortless multi-vendor selling (Pricing Page)</span><span class="top-page-clicks">776</span></div>
+        <div class="top-page"><span class="top-page-rank">3</span><span class="top-page-name">About — Make marketplaces accessible &amp; easier to build</span><span class="top-page-clicks">419</span></div>
+      </div>
+    </a>
+
+    <!-- ─ 5. Marketplace Platform ─ -->
+    <a class="pillar-card" data-pillar="platform" href="Shipturtle_Marketplace_Platform_Pruning_Audit.html" target="_blank">
+      <div class="pillar-card-header">
+        <div class="pillar-icon">🧩</div>
+        <div class="pillar-card-info">
+          <div class="pillar-card-name">Marketplace Platform</div>
+          <div class="pillar-card-url">shipturtle.com/blog/marketplace-platform-builder</div>
+        </div>
+        <div class="pillar-open-icon">→</div>
+      </div>
+      <div class="pillar-metrics">
+        <div class="pillar-metric"><div class="pm-label">Pages</div><div class="pm-value" style="color:var(--accent);">38</div></div>
+        <div class="pillar-metric"><div class="pm-label">Clicks</div><div class="pm-value" style="color:var(--keep);">2,311</div></div>
+        <div class="pillar-metric"><div class="pm-label">Impressions</div><div class="pm-value" style="color:var(--rewrite);">530K</div></div>
+        <div class="pillar-metric"><div class="pm-label">CTR</div><div class="pm-value" style="color:var(--merge);">0.44%</div></div>
+        <div class="pillar-metric"><div class="pm-label">Conversions</div><div class="pm-value" style="color:var(--repillar);">34</div></div>
+      </div>
+      <div class="health-bar">
+        <div class="health-seg active" style="flex:34;"></div>
+        <div class="health-seg zero" style="flex:4;"></div>
+      </div>
+      <div class="pillar-top-pages">
+        <div class="pillar-top-label">Top Performing Pages</div>
+        <div class="top-page"><span class="top-page-rank">1</span><span class="top-page-name">Top 7 Shopify Themes for Multi-Vendor Marketplaces</span><span class="top-page-clicks">560</span></div>
+        <div class="top-page"><span class="top-page-rank">2</span><span class="top-page-name">How To Create A Multivendor Marketplace On Shopify</span><span class="top-page-clicks">392</span></div>
+        <div class="top-page"><span class="top-page-rank">3</span><span class="top-page-name">Seller Sync Solution for Marketplace on Shopify</span><span class="top-page-clicks">182</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── Comparison Table ── -->
+  <div class="section-title">Pillar Comparison <span class="count">SIDE-BY-SIDE</span></div>
+  <div class="compare-wrap">
+    <div class="compare-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:200px;">Pillar</th>
+            <th class="metric">Pages</th>
+            <th class="metric">Clicks</th>
+            <th class="metric">Impressions</th>
+            <th class="metric">CTR</th>
+            <th class="metric">Conv.</th>
+            <th class="metric">Zero-Click</th>
+            <th style="min-width:160px;">Click Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🏪 Marketplace Types</td>
+            <td class="metric">50</td>
+            <td class="metric" style="color:var(--keep);">3,289</td>
+            <td class="metric">1,170,946</td>
+            <td class="metric" style="color:var(--merge);">0.28%</td>
+            <td class="metric" style="color:var(--repillar);">28</td>
+            <td class="metric" style="color:var(--delete);">8</td>
+            <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:17.2%;background:var(--accent);"></div></div></td>
+          </tr>
+          <tr>
+            <td>🔨 How to Build</td>
+            <td class="metric">13</td>
+            <td class="metric" style="color:var(--keep);">742</td>
+            <td class="metric">392,629</td>
+            <td class="metric" style="color:var(--merge);">0.19%</td>
+            <td class="metric" style="color:var(--repillar);">7</td>
+            <td class="metric" style="color:var(--delete);">1</td>
+            <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:3.9%;background:var(--keep);"></div></div></td>
+          </tr>
+          <tr>
+            <td>🏭 Industry Marketplaces</td>
+            <td class="metric">43</td>
+            <td class="metric" style="color:var(--keep);">2,022</td>
+            <td class="metric">513,941</td>
+            <td class="metric" style="color:var(--merge);">0.39%</td>
+            <td class="metric" style="color:var(--repillar);">20</td>
+            <td class="metric" style="color:var(--delete);">10</td>
+            <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:10.5%;background:var(--merge);"></div></div></td>
+          </tr>
+          <tr>
+            <td>⚙️ Ops &amp; Features</td>
+            <td class="metric">48</td>
+            <td class="metric" style="color:var(--keep);">10,803</td>
+            <td class="metric">387,964</td>
+            <td class="metric" style="color:var(--keep);">2.78%</td>
+            <td class="metric" style="color:var(--repillar);">2</td>
+            <td class="metric" style="color:var(--delete);">16</td>
+            <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:56.4%;background:var(--gap);"></div></div></td>
+          </tr>
+          <tr>
+            <td>🧩 Marketplace Platform</td>
+            <td class="metric">38</td>
+            <td class="metric" style="color:var(--keep);">2,311</td>
+            <td class="metric">530,683</td>
+            <td class="metric" style="color:var(--merge);">0.44%</td>
+            <td class="metric" style="color:var(--repillar);">34</td>
+            <td class="metric" style="color:var(--delete);">4</td>
+            <td class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:12.1%;background:var(--rewrite);"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Zero-Click Attention ── -->
+  <div class="section-title">Pages Needing Attention <span class="count">ZERO CLICKS</span></div>
+  <div class="attention-grid">
+    <div class="attention-card">
+      <div class="att-pillar">Marketplace Operations & Features</div>
+      <div class="att-count">16</div>
+      <div class="att-label">zero-click pages — 33% of pillar</div>
+    </div>
+    <div class="attention-card">
+      <div class="att-pillar">Industry Marketplaces</div>
+      <div class="att-count">10</div>
+      <div class="att-label">zero-click pages — 23% of pillar</div>
+    </div>
+    <div class="attention-card">
+      <div class="att-pillar">Marketplace Types</div>
+      <div class="att-count">8</div>
+      <div class="att-label">zero-click pages — 16% of pillar</div>
+    </div>
+    <div class="attention-card">
+      <div class="att-pillar">Marketplace Platform</div>
+      <div class="att-count">4</div>
+      <div class="att-label">zero-click pages — 11% of pillar</div>
+    </div>
+    <div class="attention-card">
+      <div class="att-pillar">How to Build</div>
+      <div class="att-count">1</div>
+      <div class="att-label">zero-click page — 8% of pillar</div>
+    </div>
+  </div>
+
+  <!-- ── Key Insights ── -->
+  <div class="section-title">Key Insights <span class="count">STRATEGIC SUMMARY</span></div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin-bottom:40px;">
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 26px; border-left:3px solid var(--keep);">
+      <div style="font-size:13px; font-weight:700; color:var(--keep); margin-bottom:8px;">✦ Highest CTR</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">Marketplace Operations &amp; Features leads at <strong style="color:var(--text);">2.78% CTR</strong> — driven by the homepage and pricing page. These are brand-aware clicks, not discovery traffic.</div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 26px; border-left:3px solid var(--rewrite);">
+      <div style="font-size:13px; font-weight:700; color:var(--rewrite); margin-bottom:8px;">✦ Highest Impressions</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">Marketplace Types commands <strong style="color:var(--text);">1.17M impressions</strong> but only 0.28% CTR. Massive opportunity to capture more clicks with better title tags and meta descriptions.</div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 26px; border-left:3px solid var(--repillar);">
+      <div style="font-size:13px; font-weight:700; color:var(--repillar); margin-bottom:8px;">✦ Best Conversion Rate</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">Marketplace Platform delivers <strong style="color:var(--text);">34 conversions from 2,311 clicks</strong> (1.47% conv rate) — the highest converting pillar. Prioritize expansion here.</div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 26px; border-left:3px solid var(--delete);">
+      <div style="font-size:13px; font-weight:700; color:var(--delete); margin-bottom:8px;">✦ Content Bloat Risk</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">39 pages (20.3%) have zero clicks. Ops &amp; Features has the worst ratio — <strong style="color:var(--text);">16 dead pages</strong>. Pruning, merging, or rewriting is urgent.</div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 26px; border-left:3px solid var(--merge);">
+      <div style="font-size:13px; font-weight:700; color:var(--merge); margin-bottom:8px;">✦ Smallest Pillar</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">How to Build has only <strong style="color:var(--text);">13 pages</strong> but strong conversion signals. High potential for cluster expansion with cost, timeline, and MVP guides.</div>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:22px 26px; border-left:3px solid var(--accent);">
+      <div style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px;">✦ Overall Health</div>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">192 pages generating <strong style="color:var(--text);">~3M impressions</strong> and <strong style="color:var(--text);">91 conversions</strong>. Pruning dead weight and boosting CTR on high-impression pages is the fastest ROI move.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<div class="footer">
+  <div class="footer-text">Shipturtle SEO Content Pruning Audit — Dashboard Home</div>
+  <div class="footer-text">Data Source: Google Search Console (02 Feb 2026) · Built for <a href="https://www.shipturtle.com" target="_blank">shipturtle.com</a></div>
+</div>
+
+</body>
+</html>
