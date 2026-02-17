@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — AEO & LLMs.txt Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0e13;
+    --surface: #14171e;
+    --surface-2: #1a1e27;
+    --surface-3: #222733;
+    --border: #2a2f3b;
+    --border-hover: #3a4050;
+    --text: #e4e7ed;
+    --text-muted: #8b92a5;
+    --text-dim: #5c6377;
+    --accent: #818cf8;
+    --accent-glow: rgba(129,140,248,0.12);
+    --keep: #34d399;
+    --keep-bg: rgba(52,211,153,0.1);
+    --merge: #fbbf24;
+    --merge-bg: rgba(251,191,36,0.1);
+    --redirect: #f97316;
+    --redirect-bg: rgba(249,115,22,0.1);
+    --delete: #f87171;
+    --delete-bg: rgba(248,113,113,0.1);
+    --rewrite: #a78bfa;
+    --rewrite-bg: rgba(167,139,250,0.1);
+    --p1: #f87171;
+    --p1-bg: rgba(248,113,113,0.1);
+    --p2: #fbbf24;
+    --p2-bg: rgba(251,191,36,0.1);
+    --done: #34d399;
+    --done-bg: rgba(52,211,153,0.1);
+    --pending: #818cf8;
+    --pending-bg: rgba(129,140,248,0.1);
+    --warn: #f97316;
+    --warn-bg: rgba(249,115,22,0.1);
+    --info: #38bdf8;
+    --info-bg: rgba(56,189,248,0.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:var(--surface); }
+  ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+  ::-webkit-scrollbar-thumb:hover { background:var(--border-hover); }
+
+  .header { background:var(--surface); border-bottom:1px solid var(--border); padding:24px 40px; position:sticky; top:0; z-index:100; backdrop-filter:blur(20px); }
+  .header-inner { max-width:1600px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .header-left { display:flex; align-items:center; gap:16px; }
+  .logo-mark { width:40px; height:40px; background:linear-gradient(135deg,var(--accent),#c084fc); border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff; }
+  .header h1 { font-size:20px; font-weight:700; letter-spacing:-0.3px; }
+  .header h1 span { color:var(--text-muted); font-weight:400; }
+  .pillar-badge { display:inline-flex; align-items:center; gap:6px; background:var(--accent-glow); border:1px solid rgba(129,140,248,0.3); color:var(--accent); padding:6px 14px; border-radius:8px; font-size:12px; font-weight:600; letter-spacing:0.3px; }
+
+  .stats-bar { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 40px; display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+  .stat-item { text-align:center; }
+  .stat-value { font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:700; color:var(--text); }
+  .stat-value.accent { color:var(--accent); }
+  .stat-value.warn { color:var(--warn); }
+  .stat-value.keep { color:var(--keep); }
+  .stat-value.delete { color:var(--delete); }
+  .stat-label { font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px; margin-top:4px; }
+
+  .main { max-width:1600px; margin:0 auto; padding:0 40px 60px; }
+
+  .tabs { display:flex; gap:4px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:4px; margin:24px 0; width:fit-content; flex-wrap:wrap; }
+  .tab { font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; padding:10px 20px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); cursor:pointer; transition:all .2s; }
+  .tab:hover { color:var(--text); }
+  .tab.active { background:var(--accent); color:#fff; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+
+  .health-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  .health-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; }
+  .health-card h4 { font-size:13px; font-weight:700; margin-bottom:10px; color:var(--accent); text-transform:uppercase; letter-spacing:0.5px; }
+  .health-card p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+  .health-card .highlight { color:var(--text); font-weight:600; }
+
+  .intent-callout { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:24px; border-left:3px solid var(--accent); }
+  .intent-callout h3 { font-size:14px; font-weight:700; margin-bottom:8px; color:var(--accent); }
+  .intent-callout p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+
+  .alert-box { background:rgba(248,113,113,0.05); border:1px solid rgba(248,113,113,0.2); border-radius:14px; padding:20px 24px; margin-bottom:24px; }
+  .alert-box h3 { font-size:14px; font-weight:700; margin-bottom:8px; color:var(--delete); }
+  .alert-box p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+
+  .star-box { background:rgba(129,140,248,0.04); border:1px solid rgba(129,140,248,0.2); border-radius:14px; padding:20px 24px; margin-bottom:24px; }
+  .star-box h3 { font-size:14px; font-weight:700; margin-bottom:8px; color:var(--accent); }
+  .star-box p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+  .star-box strong { color:var(--text); }
+
+  .info-box { background:rgba(56,189,248,0.04); border:1px solid rgba(56,189,248,0.2); border-radius:14px; padding:20px 24px; margin-bottom:24px; }
+  .info-box h3 { font-size:14px; font-weight:700; margin-bottom:8px; color:var(--info); }
+  .info-box p { font-size:13px; color:var(--text-muted); line-height:1.6; }
+  .info-box strong { color:var(--text); }
+
+  /* Section cards */
+  .section-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-bottom:16px; overflow:hidden; }
+  .section-header { padding:16px 24px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:16px; transition:background .15s; }
+  .section-header:hover { background:var(--surface-2); }
+  .section-title { font-size:14px; font-weight:700; flex:1; }
+  .section-badge { font-size:11px; font-weight:600; padding:3px 10px; border-radius:6px; white-space:nowrap; }
+  .section-badge.critical { background:var(--p1-bg); color:var(--p1); }
+  .section-badge.high { background:var(--warn-bg); color:var(--warn); }
+  .section-badge.done { background:var(--done-bg); color:var(--done); }
+  .section-badge.pending { background:var(--pending-bg); color:var(--pending); }
+  .section-badge.info { background:var(--info-bg); color:var(--info); }
+  .section-chevron { color:var(--text-dim); transition:transform .2s; font-size:18px; }
+  .section-card.open .section-chevron { transform:rotate(180deg); }
+  .section-body { padding:0 24px 20px; display:none; }
+  .section-card.open .section-body { display:block; }
+  .section-body p { font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:12px; }
+  .section-body p strong { color:var(--text); }
+  .section-body ul { list-style:none; padding:0; margin:0 0 12px 0; }
+  .section-body ul li { font-size:13px; color:var(--text-muted); padding:6px 0 6px 20px; position:relative; line-height:1.5; }
+  .section-body ul li::before { content:'→'; position:absolute; left:0; color:var(--accent); font-weight:600; }
+  .section-body .code-block { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:14px 18px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted); overflow-x:auto; margin:12px 0; line-height:1.7; white-space:pre-wrap; }
+
+  /* Gap / action items */
+  .gap-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:12px; }
+  .gap-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+  .gap-title { font-size:14px; font-weight:700; flex:1; min-width:200px; }
+  .gap-priority { font-size:10px; font-weight:700; padding:3px 10px; border-radius:6px; text-transform:uppercase; letter-spacing:0.5px; }
+  .gap-priority.p1 { background:var(--p1-bg); color:var(--p1); }
+  .gap-priority.p2 { background:var(--p2-bg); color:var(--p2); }
+  .gap-desc { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:10px; }
+  .gap-keywords { display:flex; gap:6px; flex-wrap:wrap; }
+  .gap-keyword { font-family:'JetBrains Mono',monospace; font-size:11px; background:var(--surface-3); color:var(--text-dim); padding:3px 8px; border-radius:4px; }
+
+  /* Comparison table */
+  .comp-table { width:100%; border-collapse:collapse; margin:16px 0; font-size:13px; }
+  .comp-table th { text-align:left; padding:10px 14px; background:var(--surface-2); color:var(--accent); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid var(--border); }
+  .comp-table td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--text-muted); vertical-align:top; }
+  .comp-table tr:hover td { background:var(--surface-2); }
+  .comp-table td:first-child { color:var(--text); font-weight:500; }
+  .comp-table .status-good { color:var(--keep); }
+  .comp-table .status-bad { color:var(--delete); }
+  .comp-table .status-warn { color:var(--warn); }
+
+  /* Checklist */
+  .checklist { list-style:none; padding:0; margin:0; }
+  .checklist li { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--text-muted); line-height:1.5; }
+  .checklist li:last-child { border-bottom:none; }
+  .check-box { width:18px; height:18px; min-width:18px; border:2px solid var(--border); border-radius:4px; margin-top:1px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; }
+  .check-box:hover { border-color:var(--accent); }
+  .check-box.checked { background:var(--accent); border-color:var(--accent); }
+  .check-box.checked::after { content:'✓'; color:#fff; font-size:11px; font-weight:700; }
+  .checklist li.checked-item { text-decoration:line-through; color:var(--text-dim); }
+
+  /* Timeline */
+  .timeline { position:relative; padding-left:28px; }
+  .timeline::before { content:''; position:absolute; left:8px; top:6px; bottom:6px; width:2px; background:var(--border); }
+  .timeline-item { position:relative; margin-bottom:20px; }
+  .timeline-dot { position:absolute; left:-24px; top:4px; width:12px; height:12px; border-radius:50%; border:2px solid var(--border); background:var(--bg); }
+  .timeline-item.month1 .timeline-dot { border-color:var(--p1); background:var(--p1); }
+  .timeline-item.month2 .timeline-dot { border-color:var(--warn); background:var(--warn); }
+  .timeline-item.month3 .timeline-dot { border-color:var(--keep); background:var(--keep); }
+  .timeline-month { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+  .timeline-item.month1 .timeline-month { color:var(--p1); }
+  .timeline-item.month2 .timeline-month { color:var(--warn); }
+  .timeline-item.month3 .timeline-month { color:var(--keep); }
+  .timeline-tasks { font-size:13px; color:var(--text-muted); line-height:1.7; }
+
+  /* LLMs.txt preview */
+  .llms-preview { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:20px 24px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-muted); line-height:1.7; max-height:500px; overflow-y:auto; margin:16px 0; white-space:pre-wrap; word-wrap:break-word; }
+  .llms-preview .llms-h1 { color:var(--accent); font-weight:700; font-size:16px; }
+  .llms-preview .llms-quote { color:var(--keep); font-style:italic; }
+  .llms-preview .llms-h2 { color:var(--warn); font-weight:600; font-size:13px; margin-top:12px; }
+  .llms-preview .llms-link { color:var(--info); }
+  .llms-preview .llms-comment { color:var(--text-dim); }
+
+  /* Diff */
+  .diff-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0; }
+  .diff-panel { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:16px 20px; }
+  .diff-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .diff-label.bad { color:var(--delete); }
+  .diff-label.good { color:var(--keep); }
+  .diff-content { font-size:12px; color:var(--text-muted); line-height:1.6; }
+
+  /* Schema example */
+  .schema-block { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin:12px 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-dim); line-height:1.6; overflow-x:auto; white-space:pre; }
+  .schema-block .key { color:var(--accent); }
+  .schema-block .str { color:var(--keep); }
+
+  @media (max-width:1100px) { .diff-grid { grid-template-columns:1fr; } }
+  @media (max-width:900px) {
+    .header { padding:16px 20px; }
+    .stats-bar { padding:16px 20px; grid-template-columns:repeat(3,1fr); }
+    .main { padding:0 20px 40px; }
+    .health-grid { grid-template-columns:1fr; }
+    .tabs { flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="logo-mark">S</div>
+      <div><h1>AEO & LLMs.txt Playbook <span>— Shipturtle</span></h1></div>
+    </div>
+    <div class="pillar-badge">AI Visibility Strategy · Feb 2026</div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-value delete">7,533</div><div class="stat-label">Lines in Old LLMs.txt</div></div>
+  <div class="stat-item"><div class="stat-value keep">~120</div><div class="stat-label">Lines in Fixed LLMs.txt</div></div>
+  <div class="stat-item"><div class="stat-value warn">8</div><div class="stat-label">P1 Content Gaps</div></div>
+  <div class="stat-item"><div class="stat-value accent">5</div><div class="stat-label">AEO Strategy Pillars</div></div>
+  <div class="stat-item"><div class="stat-value">90</div><div class="stat-label">Day Action Plan</div></div>
+</div>
+
+<div class="main">
+
+  <div class="tabs">
+    <button class="tab active" data-tab="llms">LLMs.txt Audit</button>
+    <button class="tab" data-tab="aeo">AEO Strategy</button>
+    <button class="tab" data-tab="gaps">Content Gaps</button>
+    <button class="tab" data-tab="schema">Schema Markup</button>
+    <button class="tab" data-tab="plan">90-Day Plan</button>
+    <button class="tab" data-tab="checklist">Page Checklist</button>
+  </div>
+
+  <!-- ═══════════════ TAB 1: LLMS.TXT AUDIT ═══════════════ -->
+  <div class="tab-content active" id="tab-llms">
+
+    <div class="alert-box">
+      <h3>⚠ Your Current LLMs.txt Is Not Spec-Compliant</h3>
+      <p>Your agency delivered a <strong>7,533-line raw website scrape</strong> — navigation menus, image CDN URLs, cookie banners, footer markup, duplicate testimonials, and JavaScript artifacts. The LLMs.txt specification requires a <strong>concise, curated markdown file</strong> of ~100-200 lines with structured links to your most important pages. The file you received would confuse AI systems rather than help them.</p>
+    </div>
+
+    <div class="health-grid">
+      <div class="health-card">
+        <h4>What LLMs.txt Actually Is</h4>
+        <p>A lightweight <span class="highlight">markdown file at yoursite.com/llms.txt</span> that follows a specific structure: an H1 with your brand name, a blockquote summary, and curated sections with links to your most important pages. Think of it as a <span class="highlight">librarian's recommended reading list</span> — not a complete catalogue of every page. Proposed by Jeremy Howard (Answer.AI) in September 2024.</p>
+      </div>
+      <div class="health-card">
+        <h4>Current Adoption Reality</h4>
+        <p><span class="highlight">844,000+ websites</span> have implemented LLMs.txt including Anthropic, Cloudflare, and Stripe. However, as of mid-2025, <span class="highlight">OpenAI, Google, and Anthropic have NOT implemented native support</span> in their primary AI products. Semrush testing found zero visits from GPTbot, PerplexityBot, or ClaudeBot. It's a <span class="highlight">low-risk future-proofing</span> move — not your primary AEO strategy.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--text);">Before vs After: Your LLMs.txt File</h3>
+
+    <div class="diff-grid">
+      <div class="diff-panel">
+        <div class="diff-label bad">✗ Agency's File (What You Had)</div>
+        <div class="diff-content" style="font-family:'JetBrains Mono',monospace; font-size:11px; max-height:300px; overflow-y:auto;">
+[**Docs**](https://www.shipturtle.com/kb)
+
+[![Shipturtle logo](https://cdn.prod.website-files...)]
+
+# Build a Marketplace on Shopify in minutes
+
+Launch a vibrant B2C, B2B, or C2C marketplace...
+
+[Book a Demo](https://www.shipturtle.com/#)
+[Install on 🛍️](https://www.shipturtle.com/#)
+
+[![](https://cdn.prod.website-files.com/669903...)]
+[![](https://cdn.prod.website-files.com/669903...)]
+[![](https://cdn.prod.website-files.com/669903...)]
+
+![](https://cdn.prod.website-files.com/669903...)
+
+[Marketplace] [Brand Partnership] [Shipping]
+
+... 7,500+ more lines of raw scrape ...
+        </div>
+      </div>
+      <div class="diff-panel">
+        <div class="diff-label good">✓ Corrected File (Spec-Compliant)</div>
+        <div class="diff-content" style="font-family:'JetBrains Mono',monospace; font-size:11px; max-height:300px; overflow-y:auto;">
+<span style="color:var(--accent); font-weight:700;"># Shipturtle</span>
+
+<span style="color:var(--keep); font-style:italic;">> Shipturtle is the #1 multi-vendor marketplace
+> app on Shopify. It enables businesses to launch
+> B2C, B2B, or C2C marketplace websites. 609+
+> marketplaces, 50K+ vendors, 50+ countries.</span>
+
+<span style="color:var(--warn); font-weight:600;">## Core Products</span>
+<span style="color:var(--info);">- [Marketplace Builder](...)</span>
+<span style="color:var(--info);">- [Brand Partnership](...)</span>
+<span style="color:var(--info);">- [Shipping & Fulfillment](...)</span>
+
+<span style="color:var(--warn); font-weight:600;">## Marketplace Types Supported</span>
+<span style="color:var(--info);">- [Multi-Vendor Guide](...)</span>
+<span style="color:var(--info);">- [B2B Marketplaces](...)</span>
+<span style="color:var(--info);">- [C2C Marketplaces](...)</span>
+
+<span style="color:var(--text-dim);">... ~120 lines total, organized by topic ...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="intent-callout" style="margin-top:24px;">
+      <h3>Update Frequency Guide</h3>
+      <p>Update your LLMs.txt whenever you make meaningful changes. For SaaS products like Shipturtle, that means: <strong>immediately</strong> for pricing changes or URL changes; <strong>within 1 week</strong> for new product launches or major features; <strong>monthly</strong> quick review for dead links; <strong>quarterly</strong> substantive update to add new high-value content and restructure sections. Total ongoing effort: ~30 minutes per quarter.</p>
+    </div>
+
+    <div class="info-box">
+      <h3>ℹ What About llms-full.txt?</h3>
+      <p>Some brands also create an expanded <strong>llms-full.txt</strong> that includes the actual content of key pages (not just links). This helps AI systems ingest your content in a single request. For Shipturtle, this is <strong>low priority</strong> — focus on deploying the standard llms.txt first, then the on-page AEO work (which delivers 10x more immediate impact), and create the full version in Q2 2026 if resources allow.</p>
+    </div>
+
+    <h3 style="font-size:16px; margin:24px 0 16px; color:var(--text);">Deployment Checklist</h3>
+    <table class="comp-table">
+      <thead><tr><th>Step</th><th>Action</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Upload corrected llms.txt to Webflow</td><td>Must be accessible at shipturtle.com/llms.txt</td></tr>
+        <tr><td>2</td><td>Verify file loads in browser</td><td>Should render as plain text/markdown — not HTML</td></tr>
+        <tr><td>3</td><td>Test with LLM</td><td>Ask ChatGPT or Claude to fetch shipturtle.com/llms.txt and verify it reads correctly</td></tr>
+        <tr><td>4</td><td>Add to robots.txt</td><td>Optional: Add <code>Allow: /llms.txt</code> to ensure no blocking</td></tr>
+        <tr><td>5</td><td>Set up quarterly calendar reminder</td><td>Review and update every 3 months</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════ TAB 2: AEO STRATEGY ═══════════════ -->
+  <div class="tab-content" id="tab-aeo">
+
+    <div class="star-box">
+      <h3>Why AEO Matters for Shipturtle Right Now</h3>
+      <p><strong>65% of Google searches now end without a click.</strong> AI Overviews are appearing in more results. Voice search continues growing. Your content needs to be <em>the answer</em>, not just a result. AEO is about making Shipturtle the source that ChatGPT, Perplexity, Google AI Overviews, and Gemini pull from when users ask about marketplaces, multi-vendor commerce, and Shopify marketplace apps.</p>
+    </div>
+
+    <!-- AEO PILLAR 1 -->
+    <div class="section-card open">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Pillar 1: Direct Answer Architecture</span>
+        <span class="section-badge critical">Highest Impact</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <p>Every key page must lead with a <strong>direct answer in the first 100 words</strong>. When someone asks "What is a multi-vendor marketplace?" — AI needs to find a clean, standalone answer immediately. No preamble, no setup, no marketing fluff.</p>
+
+        <p><strong>Current problem:</strong> Many Shipturtle pages open with vague intros, editorial-style titles (especially the geo-editorial pages), or marketing copy before reaching the actual answer.</p>
+
+        <p><strong>Required structure for every pillar page and top cluster blog:</strong></p>
+        <div class="code-block">## [Question as H2]
+
+[40-70 word direct answer — standalone, no preamble]
+
+[2-4 bullet summary list]
+
+[Real-world example or data point]
+
+[Expanded explanation in 2-3 short paragraphs]</div>
+
+        <p><strong>Example rewrite for "What is a Marketplace" page (#4):</strong></p>
+        <div class="code-block" style="border-left:3px solid var(--keep);">What is a Multi-Vendor Marketplace?
+
+A multi-vendor marketplace is an ecommerce platform where multiple
+independent sellers list and sell products or services through a
+single storefront. The marketplace operator manages the platform,
+handles payments, and coordinates fulfillment while vendors maintain
+their own inventory. Examples include Amazon, Etsy, and Airbnb.</div>
+        <p>This paragraph can be extracted by AI as-is. It answers the question completely in 47 words. No setup needed.</p>
+
+        <p><strong>Priority pages to apply this to (by impression volume):</strong></p>
+        <table class="comp-table">
+          <thead><tr><th>#</th><th>Page</th><th>Impressions</th><th>Conversions</th><th>Why Priority</th></tr></thead>
+          <tbody>
+            <tr><td>#19</td><td>30+ Multi-Vendor Marketplace Examples</td><td>262,318</td><td>7</td><td>Highest-traffic page in entire ecosystem</td></tr>
+            <tr><td>#7</td><td>C2C Marketplace Guide</td><td>112,541</td><td>7</td><td>Top performer — highest conversions for a type page</td></tr>
+            <tr><td>#62</td><td>Cost to Build a Marketplace</td><td>110,099</td><td>22</td><td>Highest-converting page across ALL content</td></tr>
+            <tr><td>#6</td><td>P2P Rental Marketplace</td><td>101,240</td><td>4</td><td>Core marketplace type with strong commercial intent</td></tr>
+            <tr><td>#53</td><td>B2B Marketplace Platform</td><td>86,613</td><td>0</td><td>Massive impressions, needs conversion optimization</td></tr>
+            <tr><td>#11</td><td>Service Marketplace Platform</td><td>69,885</td><td>0</td><td>Key type definition page</td></tr>
+            <tr><td>#4</td><td>What is a Marketplace</td><td>36,622</td><td>0</td><td>Canonical definition page — foundational for authority</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- AEO PILLAR 2 -->
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Pillar 2: FAQ Schema at Scale</span>
+        <span class="section-badge high">High Impact</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <p><strong>Every pillar page needs 5-8 FAQs. Every cluster blog needs 3-5 FAQs.</strong> These aren't just for Google's People Also Ask — they're the primary way AI systems extract Q&A pairs from your content.</p>
+
+        <p><strong>Rules for AEO-optimized FAQs:</strong></p>
+        <ul>
+          <li>Each answer must be <strong>40-60 words</strong> — standalone and complete</li>
+          <li><strong>No promotional language</strong> in answers (AI systems deprioritize marketing copy)</li>
+          <li>Use <strong>natural question phrasing</strong> (how users actually ask, not keyword-stuffed)</li>
+          <li>Include the answer <strong>in the first sentence</strong>, then expand</li>
+        </ul>
+
+        <p><strong>FAQ templates by pillar:</strong></p>
+
+        <table class="comp-table">
+          <thead><tr><th>Pillar</th><th>Example FAQs to Add</th></tr></thead>
+          <tbody>
+            <tr><td>Marketplace Types</td><td>What are the different types of online marketplaces? · What is the difference between B2B and B2C marketplaces? · How do C2C marketplaces make money? · What is a vertical vs horizontal marketplace? · How do rental marketplaces work?</td></tr>
+            <tr><td>How to Build</td><td>How much does it cost to build an online marketplace? · Can I build a marketplace without coding? · How long does it take to launch a multi-vendor marketplace? · What platform should I use? · What features does a marketplace need at launch?</td></tr>
+            <tr><td>Operations</td><td>How do marketplace vendor payouts work? · How do I onboard vendors? · What is a marketplace commission structure? · How do multi-vendor marketplaces handle shipping? · How do I automate order routing?</td></tr>
+            <tr><td>Platform</td><td>What is the best Shopify marketplace app? · How do I convert my Shopify store into a marketplace? · Can I sync products between multiple Shopify stores? · Shopify Collective vs third-party marketplace apps?</td></tr>
+            <tr><td>Industry</td><td>How to start a food marketplace? · What makes a fashion marketplace profitable? · How to build a service marketplace like Upwork? · What is the best platform for a rental marketplace?</td></tr>
+          </tbody>
+        </table>
+
+        <p>Every FAQ must also be wrapped in <strong>FAQ Schema (JSON-LD)</strong> — see the Schema Markup tab for implementation details.</p>
+      </div>
+    </div>
+
+    <!-- AEO PILLAR 3 -->
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Pillar 3: Comparison Content for AI Extraction</span>
+        <span class="section-badge high">High Impact</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <p>AI systems love comparison content because it directly answers "vs" and "which is better" queries. <strong>Your existing comparison pages have problems:</strong> 3 have URL-title mismatches (#189, #190, #191) and they're conversion-focused but lack the structured, neutral content AI prefers.</p>
+
+        <p><strong>Comparison content to build:</strong></p>
+        <table class="comp-table">
+          <thead><tr><th>Comparison</th><th>Format</th><th>Priority</th><th>Why It Matters</th></tr></thead>
+          <tbody>
+            <tr><td>Multi-vendor marketplace vs single-vendor store</td><td>Comparison table + 500 words</td><td class="status-bad">P1</td><td>Your #1 positioning argument — no page exists</td></tr>
+            <tr><td>Shopify Collective vs Shipturtle (in-depth blog)</td><td>2,500+ word blog post</td><td class="status-bad">P1</td><td>Vs landing page (113 clicks) exists but no deep AEO content</td></tr>
+            <tr><td>Custom-built vs SaaS marketplace</td><td>Decision framework</td><td class="status-bad">P1</td><td>Targets "build or buy" intent — #1 question founders ask</td></tr>
+            <tr><td>Horizontal vs vertical marketplace</td><td>Definition + table</td><td class="status-bad">P1</td><td>Missing foundational content for topical authority</td></tr>
+            <tr><td>Managed vs unmanaged marketplace</td><td>Comparison table</td><td class="status-warn">P2</td><td>No existing coverage — key evaluation criterion</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Key rule:</strong> Use HTML tables (not images) with clear column headers. AI systems parse these directly. Keep the tone analytical and neutral — marketing-heavy comparisons get deprioritized by AI.</p>
+      </div>
+    </div>
+
+    <!-- AEO PILLAR 4 -->
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Pillar 4: Entity & Topical Authority Building</span>
+        <span class="section-badge pending">Strategic</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <p>AI systems determine authority based on <strong>how comprehensively you cover a topic cluster</strong>, not just individual keywords. If your brand targets "multi-vendor marketplace" but ignores foundational related terms, AI won't consider you authoritative.</p>
+
+        <p><strong>Entity map Shipturtle must own:</strong></p>
+        <ul>
+          <li><strong>Core entity:</strong> multi-vendor marketplace, Shopify marketplace app, marketplace builder</li>
+          <li><strong>Type entities:</strong> B2B marketplace, B2C marketplace, C2C marketplace, service marketplace, rental marketplace</li>
+          <li><strong>Operations entities:</strong> vendor management, marketplace commission, vendor payouts, order fulfillment</li>
+          <li><strong>Comparison entities:</strong> marketplace vs ecommerce store, Shopify Collective vs alternatives, build vs buy marketplace</li>
+          <li><strong>Model entities:</strong> horizontal marketplace, vertical marketplace, managed marketplace, network effects</li>
+        </ul>
+
+        <p><strong>Critical gaps in your entity coverage</strong> (see Content Gaps tab for full details): You're missing definitional pages for B2B marketplace, C2C marketplace, horizontal vs vertical, and multi-vendor vs single-vendor — all foundational entities that AI references when evaluating topical authority.</p>
+      </div>
+    </div>
+
+    <!-- AEO PILLAR 5 -->
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Pillar 5: Content Structure for AI Extraction</span>
+        <span class="section-badge info">Ongoing</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <p>AI systems don't read pages top-to-bottom. They <strong>extract chunks</strong> — individual paragraphs, lists, tables, and definitions — and evaluate each chunk independently.</p>
+
+        <p><strong>6 rules for making every paragraph AI-extractable:</strong></p>
+        <table class="comp-table">
+          <thead><tr><th>#</th><th>Rule</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Each paragraph must be understandable on its own</td><td>No "as mentioned above" — each block is a complete thought</td></tr>
+            <tr><td>2</td><td>Short paragraphs only (2-4 lines max)</td><td>AI context windows are limited; shorter = easier to extract</td></tr>
+            <tr><td>3</td><td>H2/H3 headings should be the question or topic</td><td>First sentence under heading = the answer</td></tr>
+            <tr><td>4</td><td>No filler phrases</td><td>"In today's fast-paced digital landscape" adds zero information</td></tr>
+            <tr><td>5</td><td>Numbered steps for process content</td><td>AI extracts these as structured how-to answers</td></tr>
+            <tr><td>6</td><td>Specific data over generalities</td><td>"200+ carriers in 50+ countries" beats "comprehensive shipping solutions"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ TAB 3: CONTENT GAPS ═══════════════ -->
+  <div class="tab-content" id="tab-gaps">
+
+    <div class="intent-callout">
+      <h3>Why These Gaps Hurt Your AEO</h3>
+      <p>When an AI system evaluates which source to cite for "how to build a marketplace on Shopify," it considers <strong>topical authority</strong> — does this source comprehensively cover the marketplace topic? Missing foundational pages tell AI systems your coverage has gaps, making them <strong>less likely to cite you</strong> as the authoritative source. These 8 P1 gaps are the most damaging.</p>
+    </div>
+
+    <div id="gapsContainer"></div>
+  </div>
+
+  <!-- ═══════════════ TAB 4: SCHEMA MARKUP ═══════════════ -->
+  <div class="tab-content" id="tab-schema">
+
+    <div class="star-box">
+      <h3>Schema = Speaking AI's Native Language</h3>
+      <p>Schema markup is structured data that helps search engines and AI systems understand your content at a machine level. For Shipturtle, it's the difference between AI <em>guessing</em> your page is about marketplace payouts versus <em>knowing</em> it contains FAQ answers about commission structures. <strong>FAQ Schema alone can double your featured snippet wins.</strong></p>
+    </div>
+
+    <h3 style="font-size:16px; margin-bottom:16px; color:var(--text);">Priority Schema Types for Shipturtle</h3>
+
+    <table class="comp-table">
+      <thead><tr><th>Schema Type</th><th>Where to Apply</th><th>AEO Impact</th><th>Effort</th></tr></thead>
+      <tbody>
+        <tr><td>FAQ Schema</td><td>Every pillar page + top 20 cluster blogs</td><td class="status-good">Highest</td><td>30 min/page</td></tr>
+        <tr><td>HowTo Schema</td><td>All "How to Build" articles</td><td class="status-good">High</td><td>30 min/page</td></tr>
+        <tr><td>SoftwareApplication</td><td>Homepage, features page, pricing page</td><td class="status-good">High</td><td>1 hour total</td></tr>
+        <tr><td>Comparison/Table</td><td>All vs pages and comparison articles</td><td class="status-warn">Medium</td><td>20 min/page</td></tr>
+        <tr><td>Review Schema</td><td>Customer stories page</td><td class="status-warn">Medium</td><td>45 min total</td></tr>
+        <tr><td>Organization Schema</td><td>About page</td><td class="status-warn">Medium</td><td>30 min total</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">FAQ Schema Template (JSON-LD) — Copy & Customize</h3>
+
+    <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  <span class="key">"@context"</span>: <span class="str">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="str">"FAQPage"</span>,
+  <span class="key">"mainEntity"</span>: [
+    {
+      <span class="key">"@type"</span>: <span class="str">"Question"</span>,
+      <span class="key">"name"</span>: <span class="str">"What is a multi-vendor marketplace?"</span>,
+      <span class="key">"acceptedAnswer"</span>: {
+        <span class="key">"@type"</span>: <span class="str">"Answer"</span>,
+        <span class="key">"text"</span>: <span class="str">"A multi-vendor marketplace is an ecommerce platform
+         where multiple independent sellers list and sell products
+         or services through a single storefront. The marketplace
+         operator manages the platform while vendors maintain their
+         own inventory. Examples include Amazon, Etsy, and Airbnb."</span>
+      }
+    },
+    {
+      <span class="key">"@type"</span>: <span class="str">"Question"</span>,
+      <span class="key">"name"</span>: <span class="str">"How much does it cost to build an online marketplace?"</span>,
+      <span class="key">"acceptedAnswer"</span>: {
+        <span class="key">"@type"</span>: <span class="str">"Answer"</span>,
+        <span class="key">"text"</span>: <span class="str">"Building a marketplace costs between $5,000 and
+         $500,000+ depending on the approach. No-code platforms
+         like Shopify with Shipturtle start at under $500/month.
+         Custom development typically costs $50,000-$500,000+
+         with 6-12 months of development time."</span>
+      }
+    }
+  ]
+}
+&lt;/script&gt;</div>
+
+    <h3 style="font-size:16px; margin:24px 0 12px; color:var(--text);">SoftwareApplication Schema Template</h3>
+
+    <div class="schema-block">&lt;script type="application/ld+json"&gt;
+{
+  <span class="key">"@context"</span>: <span class="str">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="str">"SoftwareApplication"</span>,
+  <span class="key">"name"</span>: <span class="str">"Shipturtle"</span>,
+  <span class="key">"applicationCategory"</span>: <span class="str">"BusinessApplication"</span>,
+  <span class="key">"operatingSystem"</span>: <span class="str">"Web"</span>,
+  <span class="key">"description"</span>: <span class="str">"#1 multi-vendor marketplace app on Shopify.
+   Launch B2C, B2B, or C2C marketplaces with automated
+   vendor management, order routing, and 200+ carrier
+   integrations."</span>,
+  <span class="key">"offers"</span>: {
+    <span class="key">"@type"</span>: <span class="str">"Offer"</span>,
+    <span class="key">"price"</span>: <span class="str">"0"</span>,
+    <span class="key">"priceCurrency"</span>: <span class="str">"USD"</span>,
+    <span class="key">"description"</span>: <span class="str">"Free 14-day trial"</span>
+  },
+  <span class="key">"aggregateRating"</span>: {
+    <span class="key">"@type"</span>: <span class="str">"AggregateRating"</span>,
+    <span class="key">"ratingValue"</span>: <span class="str">"4.9"</span>,
+    <span class="key">"reviewCount"</span>: <span class="str">"150"</span>,
+    <span class="key">"bestRating"</span>: <span class="str">"5"</span>
+  }
+}
+&lt;/script&gt;</div>
+  </div>
+
+  <!-- ═══════════════ TAB 5: 90-DAY PLAN ═══════════════ -->
+  <div class="tab-content" id="tab-plan">
+
+    <div class="health-grid">
+      <div class="health-card">
+        <h4>Plan Philosophy</h4>
+        <p>Month 1 is <span class="highlight">foundation work</span> — deploy LLMs.txt, fix critical issues, and apply direct answer architecture to your highest-traffic pages. Month 2 is <span class="highlight">authority building</span> — create missing content gaps and add schema at scale. Month 3 is <span class="highlight">depth and measurement</span> — fill remaining gaps and start tracking AI visibility.</p>
+      </div>
+      <div class="health-card">
+        <h4>Expected Impact</h4>
+        <p>Featured snippet wins within <span class="highlight">4-8 weeks</span> of FAQ schema deployment. AI citation improvements within <span class="highlight">8-12 weeks</span> of content gap fills. Full topical authority signals within <span class="highlight">3-6 months</span> as the content cluster matures and accumulates backlinks.</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item month1">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month">Month 1 — Foundation</div>
+        <div class="timeline-tasks">
+          <ul class="checklist" id="month1Checklist">
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Deploy corrected LLMs.txt to shipturtle.com/llms.txt</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Fix URL-title mismatches on 3 comparison pages (#189, #190, #191)</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Add FAQ schema (JSON-LD) to top 5 performing pages (#19, #7, #6, #62, #53)</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Rewrite opening paragraphs of top 7 pages with direct answer architecture</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Create "How to Build a Marketplace on Shopify" page (P1 gap — most important missing page)</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Add SoftwareApplication schema to homepage, features, and pricing pages</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item month2">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month">Month 2 — Authority Building</div>
+        <div class="timeline-tasks">
+          <ul class="checklist" id="month2Checklist">
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Create "Best Shopify Multi-Vendor Marketplace Apps" roundup page</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Create "Horizontal vs Vertical Marketplace" comparison page</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Create "What is a B2B Marketplace?" definitional page</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Create "Multi-Vendor Marketplace vs Single-Vendor Store" comparison</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Add FAQ schema to next 10 highest-traffic pages</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Add HowTo schema to all "How to Build" pillar content</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item month3">
+        <div class="timeline-dot"></div>
+        <div class="timeline-month">Month 3 — Depth & Measurement</div>
+        <div class="timeline-tasks">
+          <ul class="checklist" id="month3Checklist">
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Create remaining P1 content gap pages (commission structures, marketplace analytics, C2C definition)</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Build comparison tables for all vs pages</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Add FAQ sections (5-8 questions) to all pillar pages that don't have them</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Audit AI visibility: search ChatGPT, Perplexity, and Google AI Overviews for target queries</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>First quarterly LLMs.txt update</li>
+            <li><div class="check-box" onclick="toggleCheck(this)"></div>Set up monthly AI visibility tracking (which AI tools mention Shipturtle)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ TAB 6: PER-PAGE CHECKLIST ═══════════════ -->
+  <div class="tab-content" id="tab-checklist">
+
+    <div class="intent-callout">
+      <h3>Use This Before Publishing Every Page</h3>
+      <p>This checklist ensures every new blog post, pillar page, or content update on Shipturtle is optimized for AI answer engines from day one. Share this with your content team and agency — every item is binary (yes/no) and takes less than 5 minutes to verify.</p>
+    </div>
+
+    <div class="section-card open">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Content Structure (Must-Have)</span>
+        <span class="section-badge critical">Required</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>First paragraph directly answers the page's primary question (40-70 words, standalone)</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Every section can be understood independently — no "as mentioned above" or "building on previous"</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>All paragraphs are 2-4 lines maximum</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>H2/H3 hierarchy matches natural question phrasing</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Numbered steps used for all process/how-to content</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>No filler phrases ("In today's fast-paced…", "It's no secret that…", "At the end of the day…")</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Specific data points and real-world examples included (not vague claims)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">FAQ & Schema (Must-Have)</span>
+        <span class="section-badge critical">Required</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Pillar pages have 5-8 FAQs; cluster blogs have 3-5 FAQs</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>FAQ answers are 40-60 words, standalone, non-promotional</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>FAQ Schema (JSON-LD) is added to the page markup</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>HowTo Schema added if the page contains step-by-step instructions</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Comparison tables use HTML (not images) with clear column headers</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Internal Linking (Must-Have)</span>
+        <span class="section-badge high">Required</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Links back to assigned pillar page</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Links laterally to 2-3 related cluster articles</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>If high-value page: added to LLMs.txt file</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Anchor text is descriptive (not "click here" or "read more")</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-title">Quality & E-E-A-T Signals (Should-Have)</span>
+        <span class="section-badge pending">Recommended</span>
+        <span class="section-chevron">▾</span>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Author attribution visible on the page</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Publish date and last-updated date visible</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>External citations or data sources linked where claims are made</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>No exaggerated or unsubstantiated claims</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Tone is analytical and neutral (especially for comparison content)</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Content is 1,500+ words for cluster blogs, 3,000+ for pillar pages</li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div>Title matches URL slug and meta title (no mismatches)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══ TAB SWITCHING ═══
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ═══ SECTION ACCORDION ═══
+function toggleSection(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+// ═══ CHECKBOX TOGGLE ═══
+function toggleCheck(box) {
+  box.classList.toggle('checked');
+  box.closest('li').classList.toggle('checked-item');
+}
+
+// ═══ CONTENT GAPS DATA ═══
+const contentGaps = [
+  {
+    title: "How to Build a Marketplace on Shopify: The Definitive Guide",
+    desc: "Arguably the single most important missing page for Shipturtle's entire SEO strategy. 'Build marketplace on Shopify' is Shipturtle's #1 commercial keyword. Currently NO page in any pillar directly targets this query. This should be a 3,500+ word guide covering: Shopify store setup → Shipturtle installation → vendor onboarding → product sync → order routing → launch checklist.",
+    keywords: ["how to build a marketplace on shopify", "shopify marketplace setup", "shopify multi vendor marketplace tutorial"],
+    priority: "p1"
+  },
+  {
+    title: "Best Shopify Multi-Vendor Marketplace Apps: Complete Guide",
+    desc: "Despite having individual app/tool pages, there is NO single definitive 'Shopify marketplace app' roundup page. People searching 'Shopify marketplace app' should land on Shipturtle content. This is the #1 missing commercial page for the Platform pillar.",
+    keywords: ["shopify marketplace app", "best shopify multi vendor app", "shopify multivendor marketplace app"],
+    priority: "p1"
+  },
+  {
+    title: "Horizontal vs Vertical Marketplace — Complete Comparison",
+    desc: "No page covers this fundamental marketplace classification. High search volume, core to topical authority. This is table-stakes content for a 'marketplace types' pillar — without it, AI systems see a gap in your foundational coverage.",
+    keywords: ["horizontal marketplace", "vertical marketplace", "horizontal vs vertical marketplace"],
+    priority: "p1"
+  },
+  {
+    title: "What is a B2B Marketplace? Definitive Guide",
+    desc: "B2B content is scattered across 3+ pages (#17, #29, #36) but no single definitional 'What is a B2B marketplace' page exists. This is a core marketplace type that needs its own canonical page for AI to reference.",
+    keywords: ["what is a b2b marketplace", "b2b marketplace meaning", "b2b marketplace examples"],
+    priority: "p1"
+  },
+  {
+    title: "Multi-Vendor Marketplace vs Single-Vendor Store",
+    desc: "Fundamental comparison missing from the entire content ecosystem. High commercial intent — directly supports Shipturtle's 'why marketplace > single store' positioning. This is the kind of page AI references when answering 'should I build a marketplace or an ecommerce store?'",
+    keywords: ["multi-vendor vs single vendor", "multivendor marketplace vs ecommerce store", "marketplace vs online store"],
+    priority: "p1"
+  },
+  {
+    title: "Complete Guide to Marketplace Commission Structures & Pricing Models",
+    desc: "Despite having 4 payment-related pages, no single definitive guide covers ALL commission models (percentage, fixed, tiered, subscription, listing fees, lead generation). This is a top-5 search query for marketplace operators.",
+    keywords: ["marketplace commission structure", "marketplace pricing model", "how to price marketplace commissions"],
+    priority: "p1"
+  },
+  {
+    title: "What is a C2C Marketplace? Types, Examples & How to Start",
+    desc: "The C2C Guide (#7 — 412 clicks, 7 conversions) targets building. No clean definitional page for 'what is a C2C marketplace' exists — a high-volume informational query that feeds into the building intent.",
+    keywords: ["what is a c2c marketplace", "c2c marketplace examples", "c2c vs b2c marketplace"],
+    priority: "p1"
+  },
+  {
+    title: "Marketplace Analytics: KPIs, Dashboards & Metrics That Matter",
+    desc: "Zero content on marketplace analytics. 'Marketplace KPIs' and 'marketplace metrics' are high-intent queries from operators trying to measure and optimize. This is a critical operations gap — and the kind of data-rich content AI systems love to cite.",
+    keywords: ["marketplace KPIs", "marketplace analytics dashboard", "marketplace metrics to track"],
+    priority: "p1"
+  },
+  {
+    title: "What is a Niche Marketplace? Benefits & Examples",
+    desc: "Niche/vertical marketplaces are a major trend. No dedicated content despite related coverage in Industry Marketplaces pillar. 35% of consumers now shop at niche marketplaces.",
+    keywords: ["niche marketplace", "niche marketplace examples", "how to build a niche marketplace"],
+    priority: "p2"
+  },
+  {
+    title: "Marketplace Network Effects — How to Build & Measure Them",
+    desc: "Core concept for marketplace strategy. 'Network effects' is the #1 reason marketplaces succeed or fail. AI systems reference this concept heavily when explaining marketplace dynamics. Currently missing from all Shipturtle content.",
+    keywords: ["marketplace network effects", "how to build network effects", "marketplace flywheel"],
+    priority: "p2"
+  },
+  {
+    title: "How to Handle Returns & Refunds in a Multi-Vendor Marketplace",
+    desc: "Returns/refunds are the #1 operational headache for marketplace operators. No existing content despite being a top FAQ. Should cover multi-vendor return policies, refund routing, and dispute resolution.",
+    keywords: ["marketplace returns policy", "multi-vendor refund process", "marketplace dispute resolution"],
+    priority: "p2"
+  },
+  {
+    title: "How to Build a Marketplace App (Mobile-First Guide)",
+    desc: "No content covers mobile marketplace development. Mobile commerce drives 73% of ecommerce sales globally. 'Marketplace app development' is a high-volume keyword with zero Shipturtle coverage.",
+    keywords: ["how to build a marketplace app", "marketplace app development", "mobile marketplace platform"],
+    priority: "p2"
+  }
+];
+
+// ═══ RENDER CONTENT GAPS ═══
+const gapsContainer = document.getElementById('gapsContainer');
+contentGaps.forEach(gap => {
+  const card = document.createElement('div');
+  card.className = 'gap-card';
+  card.innerHTML = `
+    <div class="gap-header">
+      <div class="gap-title">${gap.title}</div>
+      <div class="gap-priority ${gap.priority}">${gap.priority === 'p1' ? '● P1 — Critical' : '● P2 — Important'}</div>
+    </div>
+    <div class="gap-desc">${gap.desc}</div>
+    <div class="gap-keywords">${gap.keywords.map(k => `<span class="gap-keyword">${k}</span>`).join('')}</div>
+  `;
+  gapsContainer.appendChild(card);
+});
+</script>
+
+</body>
+</html>
