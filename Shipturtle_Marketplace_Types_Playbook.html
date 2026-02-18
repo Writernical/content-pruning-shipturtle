@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — Marketplace Types Pillar: Complete Child Page Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e14;
+  --surface: #141722;
+  --surface2: #1a1f2e;
+  --surface3: #222840;
+  --border: #2a3050;
+  --text: #e0e4f0;
+  --text2: #8b93b0;
+  --text3: #5a6380;
+  --accent: #6c9fff;
+  --accent2: #a78bfa;
+  --green: #34d399;
+  --green-dim: rgba(52,211,153,0.12);
+  --yellow: #fbbf24;
+  --yellow-dim: rgba(251,191,36,0.12);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.12);
+  --orange: #fb923c;
+  --orange-dim: rgba(251,146,60,0.12);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.12);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.12);
+  --keep: #34d399;
+  --merge: #fbbf24;
+  --rewrite: #60a5fa;
+  --redirect: #f87171;
+  --repillar: #a78bfa;
+  --font: 'DM Sans', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:var(--font); line-height:1.6; }
+::selection { background:var(--accent); color:#000; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #141722 0%, #1a1040 50%, #141722 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 40px 40px;
+}
+.header-inner { max-width:1400px; margin:0 auto; }
+.header-top { display:flex; align-items:center; gap:16px; margin-bottom:8px; }
+.header-badge {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color:#000; font-weight:700; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:4px 12px; border-radius:4px;
+}
+.header h1 {
+  font-size:clamp(28px,4vw,42px); font-weight:700; letter-spacing:-0.5px;
+  background:linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.header-sub { color:var(--text2); font-size:15px; margin-top:8px; max-width:800px; }
+.pillar-url {
+  display:inline-block; margin-top:16px; font-family:var(--mono); font-size:13px;
+  background:var(--surface); border:1px solid var(--border); border-radius:6px;
+  padding:8px 16px; color:var(--accent);
+}
+
+/* STATS BAR */
+.stats-bar {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+  gap:12px; max-width:1400px; margin:24px auto; padding:0 40px;
+}
+.stat-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:10px;
+  padding:16px 20px; text-align:center;
+}
+.stat-card .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--text3); margin-bottom:4px; }
+.stat-card .value { font-size:28px; font-weight:700; color:var(--text); }
+.stat-card .sub { font-size:11px; color:var(--text3); margin-top:2px; }
+.stat-card.keep .value { color:var(--keep); }
+.stat-card.merge .value { color:var(--merge); }
+.stat-card.rewrite .value { color:var(--rewrite); }
+.stat-card.redirect .value { color:var(--redirect); }
+.stat-card.repillar .value { color:var(--purple); }
+
+/* NAV & FILTERS */
+.controls {
+  max-width:1400px; margin:0 auto; padding:20px 40px;
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  position:sticky; top:0; z-index:100; background:var(--bg);
+  border-bottom:1px solid var(--border);
+}
+.controls .label { font-size:12px; color:var(--text3); text-transform:uppercase; letter-spacing:1px; margin-right:4px; }
+.filter-btn {
+  background:var(--surface); border:1px solid var(--border); color:var(--text2);
+  padding:6px 14px; border-radius:6px; font-size:13px; font-family:var(--font);
+  cursor:pointer; transition:all 0.15s;
+}
+.filter-btn:hover { border-color:var(--accent); color:var(--text); }
+.filter-btn.active { background:var(--accent); color:#000; border-color:var(--accent); font-weight:600; }
+.filter-btn.keep.active { background:var(--keep); }
+.filter-btn.merge.active { background:var(--merge); }
+.filter-btn.rewrite.active { background:var(--rewrite); }
+.filter-btn.redirect.active { background:var(--redirect); }
+.filter-btn.repillar.active { background:var(--purple); }
+.search-box {
+  margin-left:auto; background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:6px 14px; color:var(--text); font-size:13px;
+  font-family:var(--font); width:240px; outline:none; transition:border-color 0.15s;
+}
+.search-box:focus { border-color:var(--accent); }
+.search-box::placeholder { color:var(--text3); }
+
+/* TAB NAV */
+.tab-nav {
+  max-width:1400px; margin:0 auto; padding:0 40px;
+  display:flex; gap:0; border-bottom:1px solid var(--border);
+}
+.tab-btn {
+  padding:14px 24px; font-size:14px; font-weight:500; color:var(--text2);
+  background:transparent; border:none; cursor:pointer; font-family:var(--font);
+  border-bottom:2px solid transparent; transition:all 0.15s;
+}
+.tab-btn:hover { color:var(--text); }
+.tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* MAIN */
+.main { max-width:1400px; margin:0 auto; padding:24px 40px 80px; }
+
+/* PAGE CARDS */
+.page-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  margin-bottom:16px; overflow:hidden; transition:border-color 0.2s;
+}
+.page-card:hover { border-color:var(--accent); }
+.page-card-header {
+  display:flex; align-items:center; gap:12px; padding:16px 20px;
+  cursor:pointer; user-select:none;
+}
+.page-id {
+  font-family:var(--mono); font-size:12px; color:var(--text3);
+  background:var(--surface2); border-radius:4px; padding:2px 8px; min-width:32px; text-align:center;
+}
+.page-title { font-weight:600; font-size:15px; flex:1; }
+.page-metrics { display:flex; gap:16px; font-size:13px; }
+.page-metrics span { display:flex; align-items:center; gap:4px; }
+.metric-clicks { color:var(--accent); }
+.metric-imp { color:var(--text2); }
+.metric-conv { color:var(--green); }
+.action-badge {
+  font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
+  padding:4px 10px; border-radius:4px;
+}
+.action-badge.keep { background:var(--green-dim); color:var(--keep); }
+.action-badge.merge { background:var(--yellow-dim); color:var(--merge); }
+.action-badge.rewrite { background:var(--blue-dim); color:var(--rewrite); }
+.action-badge.redirect { background:var(--red-dim); color:var(--redirect); }
+.action-badge.repillar { background:var(--purple-dim); color:var(--purple); }
+.chevron { color:var(--text3); transition:transform 0.2s; font-size:18px; }
+.chevron.open { transform:rotate(180deg); }
+
+/* EXPANDED DETAIL */
+.page-detail { display:none; padding:0 20px 24px; }
+.page-detail.open { display:block; }
+.detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media(max-width:900px){ .detail-grid { grid-template-columns:1fr; } }
+
+.detail-section {
+  background:var(--surface2); border:1px solid var(--border); border-radius:8px;
+  padding:16px; break-inside:avoid;
+}
+.detail-section h3 {
+  font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--accent);
+  margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border);
+}
+.detail-section h4 {
+  font-size:13px; font-weight:600; color:var(--text); margin:12px 0 6px;
+}
+.detail-section p, .detail-section li {
+  font-size:13px; color:var(--text2); line-height:1.7;
+}
+.detail-section ul { padding-left:16px; }
+.detail-section li { margin-bottom:4px; }
+.detail-section code {
+  font-family:var(--mono); font-size:12px; background:var(--surface3);
+  padding:1px 6px; border-radius:3px; color:var(--accent);
+}
+.full-width { grid-column:1 / -1; }
+
+/* URL ROW */
+.url-row {
+  font-family:var(--mono); font-size:12px; color:var(--text3); padding:0 20px 12px;
+}
+
+/* LINK TABLE */
+.link-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:8px; }
+.link-table th {
+  text-align:left; padding:6px 8px; border-bottom:1px solid var(--border);
+  color:var(--text3); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;
+}
+.link-table td { padding:6px 8px; border-bottom:1px solid rgba(42,48,80,0.4); color:var(--text2); }
+.link-table tr:last-child td { border-bottom:none; }
+.link-table .anchor { color:var(--green); font-family:var(--mono); font-size:11px; }
+
+/* CONTENT TEMPLATE */
+.template-section {
+  background:var(--surface3); border-left:3px solid var(--accent);
+  padding:12px 16px; border-radius:0 6px 6px 0; margin:8px 0;
+}
+.template-section .section-label {
+  font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase;
+  letter-spacing:0.8px; margin-bottom:4px;
+}
+.template-section .section-content { font-size:12px; color:var(--text2); line-height:1.6; }
+.template-section .word-count {
+  display:inline-block; font-family:var(--mono); font-size:10px; color:var(--text3);
+  background:var(--surface); padding:1px 6px; border-radius:3px; margin-left:8px;
+}
+
+/* LINK MAP VIZ */
+.link-map {
+  background:var(--bg); border:1px solid var(--border); border-radius:8px;
+  padding:16px; font-family:var(--mono); font-size:11px; color:var(--text3);
+  white-space:pre; overflow-x:auto; line-height:1.5;
+}
+.link-map .pillar { color:var(--accent2); font-weight:600; }
+.link-map .self { color:var(--accent); font-weight:600; }
+.link-map .sibling { color:var(--green); }
+.link-map .arrow { color:var(--text3); }
+
+/* SCHEMA BADGES */
+.schema-badges { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.schema-badge {
+  font-size:10px; font-weight:600; padding:3px 8px; border-radius:4px;
+  background:var(--surface3); color:var(--text2); border:1px solid var(--border);
+}
+
+/* LINK MAP SECTION */
+.visual-map {
+  max-width:1400px; margin:0 auto; padding:24px 40px;
+}
+.map-container {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  padding:32px; overflow-x:auto;
+}
+
+/* CLUSTER GROUPS */
+.cluster-group {
+  background:var(--surface); border:1px solid var(--border); border-radius:12px;
+  margin-bottom:16px; padding:20px;
+}
+.cluster-title { font-size:16px; font-weight:700; margin-bottom:4px; }
+.cluster-sub { font-size:13px; color:var(--text2); margin-bottom:16px; }
+.cluster-pages { display:flex; flex-wrap:wrap; gap:8px; }
+.cluster-page {
+  background:var(--surface2); border:1px solid var(--border); border-radius:6px;
+  padding:8px 12px; font-size:12px;
+}
+.cluster-page .cp-id { font-family:var(--mono); color:var(--text3); }
+.cluster-page .cp-title { color:var(--text); margin-left:4px; }
+.cluster-page .cp-clicks { color:var(--accent); font-family:var(--mono); font-size:11px; margin-left:8px; }
+
+/* PRINT */
+@media print {
+  .controls, .tab-nav { display:none; }
+  .page-detail { display:block !important; }
+  body { background:#fff; color:#111; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <span class="header-badge">Pillar Playbook</span>
+      <span class="header-badge" style="background:linear-gradient(135deg,#6c9fff,#a78bfa);">Marketplace Types</span>
+    </div>
+    <h1>Child Page Content &amp; Linking Playbook</h1>
+    <p class="header-sub">Complete content templates, internal linking architecture, schema requirements, and rewrite briefs for all 50 child pages under the Marketplace Types pillar. Every page has a detailed action plan — expand any card to see the full brief.</p>
+    <div class="pillar-url">PILLAR → /blog/types-of-online-marketplaces</div>
+  </div>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="pages">All Pages</button>
+  <button class="tab-btn" data-tab="clusters">Sub-Category Clusters</button>
+  <button class="tab-btn" data-tab="linkmap">Pillar Link Map</button>
+  <button class="tab-btn" data-tab="checklist">Master Checklist</button>
+</div>
+
+<div class="controls" id="controls">
+  <span class="label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All (50)</button>
+  <button class="filter-btn" data-filter="keep" style="--c:var(--keep)">Keep</button>
+  <button class="filter-btn" data-filter="rewrite" style="--c:var(--rewrite)">Rewrite</button>
+  <button class="filter-btn" data-filter="merge" style="--c:var(--merge)">Merge</button>
+  <button class="filter-btn" data-filter="redirect" style="--c:var(--redirect)">Redirect</button>
+  <button class="filter-btn" data-filter="repillar" style="--c:var(--repillar)">Re-Pillar</button>
+  <input type="text" class="search-box" id="searchBox" placeholder="Search pages...">
+</div>
+
+<div class="main">
+  <div class="tab-content active" id="tab-pages">
+    <a href="Shipturtle_SEO_Command_Center_v2.html" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none">← Back to Command Center</a>
+  <div id="pageList"></div>
+  </div>
+  <div class="tab-content" id="tab-clusters"></div>
+  <div class="tab-content" id="tab-linkmap"></div>
+  <div class="tab-content" id="tab-checklist"></div>
+</div>
+
+<script>
+// ───── DATA ─────
+const PILLAR = { url:"/blog/types-of-online-marketplaces", title:"Types of Online Marketplaces" };
+
+const pages = [
+  {id:1, title:"What Is a Multi-Vendor Marketplace? A Beginner's Guide", url:"blog/what-is-a-multi-vendor-marketplace", clicks:40, impressions:30611, conv:0, subcat:"Definition", action:"merge", intent:"valid",
+    reason:"Strong impressions but cannibalizes #2, #3, #4. Merge the 'multi-vendor' specific definitions and unique content into #4 (the broadest definition page). Redirect this URL → #4.",
+    mergeTarget:"→ Merge into #4",
+    newTitle:null,
+    targetWords:null,
+    contentTemplate:[
+      {h:"N/A — Content absorbed into #4", words:null, detail:"Merge unique 'multi-vendor marketplace' specific definitions into #4. Preserve the multi-vendor angle as a dedicated H2 section. 301 redirect after merge."}
+    ],
+    linksTo:[{id:4, anchor:"what is a marketplace", context:"Redirect destination"}],
+    linksFrom:[],
+    schemas:[],
+    pillarLinks:0,
+    siblingLinks:[]
+  },
+  {id:2, title:"What Does Multivendor Marketplace Mean: A Beginner's Guide", url:"blog/what-does-multivendor-marketplace-mean", clicks:5, impressions:13385, conv:0, subcat:"Definition", action:"redirect", intent:"valid",
+    reason:"Near-identical intent to #1 and #4. Lowest clicks in the cluster. The 'multivendor marketplace meaning' query is fully answered by #4. 301 redirect.",
+    mergeTarget:"→ 301 to #4",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — 301 Redirect to #4", words:null, detail:"No content needed. Implement 301 redirect immediately."}],
+    linksTo:[{id:4, anchor:"N/A", context:"Redirect target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:3, title:"What Is an Online Marketplace? Definition, Functionality, and Examples", url:"blog/what-is-an-online-marketplace", clicks:5, impressions:10928, conv:0, subcat:"Definition", action:"redirect", intent:"valid",
+    reason:"Overlaps with #4. Low CTR (0.05%). Fold unique 'examples' section into #4 or into #19 (examples page), then redirect.",
+    mergeTarget:"→ 301 to #4",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — 301 Redirect to #4", words:null, detail:"Fold examples content into #19 or #4 before redirecting."}],
+    linksTo:[{id:4, anchor:"N/A", context:"Redirect target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:4, title:"What is a Marketplace? A Complete Guide for eCommerce Store Owners", url:"blog/what-is-a-marketplace", clicks:32, impressions:36622, conv:0, subcat:"Definition", action:"keep", intent:"valid",
+    reason:"Highest impressions in definition cluster. Broadest keyword scope. Designate as the canonical 'what is a marketplace' page. Absorb content from #1, #2, #3. Rewrite to 3,500+ words with FAQ schema, comparison table, and real-world examples.",
+    mergeTarget:null,
+    newTitle:"What Is a Marketplace? The Complete Guide [2026]",
+    targetWords:"3,500–4,000",
+    contentTemplate:[
+      {h:"H2: What Is a Marketplace? (Definition)", words:"200–250", detail:"Direct 50-word definition block (AEO target). Then expanded explanation with real examples (Amazon, Etsy, Airbnb). Mention the multi-vendor model specifically — absorb from #1."},
+      {h:"H2: How Does a Marketplace Work?", words:"300–400", detail:"Three-sided model explanation: marketplace operator, vendors, buyers. Visual flow if possible. Link to business models (#24)."},
+      {h:"H2: Types of Marketplaces", words:"500–600", detail:"Overview of B2C, C2C, B2B, P2P rental, service, hyperlocal. Each gets H3 with 60-word definition + link to dedicated type page. THIS IS THE KEY PILLAR-LINKING SECTION."},
+      {h:"H2: Marketplace vs. Traditional Ecommerce", words:"250–300", detail:"Comparison table (AEO target). Link to #30 (marketplace vs D2C)."},
+      {h:"H2: Benefits of the Marketplace Model", words:"300–350", detail:"Lower inventory risk, faster scaling, network effects. Link to #35 (scaling two-sided marketplace)."},
+      {h:"H2: Real-World Marketplace Examples", words:"300–350", detail:"5–8 examples across types. Link to #19 (30+ examples page)."},
+      {h:"H2: How to Start a Marketplace", words:"200–250", detail:"Brief overview with link to How to Build pillar. Soft Shipturtle CTA."},
+      {h:"H2: FAQ (8 questions)", words:"400–500", detail:"'What is a marketplace?', 'What is a multi-vendor marketplace?', 'How do marketplaces make money?', 'What are the types of marketplaces?', 'Marketplace vs ecommerce store?', 'What is the biggest marketplace?', 'How to build a marketplace?', 'What is a marketplace platform?'"}
+    ],
+    linksTo:[],
+    linksFrom:[{id:1, note:"Absorb + redirect"},{id:2, note:"Redirect"},{id:3, note:"Redirect"}],
+    schemas:["FAQ Schema","Article Schema","Speakable Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:19, anchor:"multi-vendor marketplace examples", section:"Examples section"},
+      {id:24, anchor:"marketplace business models", section:"How marketplaces work"},
+      {id:7, anchor:"C2C marketplace guide", section:"Types section — C2C"},
+      {id:6, anchor:"P2P rental marketplace", section:"Types section — P2P"},
+      {id:11, anchor:"service marketplace platform", section:"Types section — Service"},
+      {id:30, anchor:"marketplace vs D2C", section:"Comparison section"},
+      {id:35, anchor:"scaling a two-sided marketplace", section:"Benefits section"}
+    ]
+  },
+  {id:5, title:"What Is a Marketplace Development Solution?", url:"blog/what-is-a-marketplace-development-solution-and-why-you-shouldnt-build-from-scratch", clicks:7, impressions:9290, conv:0, subcat:"Definition", action:"repillar", intent:"valid",
+    reason:"Intent is about build methodology, not marketplace types. Better fit under 'How to Build' pillar where the same URL is already assigned (S No 63). Deduplicate and consolidate there.",
+    mergeTarget:"→ Move to How to Build pillar",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — Re-pillar to How to Build", words:null, detail:"Remove from Marketplace Types internal linking. Consolidate under How to Build pillar."}],
+    linksTo:[], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:6, title:"All You Can Know: Peer-to-Peer (P2P) Rental Marketplace Platform", url:"blog/peer-to-peer-rental-marketplace", clicks:400, impressions:101240, conv:4, subcat:"Type: P2P/Rental", action:"keep", intent:"valid",
+    reason:"High-performing asset. 400 clicks, 4 conversions, 101K impressions. Core marketplace type content. Refresh with 2026 examples, add FAQ schema, and strengthen links to rental clone page (#49).",
+    mergeTarget:null,
+    newTitle:"P2P Rental Marketplace: How It Works, Examples & How to Build One [2026]",
+    targetWords:"3,000–3,500",
+    contentTemplate:[
+      {h:"H2: What Is a P2P Rental Marketplace?", words:"200–250", detail:"Direct 50-word definition (AEO). Explain the peer-to-peer rental model. Real examples: Airbnb, Fat Llama, Turo."},
+      {h:"H2: How P2P Rental Marketplaces Work", words:"300–350", detail:"Three-party flow: owner → platform → renter. Revenue model (commission per booking). Trust mechanisms (reviews, insurance, deposits)."},
+      {h:"H2: Types of P2P Rental Marketplaces", words:"400–500", detail:"H3s for: Property/accommodation, Vehicle, Equipment, Fashion, Storage, Experience. Each with examples. Link to relevant Industry Marketplace pages."},
+      {h:"H2: P2P Rental Marketplace Statistics", words:"200–250", detail:"Market size, growth rates, sharing economy data. Link to #25 (statistics page)."},
+      {h:"H2: Key Features for a Rental Marketplace", words:"300–350", detail:"Booking calendar, availability management, security deposits, insurance integration, review system. Link to Marketplace Ops pillar."},
+      {h:"H2: How to Build a P2P Rental Marketplace", words:"250–300", detail:"Brief steps with link to How to Build pillar. Airbnb clone CTA linking to #49."},
+      {h:"H2: P2P Rental vs. Traditional Rental Business", words:"200–250", detail:"Comparison table (AEO target)."},
+      {h:"H2: FAQ (6 questions)", words:"300–360", detail:"'What is a P2P rental marketplace?', 'How do rental marketplaces make money?', 'Best P2P rental marketplace examples?', 'How to start a rental marketplace?', 'P2P rental vs traditional rental?', 'What features does a rental marketplace need?'"}
+    ],
+    linksTo:[],
+    linksFrom:[{id:49,note:"Airbnb clone links here"},{id:13,note:"Rental software links here"}],
+    schemas:["FAQ Schema","Article Schema","How-To Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:49, anchor:"Airbnb clone", section:"Build section"},
+      {id:19, anchor:"marketplace examples", section:"Examples/intro"},
+      {id:25, anchor:"marketplace statistics", section:"Statistics section"},
+      {id:24, anchor:"marketplace business models", section:"Revenue model section"},
+      {id:13, anchor:"rental marketplace software", section:"Features section"}
+    ]
+  },
+  {id:7, title:"C2C Marketplace Guide: Building on Shopify and Other Ecommerce Platform", url:"blog/c2c-marketplace-guide", clicks:412, impressions:112541, conv:7, subcat:"Type: C2C", action:"keep", intent:"valid",
+    reason:"TOP PERFORMER — highest clicks (412) and conversions (7). Protect and expand. Add comparison table vs B2C/B2B. Strengthen internal links to C2C monetization (#22) and Vinted/Poshmark clone pages.",
+    mergeTarget:null,
+    newTitle:"C2C Marketplace Guide: What It Is, Examples & How to Build One [2026]",
+    targetWords:"3,500–4,000",
+    contentTemplate:[
+      {h:"H2: What Is a C2C Marketplace?", words:"200–250", detail:"Direct 50-word definition (AEO). Consumer-to-consumer model. Examples: eBay, Poshmark, Vinted, Facebook Marketplace."},
+      {h:"H2: How C2C Marketplaces Work", words:"300–350", detail:"Seller-to-buyer flow, platform's role, trust mechanisms, payment escrow. Link to business models (#24)."},
+      {h:"H2: C2C vs B2C vs B2B Marketplaces", words:"250–300", detail:"Comparison table (AEO). Link to #31 (B2B vs C2C). Link to pillar for full types overview."},
+      {h:"H2: C2C Marketplace Examples", words:"300–400", detail:"8–10 examples with brief descriptions. Link to #19 (examples page) and clone pages (#43 Poshmark, #48 Vinted)."},
+      {h:"H2: C2C Marketplace Revenue Models", words:"250–300", detail:"Commission, listing fees, featured listings, premium sellers. Absorb content from merged #22."},
+      {h:"H2: How to Build a C2C Marketplace on Shopify", words:"350–400", detail:"Step-by-step with Shipturtle. Include seller onboarding, product listing, payment split. Soft CTA."},
+      {h:"H2: Key Features for C2C Marketplaces", words:"250–300", detail:"User verification, reviews, messaging, dispute resolution, shipping labels."},
+      {h:"H2: FAQ (7 questions)", words:"350–420", detail:"Standalone answers. Include 'What is C2C?', 'C2C vs B2C?', 'Best C2C platforms?', 'How to make money on C2C?', 'How to build C2C on Shopify?', 'Is eBay a C2C marketplace?', 'C2C marketplace trust safety?'"}
+    ],
+    linksTo:[],
+    linksFrom:[{id:22,note:"Merge C2C monetization"},{id:43,note:"Poshmark clone"},{id:48,note:"Vinted clone"}],
+    schemas:["FAQ Schema","Article Schema","How-To Schema","Comparison Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:43, anchor:"Poshmark clone", section:"Examples"},
+      {id:48, anchor:"Vinted clone", section:"Examples"},
+      {id:19, anchor:"marketplace examples", section:"Examples"},
+      {id:31, anchor:"B2B vs C2C comparison", section:"Comparison"},
+      {id:24, anchor:"marketplace business models", section:"Revenue models"},
+      {id:25, anchor:"marketplace statistics", section:"Intro/stats"}
+    ]
+  },
+  {id:8, title:"The Rise Of Online Barter Exchange: How To Launch A Barter Marketplace", url:"blog/launch-a-barter-marketplace", clicks:58, impressions:14073, conv:1, subcat:"Type: Niche", action:"keep", intent:"valid",
+    reason:"Unique niche angle, 58 clicks, 1 conversion. 'Barter marketplace' has no competition. Refresh with modern barter/swap platform examples. Link to C2C guide (#7).",
+    mergeTarget:null, newTitle:"How to Launch a Barter Marketplace: The Complete Guide [2026]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: What Is a Barter Marketplace?", words:"150–200", detail:"Definition + how barter differs from C2C selling. Real examples."},
+      {h:"H2: How Barter Marketplaces Work", words:"250–300", detail:"Credit systems, direct swap, value matching. Revenue model."},
+      {h:"H2: Barter Marketplace Examples", words:"200–250", detail:"Modern swap platforms. Link to #19."},
+      {h:"H2: How to Build a Barter Marketplace", words:"300–350", detail:"Key features: item valuation, matching algorithm, swap logistics. Shipturtle angle."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Definition, legality, monetization, examples, build guide."}
+    ],
+    linksTo:[], linksFrom:[], schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:7, anchor:"C2C marketplace guide", section:"Comparison to C2C"},{id:19, anchor:"marketplace examples", section:"Examples"},{id:15, anchor:"used goods marketplace", section:"Related type"}]
+  },
+  {id:9, title:"Service Marketplaces Move Fast and Booking Infrastructure Needs to Move Even Faster", url:"blog/scale-multivendor-service-booking-marketplace", clicks:2, impressions:68, conv:0, subcat:"Type: Service", action:"merge", intent:"valid",
+    reason:"Editorial title fails search intent. Only 68 impressions. Booking infrastructure content → merge into #11 as a dedicated section.",
+    mergeTarget:"→ Merge into #11",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — Merge booking content into #11", words:null, detail:"Extract the booking infrastructure angle and add as H2 section within #11: 'Booking & Scheduling Infrastructure for Service Marketplaces'. 301 redirect."}],
+    linksTo:[{id:11, anchor:"N/A", context:"Merge target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:10, title:"Building a Hyperlocal Marketplace with Near Me Delivery or Pickup", url:"blog/hyperlocal-marketplace-on-shopify", clicks:64, impressions:33090, conv:0, subcat:"Type: Hyperlocal", action:"keep", intent:"valid",
+    reason:"Solid performer — 64 clicks, 33K impressions. 'Hyperlocal marketplace' is a growing search term. Refresh with 2026 examples, add delivery logistics detail. Link to #14.",
+    mergeTarget:null, newTitle:"How to Build a Hyperlocal Marketplace on Shopify [2026 Guide]", targetWords:"2,800–3,200",
+    contentTemplate:[
+      {h:"H2: What Is a Hyperlocal Marketplace?", words:"150–200", detail:"Definition (AEO). Near-me delivery/pickup model. Examples: Instacart, DoorDash, local artisan platforms."},
+      {h:"H2: How Hyperlocal Marketplaces Work", words:"250–300", detail:"Geo-fencing, local vendor onboarding, last-mile delivery, pickup scheduling."},
+      {h:"H2: Benefits of the Hyperlocal Model", words:"200–250", detail:"Lower delivery costs, faster fulfillment, community loyalty. Data points."},
+      {h:"H2: How to Build a Hyperlocal Marketplace on Shopify", words:"400–500", detail:"Step-by-step with Shipturtle. Location-based vendor assignment, delivery zone setup, real-time tracking."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Definition, examples, cost, Shopify setup, delivery management."}
+    ],
+    linksTo:[], linksFrom:[{id:14,note:"Hyperlocal software links here"}],
+    schemas:["FAQ Schema","How-To Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:14, anchor:"hyperlocal marketplace software", section:"Build section"},{id:19, anchor:"marketplace examples", section:"Examples"},{id:4, anchor:"what is a marketplace", section:"Definition context"}]
+  },
+  {id:11, title:"What is an Online Service Marketplace Platform?", url:"blog/online-service-marketplace-platform", clicks:124, impressions:69885, conv:1, subcat:"Type: Service", action:"keep", intent:"valid",
+    reason:"Clear authority — 124 clicks, 70K impressions, 1 conversion. Absorb #9's booking content. Core type definition page.",
+    mergeTarget:null, newTitle:"What Is a Service Marketplace? Definition, Examples & How to Build One [2026]", targetWords:"3,500–4,000",
+    contentTemplate:[
+      {h:"H2: What Is a Service Marketplace?", words:"200–250", detail:"Direct 50-word definition (AEO). Service vs product marketplace distinction. Examples: TaskRabbit, Fiverr, Thumbtack."},
+      {h:"H2: How Service Marketplaces Work", words:"300–350", detail:"Provider onboarding, service listings, booking/scheduling (absorb from #9), payment, reviews."},
+      {h:"H2: Types of Service Marketplaces", words:"300–400", detail:"Freelance, home services, professional services, health/wellness, education. Each H3 with examples."},
+      {h:"H2: Service Marketplace Revenue Models", words:"200–250", detail:"Commission, subscription, lead generation, featured listings."},
+      {h:"H2: Service vs Product Marketplace", words:"200–250", detail:"Comparison table (AEO). Link to #32."},
+      {h:"H2: How to Build a Service Marketplace", words:"300–350", detail:"Key steps with Shipturtle. Link to #44 (TaskRabbit clone) and #50 (Fiverr clone)."},
+      {h:"H2: Booking Infrastructure for Service Marketplaces", words:"250–300", detail:"Absorbed from #9. Calendar management, availability, automated notifications."},
+      {h:"H2: FAQ (6 questions)", words:"300–360", detail:"Definition, examples, revenue, build guide, service vs product, booking."}
+    ],
+    linksTo:[], linksFrom:[{id:9,note:"Merge booking content"},{id:12,note:"Product page links here"}],
+    schemas:["FAQ Schema","Article Schema","How-To Schema","Comparison Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:44, anchor:"TaskRabbit clone", section:"Build section"},
+      {id:50, anchor:"Fiverr clone", section:"Build section"},
+      {id:21, anchor:"top service marketplace platforms", section:"Examples"},
+      {id:32, anchor:"product vs service marketplace", section:"Comparison"},
+      {id:19, anchor:"marketplace examples", section:"Intro"}
+    ]
+  },
+  {id:12, title:"All-In-One Service Marketplace Software", url:"marketplace/services", clicks:7, impressions:995, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"Product landing page — CAN coexist with #11 IF properly differentiated. #11 = informational, #12 = conversion-focused. Rewrite with features, pricing CTA, comparison table.",
+    mergeTarget:null, newTitle:"Service Marketplace Software — Launch Your Service Platform on Shopify", targetWords:"1,500–2,000",
+    contentTemplate:[
+      {h:"Hero: Service Marketplace Software", words:"100–150", detail:"Value prop headline + subhead + CTA button. Not a blog — this is a product page."},
+      {h:"Feature Grid", words:"300–400", detail:"Key features: booking engine, provider profiles, payment splits, review system. Visual layout."},
+      {h:"Comparison Table", words:"200–250", detail:"Shipturtle vs alternatives for service marketplaces."},
+      {h:"Use Cases", words:"200–250", detail:"3 use cases: freelance marketplace, home services, professional services."},
+      {h:"CTA Section", words:"100", detail:"Free trial CTA. Link to pricing."}
+    ],
+    linksTo:[{id:11, anchor:"what is a service marketplace", context:"Informational link in intro"}],
+    linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:11, anchor:"service marketplace guide", section:"Learn more link"},{id:44, anchor:"TaskRabbit clone", section:"Use cases"}]
+  },
+  {id:13, title:"All-In-One Rental Marketplace Software", url:"marketplace/rental", clicks:16, impressions:3824, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"Product landing page for rental vertical. Same pattern as #12 — differentiate from #6. Rewrite with rental-specific features.",
+    mergeTarget:null, newTitle:"Rental Marketplace Software — Build Your P2P Rental Platform on Shopify", targetWords:"1,500–2,000",
+    contentTemplate:[
+      {h:"Hero + Features + Comparison + Use Cases + CTA", words:"1,500–2,000", detail:"Same structure as #12 but rental-specific: booking calendar, availability management, security deposits, insurance integration, condition tracking."}
+    ],
+    linksTo:[{id:6, anchor:"P2P rental marketplace guide", context:"Informational link"}],
+    linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:6, anchor:"P2P rental marketplace", section:"Learn more"},{id:49, anchor:"Airbnb clone", section:"Use cases"}]
+  },
+  {id:14, title:"All-In-One Hyperlocal Marketplace Software", url:"marketplace/hyperlocal", clicks:12, impressions:2369, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"Product landing page. Rewrite with hyperlocal-specific features: geo-fencing, local delivery zones, pickup scheduling.",
+    mergeTarget:null, newTitle:"Hyperlocal Marketplace Software — Near-Me Delivery & Pickup Platform", targetWords:"1,500–2,000",
+    contentTemplate:[{h:"Hero + Features + Comparison + Use Cases + CTA", words:"1,500–2,000", detail:"Hyperlocal-specific: geo-fencing, delivery zones, real-time tracking, local vendor management."}],
+    linksTo:[{id:10, anchor:"hyperlocal marketplace guide", context:"Informational link"}],
+    linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:10, anchor:"hyperlocal marketplace guide", section:"Learn more"}]
+  },
+  {id:15, title:"All-In-One Used Goods Marketplace Software", url:"marketplace/usedgoods", clicks:2, impressions:591, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"Product page. 'Used goods marketplace' has intent. Rewrite with resale-specific features: condition grading, authentication, escrow.",
+    mergeTarget:null, newTitle:"Used Goods Marketplace Software — Build a Resale Platform on Shopify", targetWords:"1,500–2,000",
+    contentTemplate:[{h:"Hero + Features + Comparison + Use Cases + CTA", words:"1,500–2,000", detail:"Resale-specific: condition grading, authentication workflow, seller verification, return handling."}],
+    linksTo:[], linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:48, anchor:"Vinted clone", section:"Use cases"},{id:7, anchor:"C2C marketplace guide", section:"Learn more"}]
+  },
+  {id:16, title:"All-In-One Auction Marketplace Software", url:"marketplace/auction", clicks:20, impressions:1478, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"'Auction marketplace software' has commercial intent. 20 clicks is decent for a product page. Rewrite with auction-specific features.",
+    mergeTarget:null, newTitle:"Auction Marketplace Software — Build a Bidding Platform on Shopify", targetWords:"1,500–2,000",
+    contentTemplate:[{h:"Hero + Features + Comparison + Use Cases + CTA", words:"1,500–2,000", detail:"Auction-specific: bid engine, reserve prices, time-limited listings, auto-bid, winner notification, payment escrow."}],
+    linksTo:[], linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:19, anchor:"marketplace examples", section:"Context"},{id:7, anchor:"C2C marketplace guide", section:"Related"}]
+  },
+  {id:17, title:"Build a Powerful B2B Marketplace with Shipturtle", url:"marketplace/b2b", clicks:3, impressions:678, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"Critical page for Shipturtle's B2B positioning. Full rewrite with B2B-specific workflows (bulk ordering, RFQ, tiered pricing), feature matrix.",
+    mergeTarget:null, newTitle:"B2B Marketplace Software — Launch Your Wholesale Platform on Shopify", targetWords:"2,000–2,500",
+    contentTemplate:[{h:"Hero + B2B Features + Comparison + Use Cases + CTA", words:"2,000–2,500", detail:"B2B-specific: bulk ordering, RFQ system, tiered pricing, buyer approval workflows, trade credit, volume discounts. Link to B2B blog content."}],
+    linksTo:[], linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:29, anchor:"B2B SaaS models", section:"Context"},{id:20, anchor:"B2B food marketplace", section:"Use case"},{id:36, anchor:"specialized B2B marketplaces", section:"Trends"}]
+  },
+  {id:18, title:"All-In-One Product Marketplace Software", url:"marketplace/product", clicks:0, impressions:0, conv:0, subcat:"Landing Page", action:"rewrite", intent:"valid",
+    reason:"Zero traffic is indexation/content depth problem. This should be the strongest product page. Full rewrite with feature overview, comparison table.",
+    mergeTarget:null, newTitle:"Multi-Vendor Product Marketplace Software — Shopify Marketplace Platform", targetWords:"2,000–2,500",
+    contentTemplate:[{h:"Hero + Features + Comparison + Use Cases + CTA", words:"2,000–2,500", detail:"Core product marketplace features: multi-vendor catalog, inventory sync, order routing, shipping automation, vendor dashboard. Most generic = should be most comprehensive."}],
+    linksTo:[], linksFrom:[], schemas:["Software Application Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:19, anchor:"marketplace examples", section:"Social proof"},{id:4, anchor:"what is a marketplace", section:"Educational link"}]
+  },
+  {id:19, title:"30+ Examples Of Multi-Vendor Marketplace Platform For Ecommerce", url:"blog/examples-of-multi-vendor-marketplace", clicks:838, impressions:262318, conv:7, subcat:"Examples", action:"keep", intent:"valid",
+    reason:"STAR PAGE — highest traffic in entire pillar (838 clicks, 262K impressions, 7 conversions). Linkable asset. Refresh quarterly. Every cluster article should link TO this page.",
+    mergeTarget:null, newTitle:"30+ Multi-Vendor Marketplace Examples for 2026 [By Category]", targetWords:"4,000–5,000",
+    contentTemplate:[
+      {h:"H2: What Is a Multi-Vendor Marketplace? (Brief)", words:"100–150", detail:"Quick definition linking to #4. Set context for the examples list."},
+      {h:"H2: B2C Marketplace Examples (8–10)", words:"600–800", detail:"Each example: 40-word description, business model, why it works. Amazon, eBay, Walmart, etc."},
+      {h:"H2: C2C Marketplace Examples (6–8)", words:"400–500", detail:"Poshmark, Vinted, Depop, etc. Link to #7 (C2C guide)."},
+      {h:"H2: B2B Marketplace Examples (5–6)", words:"350–400", detail:"Alibaba, ThomasNet, etc. Link to #29 and #20."},
+      {h:"H2: Service Marketplace Examples (5–6)", words:"350–400", detail:"TaskRabbit, Fiverr, Thumbtack. Link to #11 and #21."},
+      {h:"H2: Rental Marketplace Examples (4–5)", words:"250–300", detail:"Airbnb, Turo, Fat Llama. Link to #6."},
+      {h:"H2: Niche & Emerging Marketplace Examples (5–6)", words:"350–400", detail:"Food (#20), digital products, barter (#8), hyperlocal (#10)."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"'What are the best marketplace examples?', 'What is the most successful marketplace?', etc."}
+    ],
+    linksTo:[], linksFrom:[{id:"all", note:"Every cluster page should link here"}],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:4, anchor:"what is a marketplace", section:"Definition intro"},
+      {id:7, anchor:"C2C marketplace guide", section:"C2C examples"},
+      {id:6, anchor:"P2P rental marketplace", section:"Rental examples"},
+      {id:11, anchor:"service marketplace", section:"Service examples"},
+      {id:24, anchor:"marketplace business models", section:"Revenue context"},
+      {id:25, anchor:"marketplace statistics", section:"Market data"}
+    ]
+  },
+  {id:20, title:"Top B2B Food Marketplace and Global Wholesale Hub", url:"blog/top-b2b-food-marketplace", clicks:296, impressions:53499, conv:4, subcat:"Examples", action:"keep", intent:"valid",
+    reason:"Strong niche performer. 296 clicks, 4 conversions. Refresh with 2026 data. Link to #17.",
+    mergeTarget:null, newTitle:"Top B2B Food Marketplaces & Wholesale Hubs [2026 List]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: What Is a B2B Food Marketplace?", words:"150–200", detail:"Definition. B2B wholesale food supply chain context."},
+      {h:"H2: Top B2B Food Marketplaces (10–15 listings)", words:"1,000–1,200", detail:"Each platform: description, features, target market, pricing model."},
+      {h:"H2: How to Build a B2B Food Marketplace", words:"300–350", detail:"Key features needed. Link to #17 (B2B software) and How to Build pillar."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Standalone answers."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:17, anchor:"B2B marketplace software", section:"Build section"},{id:19, anchor:"marketplace examples", section:"Intro context"},{id:29, anchor:"B2B SaaS models", section:"Business model"}]
+  },
+  {id:21, title:"Top Service Marketplace Platforms in 2025", url:"blog/top-service-marketplace-platforms-in-2025", clicks:129, impressions:57634, conv:2, subcat:"Examples", action:"keep", intent:"valid",
+    reason:"Solid listicle. 129 clicks, 2 conversions. Update to 2026. Link to #11 for definitions, #12 for product CTA.",
+    mergeTarget:null, newTitle:"Top Service Marketplace Platforms in 2026 [Ranked & Reviewed]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: What Is a Service Marketplace Platform?", words:"100–150", detail:"Brief definition linking to #11."},
+      {h:"H2: Top Service Marketplace Platforms (10–15)", words:"1,200–1,500", detail:"Detailed reviews. Include Shipturtle."},
+      {h:"H2: How to Choose the Right Platform", words:"250–300", detail:"Evaluation criteria. Link to #12 (service marketplace software)."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Standalone answers."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:11, anchor:"service marketplace guide", section:"Definition"},{id:12, anchor:"service marketplace software", section:"CTA"},{id:44, anchor:"TaskRabbit clone", section:"Alternative"},{id:50, anchor:"Fiverr clone", section:"Alternative"}]
+  },
+  {id:22, title:"Core Monetization Models for C2C Marketplaces", url:"blog/core-monetization-models-for-c2c-marketplaces", clicks:4, impressions:1745, conv:0, subcat:"Revenue Models", action:"merge", intent:"valid",
+    reason:"C2C-specific monetization too narrow for standalone. Merge into #24 as 'C2C Monetization Benchmarks' section.",
+    mergeTarget:"→ Merge into #24",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — Merge into #24", words:null, detail:"Extract C2C commission benchmarks and add as H3 within #24's comparison framework. 301 redirect."}],
+    linksTo:[{id:24, anchor:"N/A", context:"Merge target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:23, title:"Exploring Revenue Models for Marketplaces in 2025", url:"blog/exploring-revenue-models-for-marketplaces-in-2025", clicks:16, impressions:17931, conv:1, subcat:"Revenue Models", action:"merge", intent:"valid",
+    reason:"Weaker than #24. Merge 2025-specific insights as 'Revenue Models Compared' section within #24.",
+    mergeTarget:"→ Merge into #24",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — Merge into #24", words:null, detail:"Extract revenue model comparison content. 301 redirect."}],
+    linksTo:[{id:24, anchor:"N/A", context:"Merge target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:24, title:"Popular Marketplace Business Model", url:"blog/popular-marketplace-business-model", clicks:194, impressions:112073, conv:0, subcat:"Revenue Models", action:"keep", intent:"valid",
+    reason:"Clear winner — 194 clicks, 112K impressions. Absorb #22 and #23. Expand into definitive business model guide with comparison tables and case studies.",
+    mergeTarget:null, newTitle:"Marketplace Business Models: Complete Guide to Revenue & Monetization [2026]", targetWords:"4,000–4,500",
+    contentTemplate:[
+      {h:"H2: What Is a Marketplace Business Model?", words:"200–250", detail:"Direct definition (AEO). How marketplace models differ from traditional retail."},
+      {h:"H2: Types of Marketplace Business Models", words:"600–800", detail:"Commission, subscription, listing fee, freemium, lead gen, transaction fee. Each H3 with examples, pros/cons."},
+      {h:"H2: Revenue Models Compared (Table)", words:"200–250", detail:"Comparison table of all models (AEO target). Absorb from #23."},
+      {h:"H2: C2C Monetization Benchmarks", words:"200–250", detail:"Absorb from #22. C2C-specific commission rates and strategies."},
+      {h:"H2: How to Choose the Right Business Model", words:"300–350", detail:"Decision framework based on marketplace type. Link to pillar."},
+      {h:"H2: Marketplace Business Model Examples", words:"300–400", detail:"Real platforms and their models. Link to #19."},
+      {h:"H2: FAQ (6 questions)", words:"300–360", detail:"Standalone answers."}
+    ],
+    linksTo:[], linksFrom:[{id:22, note:"Merge C2C monetization"},{id:23, note:"Merge revenue models"}],
+    schemas:["FAQ Schema","Article Schema","Comparison Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:19, anchor:"marketplace examples", section:"Examples"},
+      {id:7, anchor:"C2C marketplace", section:"C2C monetization"},
+      {id:35, anchor:"scaling two-sided marketplace", section:"Growth section"},
+      {id:25, anchor:"marketplace statistics", section:"Data points"}
+    ]
+  },
+  {id:25, title:"Multi-Vendor Marketplace Statistics: Things You Should Know Before Launch", url:"blog/multi-vendor-marketplace-statistics", clicks:23, impressions:9679, conv:0, subcat:"Data/Stats", action:"rewrite", intent:"valid",
+    reason:"Linkable asset potential. Rewrite as '50+ Marketplace Statistics for 2026' with data visualizations and charts. Backlink magnet.",
+    mergeTarget:null, newTitle:"50+ Multi-Vendor Marketplace Statistics Every Founder Needs in 2026", targetWords:"3,000–3,500",
+    contentTemplate:[
+      {h:"H2: Global Marketplace Market Size in 2026", words:"400–500", detail:"Total GMV, YoY growth, regional breakdown. Direct answer block (AEO)."},
+      {h:"H2: Marketplace vs Single-Vendor Statistics", words:"300–400", detail:"Comparison table: AOV, CAC, conversion rate, scaling speed. (AEO table target)."},
+      {h:"H2: Vendor & Seller Statistics", words:"400–500", detail:"Active sellers, revenue per vendor, churn rates, commission benchmarks."},
+      {h:"H2: Buyer Behavior & Conversion Stats", words:"300–400", detail:"Product search behavior, conversion rates, mobile split."},
+      {h:"H2: Statistics by Marketplace Type", words:"500–600", detail:"B2C, C2C, B2B, rental, service — each H3 with standalone stats. Link to type pages."},
+      {h:"H2: Platform & Technology Statistics", words:"250–300", detail:"% built on Shopify vs custom, time to launch, most-used features."},
+      {h:"H2: FAQ (8 questions)", words:"400–500", detail:"Each question answerable with a specific stat. FAQ schema."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema","Speakable Schema","Table Schema"],
+    pillarLinks:3,
+    siblingLinks:[
+      {id:19, anchor:"30+ marketplace examples", section:"Market size"},
+      {id:24, anchor:"marketplace business models", section:"Revenue stats"},
+      {id:28, anchor:"marketplace trends", section:"Growth projections"},
+      {id:7, anchor:"C2C marketplace", section:"C2C stats"},
+      {id:6, anchor:"P2P rental marketplace", section:"Rental stats"}
+    ]
+  },
+  {id:26, title:"Top eCommerce Trends for 2025", url:"blog/top-ecommerce-trends-for-2025", clicks:5, impressions:6335, conv:0, subcat:"Trends", action:"merge", intent:"weak",
+    reason:"'eCommerce trends' is too broad and off-pillar. Merge marketplace-relevant insights into #28.",
+    mergeTarget:"→ Merge into #28",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — Merge into #28", words:null, detail:"Extract marketplace-relevant trend data only. 301 redirect."}],
+    linksTo:[{id:28, anchor:"N/A", context:"Merge target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:27, title:"Key Online Marketplace Industry And Trends in 2025", url:"blog/online-marketplace-industry-trends-2025", clicks:2, impressions:4816, conv:0, subcat:"Trends", action:"redirect", intent:"valid",
+    reason:"Lowest performer in trends cluster (2 clicks). Fully covered by #28. 301 redirect.",
+    mergeTarget:"→ 301 to #28",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — 301 Redirect to #28", words:null, detail:"Implement 301 redirect immediately."}],
+    linksTo:[{id:28, anchor:"N/A", context:"Redirect target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:28, title:"Key Multivendor Marketplace Trends to Watch in 2025 & 2026", url:"blog/multivendor-marketplace-trends-2025-2026", clicks:24, impressions:5549, conv:0, subcat:"Trends", action:"keep", intent:"valid",
+    reason:"Winner of trends cluster. Most aligned with pillar. Absorb #26 and #27. Full refresh with predictions and data.",
+    mergeTarget:null, newTitle:"Multi-Vendor Marketplace Trends for 2026: What's Next [Data-Backed]", targetWords:"2,800–3,200",
+    contentTemplate:[
+      {h:"H2: State of Multi-Vendor Marketplaces in 2026", words:"250–300", detail:"Current landscape overview with key numbers. Link to #25 for full stats."},
+      {h:"H2: Top Marketplace Trends (6–8 trends)", words:"1,200–1,500", detail:"Each trend: H3 with description, data, examples. AI-powered, hyperlocal growth, social commerce, etc."},
+      {h:"H2: Emerging Marketplace Types", words:"300–400", detail:"New models gaining traction. Link to pillar for types overview."},
+      {h:"H2: Predictions for 2027", words:"200–250", detail:"Forward-looking analysis."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Trend-focused questions."}
+    ],
+    linksTo:[], linksFrom:[{id:26, note:"Merge"},{id:27, note:"Redirect"}],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:25, anchor:"marketplace statistics", section:"State overview"},{id:19, anchor:"marketplace examples", section:"Trend examples"},{id:24, anchor:"business models", section:"Revenue trends"}]
+  },
+  {id:29, title:"The Rise of Software-Based B2B Models", url:"blog/rise-of-software-based-b2b-models", clicks:28, impressions:28027, conv:0, subcat:"Type: B2B", action:"keep", intent:"valid",
+    reason:"Unique thought-leadership. 28K impressions. SaaS + B2B intersection. Refresh with 2026 examples.",
+    mergeTarget:null, newTitle:"How SaaS Is Transforming B2B Ecommerce: The Software-Based Marketplace Model", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: The SaaS Shift in B2B Commerce", words:"250–300", detail:"Market context and why B2B is moving to software-based models."},
+      {h:"H2: Traditional B2B vs SaaS-Powered B2B Marketplaces", words:"300–350", detail:"Comparison table (AEO). Key differences."},
+      {h:"H2: Examples of Software-Based B2B Marketplaces", words:"400–500", detail:"5–8 examples with analysis."},
+      {h:"H2: How to Build a SaaS-Powered B2B Marketplace", words:"300–350", detail:"Shipturtle angle. Link to #17."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"B2B SaaS focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema","Comparison Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:17, anchor:"B2B marketplace software", section:"Build"},{id:20, anchor:"B2B food marketplace", section:"Example"},{id:36, anchor:"specialized B2B", section:"Related"},{id:31, anchor:"B2B vs C2C", section:"Comparison"}]
+  },
+  {id:30, title:"Launching a Multi-Vendor Marketplace VS D2C Website", url:"blog/launching-a-multi-vendor-marketplace-vs-d2c-website", clicks:26, impressions:16456, conv:1, subcat:"Comparison", action:"keep", intent:"valid",
+    reason:"Clean comparison with 1 conversion. High-intent query. Add comparison table and AEO answer block.",
+    mergeTarget:null, newTitle:"Multi-Vendor Marketplace vs D2C Website: Which Should You Launch?", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: Direct Answer", words:"60", detail:"AEO block answering 'marketplace vs D2C'."},
+      {h:"H2: Marketplace vs D2C Comparison Table", words:"200–250", detail:"Side-by-side on 10+ criteria. Featured snippet target."},
+      {h:"H2: When to Choose a Marketplace", words:"250–300", detail:"Use cases, benefits, risks."},
+      {h:"H2: When to Choose D2C", words:"250–300", detail:"Use cases, benefits, risks."},
+      {h:"H2: Can You Do Both?", words:"200–250", detail:"Hybrid model discussion."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Comparison-focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Comparison Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:4, anchor:"what is a marketplace", section:"Definition"},{id:24, anchor:"business models", section:"Revenue comparison"},{id:25, anchor:"marketplace statistics", section:"Data"}]
+  },
+  {id:31, title:"B2B vs C2C Marketplaces: Key Differences", url:"blog/b2b-vs-c2c-marketplaces", clicks:29, impressions:29657, conv:0, subcat:"Comparison", action:"keep", intent:"valid",
+    reason:"Strong impressions (30K). Core types comparison. Add comparison schema.",
+    mergeTarget:null, newTitle:"B2B vs C2C Marketplaces: Key Differences, Pros & Profitability [2026]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: B2B vs C2C at a Glance", words:"60", detail:"AEO block."},
+      {h:"H2: Comparison Table", words:"200–250", detail:"10+ criteria comparison. Featured snippet."},
+      {h:"H2: B2B Marketplace Deep Dive", words:"300–350", detail:"Link to #29 and #17."},
+      {h:"H2: C2C Marketplace Deep Dive", words:"300–350", detail:"Link to #7."},
+      {h:"H2: Which Should You Build?", words:"250–300", detail:"Decision framework."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Comparison questions."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Comparison Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:7, anchor:"C2C marketplace guide", section:"C2C section"},{id:29, anchor:"B2B SaaS models", section:"B2B section"},{id:17, anchor:"B2B marketplace software", section:"Build CTA"},{id:32, anchor:"product vs service marketplace", section:"Related comparison"}]
+  },
+  {id:32, title:"Product Marketplace vs. Service Marketplace", url:"blog/product-marketplace-vs-service-marketplace", clicks:8, impressions:14180, conv:0, subcat:"Comparison", action:"rewrite", intent:"valid",
+    reason:"14K impressions but only 8 clicks = CTR problem. Content is right but title/meta need optimization. Add comparison table.",
+    mergeTarget:null, newTitle:"Product Marketplace vs Service Marketplace: What's the Difference?", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: Quick Answer", words:"60", detail:"AEO block."},
+      {h:"H2: Comparison Table", words:"200–250", detail:"Featured snippet target."},
+      {h:"H2: Product Marketplace Explained", words:"300–350", detail:"Link to #18 (product software)."},
+      {h:"H2: Service Marketplace Explained", words:"300–350", detail:"Link to #11 and #12."},
+      {h:"H2: Which Model Is Right for You?", words:"250–300", detail:"Decision framework."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Comparison questions."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Comparison Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:11, anchor:"service marketplace guide", section:"Service section"},{id:18, anchor:"product marketplace software", section:"Product section"},{id:31, anchor:"B2B vs C2C", section:"Related comparison"}]
+  },
+  {id:33, title:"How To Turn Your Retail Store Into An Online Marketplace", url:"blog/turn-retail-store-Into-online-marketplace", clicks:0, impressions:0, conv:0, subcat:"How-to", action:"rewrite", intent:"valid",
+    reason:"Valid intent — directly serves Shipturtle's ICP. Zero traffic = content depth + linking failure. Rewrite with step-by-step guide.",
+    mergeTarget:null, newTitle:"How to Turn Your Retail Store Into a Multi-Vendor Marketplace [Step-by-Step]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: Why Convert to a Marketplace?", words:"200–250", detail:"Benefits: expanded catalog, lower inventory risk, new revenue. Link to #30 (vs D2C)."},
+      {h:"H2: Step-by-Step Guide (6 steps)", words:"800–1,000", detail:"Each step as H3. Numbered list (AEO). Shipturtle workflow."},
+      {h:"H2: Real Examples", words:"200–250", detail:"Stores that successfully converted. Link to #19."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Standalone answers."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:30, anchor:"marketplace vs D2C", section:"Why convert"},{id:4, anchor:"what is a marketplace", section:"Context"},{id:19, anchor:"marketplace examples", section:"Examples"}]
+  },
+  {id:34, title:"How to Sell Internationally from Your Own Marketplace", url:"blog/sell-internationally-from-your-own-marketplace", clicks:0, impressions:0, conv:0, subcat:"Type: Cross-Border", action:"rewrite", intent:"valid",
+    reason:"'Cross-border marketplace' has real demand. Rewrite to target it as a marketplace type with practical examples.",
+    mergeTarget:null, newTitle:"Cross-Border Marketplace: How to Sell Internationally from Your Marketplace", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: What Is a Cross-Border Marketplace?", words:"150–200", detail:"Definition (AEO). Examples of cross-border platforms."},
+      {h:"H2: Key Challenges", words:"300–350", detail:"Multi-currency, tax compliance, international shipping, localization."},
+      {h:"H2: How to Set Up Cross-Border Selling", words:"400–500", detail:"Step-by-step with Shipturtle features."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Cross-border focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:19, anchor:"marketplace examples", section:"Examples"},{id:4, anchor:"what is a marketplace", section:"Context"}]
+  },
+  {id:35, title:"Key Strategies for Scaling a Two-Sided Marketplace Business Model", url:"blog/scaling-a-two-sided-marketplace-business-model", clicks:43, impressions:30254, conv:0, subcat:"Strategy", action:"keep", intent:"valid",
+    reason:"Solid (43 clicks, 30K impressions). 'Two-sided marketplace' is a core concept. Add case studies, link to #24.",
+    mergeTarget:null, newTitle:"How to Scale a Two-Sided Marketplace: Strategies That Work [2026]", targetWords:"3,000–3,500",
+    contentTemplate:[
+      {h:"H2: What Is a Two-Sided Marketplace?", words:"150–200", detail:"Definition (AEO). Examples."},
+      {h:"H2: The Chicken-and-Egg Problem", words:"300–350", detail:"Supply vs demand bootstrapping strategies."},
+      {h:"H2: 7 Scaling Strategies", words:"800–1,000", detail:"Each strategy as H3 with examples."},
+      {h:"H2: Metrics to Track", words:"200–250", detail:"Liquidity, take rate, GMV, repeat rate. Link to #25."},
+      {h:"H2: Case Studies", words:"300–400", detail:"2–3 real scaling stories."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"Scaling-focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:24, anchor:"marketplace business models", section:"Revenue context"},{id:25, anchor:"marketplace statistics", section:"Metrics"},{id:19, anchor:"marketplace examples", section:"Case studies"}]
+  },
+  {id:36, title:"How Specialized Marketplaces Are Transforming B2B eCommerce in 2025", url:"blog/how-specialized-marketplaces-are-transforming-b2b-ecommerce-in-2025", clicks:20, impressions:19995, conv:0, subcat:"Type: B2B", action:"keep", intent:"valid",
+    reason:"20K impressions. Unique vertical B2B angle. Refresh with 2026 data.",
+    mergeTarget:null, newTitle:"How Specialized B2B Marketplaces Are Transforming Wholesale Ecommerce [2026]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: What Are Specialized B2B Marketplaces?", words:"150–200", detail:"Definition. How they differ from horizontal B2B platforms."},
+      {h:"H2: Industry Examples (5–6 verticals)", words:"600–800", detail:"Each vertical as H3. Link to relevant Industry Marketplace pages."},
+      {h:"H2: Why Specialization Wins", words:"250–300", detail:"Data on niche vs horizontal marketplace performance."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"B2B specialization focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:29, anchor:"B2B SaaS models", section:"Related"},{id:17, anchor:"B2B marketplace software", section:"Build CTA"},{id:20, anchor:"B2B food marketplace", section:"Example"}]
+  },
+  {id:37, title:"How Spain's Fashion Franchises Are Reinventing Ecommerce", url:"blog/build-a-hyperlocal-multi-franchise-fashion-marketplace-spain", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"Valid intent buried in bad execution. Rewrite to target 'franchise marketplace' as a marketplace type. Spain = one example.",
+    mergeTarget:null, newTitle:"What Is a Franchise Marketplace? How Multi-Brand Retailers Go Digital", targetWords:"2,000–2,500",
+    contentTemplate:[
+      {h:"H2: What Is a Franchise Marketplace?", words:"150–200", detail:"Definition of franchise marketplace model."},
+      {h:"H2: How Franchise Marketplaces Work", words:"250–300", detail:"Multi-location, brand consistency, local inventory."},
+      {h:"H2: Examples", words:"300–350", detail:"Spain fashion + other verticals. Keep Spain as ONE example."},
+      {h:"H2: FAQ (4 questions)", words:"200–240", detail:"Franchise marketplace focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","Article Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:10, anchor:"hyperlocal marketplace", section:"Related"},{id:4, anchor:"what is a marketplace", section:"Context"}]
+  },
+  {id:38, title:"The Dating Marketplace Indonesia Was Missing", url:"blog/build-a-dating-marketplace-platform-indonesia", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"redirect", intent:"offbrand",
+    reason:"OFF-BRAND — 'Dating marketplace' doesn't align with Shipturtle's ecommerce positioning. 301 redirect to #19.",
+    mergeTarget:"→ 301 to #19",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — 301 Redirect to #19", words:null, detail:"Off-brand content. Redirect to examples page."}],
+    linksTo:[{id:19, anchor:"N/A", context:"Redirect target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:39, title:"Where Offline Success Meets Digital Scale in Modern Marketplaces", url:"blog/build-a-multi-vendor-exhibitor-marketplace-uk", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"Valid intent — 'exhibitor marketplace' / 'trade show marketplace' has B2B demand. Editorial title kills SEO. Rewrite.",
+    mergeTarget:null, newTitle:"How to Build an Exhibitor & Trade Show Marketplace Online", targetWords:"2,000–2,500",
+    contentTemplate:[
+      {h:"H2: What Is an Exhibitor Marketplace?", words:"150–200", detail:"Definition. How trade shows go digital."},
+      {h:"H2: How It Works", words:"250–300", detail:"Vendor booth → online catalog. B2B matchmaking."},
+      {h:"H2: Examples", words:"200–250", detail:"UK + other markets."},
+      {h:"H2: FAQ (4 questions)", words:"200–240", detail:"Exhibitor marketplace focused."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:29, anchor:"B2B models", section:"B2B context"},{id:4, anchor:"what is a marketplace", section:"Definition"}]
+  },
+  {id:40, title:"The Marketplace Model Transforming Multi Vendor Ecommerce in India", url:"blog/build-a-multi-vendor-ecommerce-marketplace-india", clicks:2, impressions:301, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"'Multi-vendor marketplace India' has real demand. Rewrite with India-specific content: UPI, GST, local logistics.",
+    mergeTarget:null, newTitle:"How to Build a Multi-Vendor Marketplace in India [Complete Guide]", targetWords:"2,500–3,000",
+    contentTemplate:[
+      {h:"H2: India's Marketplace Landscape", words:"200–250", detail:"Market size, key players, growth data."},
+      {h:"H2: India-Specific Requirements", words:"400–500", detail:"UPI payments, GST compliance, Delhivery/Shiprocket integration, vernacular language support."},
+      {h:"H2: Step-by-Step Build Guide", words:"400–500", detail:"Shopify + Shipturtle for India. How-to schema."},
+      {h:"H2: FAQ (5 questions)", words:"250–300", detail:"India-specific marketplace questions."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:4, anchor:"what is a marketplace", section:"Context"},{id:19, anchor:"marketplace examples", section:"Global context"}]
+  },
+  {id:41, title:"The Future Ready Community Commerce Marketplace Model for Canada", url:"blog/canada-peer-to-peer-marketplace-model", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"rewrite", intent:"valid",
+    reason:"'P2P marketplace Canada' / 'community marketplace Canada' has intent. Rewrite with Canadian market focus.",
+    mergeTarget:null, newTitle:"How to Build a Community Marketplace in Canada [P2P Guide]", targetWords:"2,000–2,500",
+    contentTemplate:[
+      {h:"Full geo-targeted guide", words:"2,000–2,500", detail:"Canada-specific: Interac, CAD payments, Canadapost integration, bilingual (EN/FR) requirements, local regulations."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema"],
+    pillarLinks:2,
+    siblingLinks:[{id:6, anchor:"P2P rental marketplace", section:"P2P context"},{id:7, anchor:"C2C marketplace", section:"C2C context"}]
+  },
+  {id:42, title:"Where UK Developers Turn Digital Projects Into Funded Marketplaces", url:"blog/uk-digital-credit-marketplace-workflows", clicks:0, impressions:0, conv:0, subcat:"Geo Story", action:"redirect", intent:"offbrand",
+    reason:"OFF-BRAND — 'Digital credit marketplace' is fintech. 301 redirect to #4.",
+    mergeTarget:"→ 301 to #4",
+    newTitle:null, targetWords:null,
+    contentTemplate:[{h:"N/A — 301 Redirect to #4", words:null, detail:"Off-brand. Redirect to canonical definition page."}],
+    linksTo:[{id:4, anchor:"N/A", context:"Redirect target"}], linksFrom:[], schemas:[], pillarLinks:0, siblingLinks:[]
+  },
+  {id:43, title:"Build your own Poshmark clone marketplace in minutes", url:"clone/poshmark", clicks:15, impressions:2793, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"'Poshmark clone' has commercial intent. Link to C2C guide (#7) and examples (#19).",
+    mergeTarget:null, newTitle:"Build a Poshmark Clone Marketplace on Shopify [Step-by-Step]", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"H2: What Is Poshmark?", words:"100–150", detail:"Brief Poshmark overview + why people want to clone it."},
+      {h:"H2: Key Features to Replicate", words:"300–400", detail:"Social selling, offers, bundles, Posh Parties equivalent, authentication."},
+      {h:"H2: How to Build It with Shipturtle", words:"400–500", detail:"Step-by-step. Screenshots/feature mapping."},
+      {h:"H2: Poshmark Clone vs Building from Scratch", words:"200–250", detail:"Cost and time comparison."},
+      {h:"H2: FAQ (4 questions)", words:"200–240", detail:"Clone-specific."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:7, anchor:"C2C marketplace guide", section:"Context"},{id:48, anchor:"Vinted clone", section:"Alternative"},{id:19, anchor:"marketplace examples", section:"Market context"}]
+  },
+  {id:44, title:"Build your own TaskRabbit clone marketplace in minutes", url:"clone/taskrabbit", clicks:85, impressions:8867, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Best clone page (85 clicks). Link to service marketplace (#11). Optimize meta for better CTR.",
+    mergeTarget:null, newTitle:"Build a TaskRabbit Clone Marketplace on Shopify [2026 Guide]", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"H2: What Is TaskRabbit?", words:"100–150", detail:"Brief overview."},
+      {h:"H2: Key Features to Replicate", words:"300–400", detail:"Task posting, provider matching, scheduling, ratings, payment."},
+      {h:"H2: How to Build It with Shipturtle", words:"400–500", detail:"Step-by-step."},
+      {h:"H2: FAQ (4 questions)", words:"200–240", detail:"Clone-specific."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:11, anchor:"service marketplace guide", section:"Context"},{id:50, anchor:"Fiverr clone", section:"Alternative"},{id:21, anchor:"top service platforms", section:"Market context"}]
+  },
+  {id:45, title:"Build a Gumroad clone marketplace in minutes", url:"clone/gumroad", clicks:63, impressions:5790, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Solid (63 clicks). Digital marketplace angle.",
+    mergeTarget:null, newTitle:"Build a Gumroad Clone: Digital Products Marketplace on Shopify", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"Standard clone template", words:"1,800–2,200", detail:"What Is Gumroad → Key Features → Build with Shipturtle → FAQ. Digital-specific: instant delivery, license keys, subscription products."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:19, anchor:"marketplace examples", section:"Context"},{id:24, anchor:"business models", section:"Revenue model"}]
+  },
+  {id:46, title:"Build your own Etsy marketplace clone in minutes", url:"clone/etsy", clicks:39, impressions:7601, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"'Etsy clone' is a proven keyword. Keep and optimize.",
+    mergeTarget:null, newTitle:"Build an Etsy Clone Marketplace on Shopify [Complete Guide]", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"Standard clone template", words:"1,800–2,200", detail:"What Is Etsy → Key Features (handmade categories, seller shops, reviews, favorites) → Build with Shipturtle → FAQ."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:7, anchor:"C2C marketplace", section:"Context"},{id:19, anchor:"marketplace examples", section:"Market"},{id:43, anchor:"Poshmark clone", section:"Alternative"}]
+  },
+  {id:47, title:"Build an Amazon clone for your e-commerce business", url:"clone/amazon", clicks:44, impressions:8738, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"'Amazon clone' is high-intent. Strengthen with feature comparison.",
+    mergeTarget:null, newTitle:"Build an Amazon Clone: Multi-Vendor Marketplace on Shopify", targetWords:"2,000–2,500",
+    contentTemplate:[
+      {h:"Standard clone template (expanded)", words:"2,000–2,500", detail:"Amazon is the most complex clone. Cover: multi-vendor catalog, Buy Box, FBA-equivalent, Prime-like programs, reviews, recommendations. Detailed feature matrix."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:19, anchor:"marketplace examples", section:"Context"},{id:4, anchor:"what is a marketplace", section:"Definition"},{id:24, anchor:"business models", section:"Revenue"}]
+  },
+  {id:48, title:"Build a Vinted clone marketplace in minutes", url:"clone/vinted", clicks:79, impressions:11094, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Second-best clone (79 clicks). C2C resale trend. Link to #7 and #15.",
+    mergeTarget:null, newTitle:"Build a Vinted Clone: Secondhand Fashion Marketplace on Shopify", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"Standard clone template", words:"1,800–2,200", detail:"Vinted-specific: no seller fees model, buyer protection, shipping labels, condition grading, social features."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:7, anchor:"C2C marketplace guide", section:"Context"},{id:15, anchor:"used goods marketplace", section:"Related"},{id:43, anchor:"Poshmark clone", section:"Alternative"}]
+  },
+  {id:49, title:"Build an Airbnb marketplace clone in minutes", url:"clone/airbnb", clicks:28, impressions:5786, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Rental marketplace clone. Link to #6. Optimize meta.",
+    mergeTarget:null, newTitle:"Build an Airbnb Clone: Rental Marketplace on Shopify [2026]", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"Standard clone template", words:"1,800–2,200", detail:"Airbnb-specific: availability calendar, instant booking, reviews, host profiles, location search, pricing rules."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:6, anchor:"P2P rental marketplace", section:"Context"},{id:13, anchor:"rental marketplace software", section:"Product CTA"}]
+  },
+  {id:50, title:"Build your Fiverr clone marketplace in minutes", url:"clone/fiverr", clicks:40, impressions:8160, conv:0, subcat:"Clone", action:"keep", intent:"valid",
+    reason:"Good traction (40 clicks). Service marketplace clone. Link to #11.",
+    mergeTarget:null, newTitle:"Build a Fiverr Clone: Freelance Marketplace on Shopify", targetWords:"1,800–2,200",
+    contentTemplate:[
+      {h:"Standard clone template", words:"1,800–2,200", detail:"Fiverr-specific: gig listings, packages/tiers, buyer requests, seller levels, order tracking, revision system."}
+    ],
+    linksTo:[], linksFrom:[],
+    schemas:["FAQ Schema","How-To Schema"],
+    pillarLinks:1,
+    siblingLinks:[{id:11, anchor:"service marketplace guide", section:"Context"},{id:44, anchor:"TaskRabbit clone", section:"Alternative"},{id:21, anchor:"top service platforms", section:"Market"}]
+  }
+];
+
+// ───── SUB-CATEGORIES ─────
+const subcategories = [
+  {name:"Definition", desc:"Canonical 'what is' pages — consolidating into #4 as the single authoritative definition.", color:"var(--accent)", ids:[1,2,3,4,5]},
+  {name:"Core Marketplace Types", desc:"One page per marketplace type — the backbone of the pillar's topical authority.", color:"var(--green)", ids:[6,7,8,10,11]},
+  {name:"Landing Pages (Software)", desc:"Product/conversion pages for each marketplace vertical. Must be differentiated from informational content.", color:"var(--purple)", ids:[12,13,14,15,16,17,18]},
+  {name:"Examples & Listicles", desc:"High-traffic list pages. #19 is the STAR PAGE of the entire pillar.", color:"var(--yellow)", ids:[19,20,21]},
+  {name:"Revenue & Business Models", desc:"Consolidating into #24 as the canonical business model guide.", color:"var(--orange)", ids:[22,23,24]},
+  {name:"Data & Statistics", desc:"Linkable asset — backlink magnet potential. Needs full rewrite.", color:"var(--blue)", ids:[25]},
+  {name:"Trends", desc:"Consolidating into #28 as the canonical trends page.", color:"var(--accent)", ids:[26,27,28]},
+  {name:"B2B Deep Dives", desc:"B2B-specific content — thought leadership and specialization angles.", color:"var(--green)", ids:[29,36]},
+  {name:"Comparisons", desc:"'X vs Y' pages — high-intent commercial content. AEO table targets.", color:"var(--yellow)", ids:[30,31,32]},
+  {name:"Strategy", desc:"Scaling and operational strategy content.", color:"var(--purple)", ids:[33,34,35]},
+  {name:"Geo Stories", desc:"Country-specific marketplace content. Most need rewrites — editorial titles kill SEO.", color:"var(--red)", ids:[37,38,39,40,41,42]},
+  {name:"Clone Pages", desc:"Platform clone landing pages — commercial intent. Template-based but need type-linking.", color:"var(--accent2)", ids:[43,44,45,46,47,48,49,50]}
+];
+
+// ───── RENDER ─────
+function renderStats() {
+  const bar = document.getElementById('statsBar');
+  const actions = {};
+  pages.forEach(p => actions[p.action]=(actions[p.action]||0)+1);
+  const totalClicks = pages.reduce((s,p)=>s+p.clicks,0);
+  const totalConv = pages.reduce((s,p)=>s+p.conv,0);
+  const totalImp = pages.reduce((s,p)=>s+p.impressions,0);
+  bar.innerHTML = `
+    <div class="stat-card"><div class="label">Total Pages</div><div class="value">${pages.length}</div><div class="sub">${pages.filter(p=>p.clicks===0&&p.impressions===0).length} at zero traffic</div></div>
+    <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${totalClicks.toLocaleString()}</div><div class="sub">${(totalImp/1000).toFixed(0)}K impressions</div></div>
+    <div class="stat-card"><div class="label">Conversions</div><div class="value">${totalConv}</div><div class="sub">across pillar</div></div>
+    <div class="stat-card keep"><div class="label">Keep</div><div class="value">${actions.keep||0}</div></div>
+    <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">${actions.rewrite||0}</div></div>
+    <div class="stat-card merge"><div class="label">Merge</div><div class="value">${actions.merge||0}</div></div>
+    <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">${actions.redirect||0}</div></div>
+    <div class="stat-card repillar"><div class="label">Re-Pillar</div><div class="value">${actions.repillar||0}</div></div>`;
+}
+
+let currentFilter = 'all';
+function renderPages() {
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  const container = document.getElementById('pageList');
+  let html = '';
+  pages.forEach(p => {
+    if (currentFilter!=='all' && p.action!==currentFilter) return;
+    if (search && !p.title.toLowerCase().includes(search) && !p.url.toLowerCase().includes(search) && !p.subcat.toLowerCase().includes(search)) return;
+    
+    const templates = p.contentTemplate || [];
+    const hasDetail = templates.length > 0 && templates[0].h !== 'N/A — 301 Redirect to #4' && templates[0].h !== 'N/A — 301 Redirect to #19' && templates[0].h !== 'N/A — 301 Redirect to #28';
+    
+    html += `<div class="page-card" id="page-${p.id}">
+      <div class="page-card-header" onclick="togglePage(${p.id})">
+        <span class="page-id">#${p.id}</span>
+        <span class="page-title">${p.title}</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">${p.clicks.toLocaleString()} clicks</span>
+          <span class="metric-imp">${(p.impressions/1000).toFixed(1)}K imp</span>
+          ${p.conv?`<span class="metric-conv">${p.conv} conv</span>`:''}
+        </span>
+        <span class="action-badge ${p.action}">${p.action}</span>
+        <span class="chevron" id="chev-${p.id}">▾</span>
+      </div>
+      <div class="url-row">/${p.url}</div>
+      <div class="page-detail" id="detail-${p.id}">
+        <div class="detail-grid">
+          <!-- AUDIT BRIEF -->
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> ${p.subcat}</p>
+            <p><strong>Intent:</strong> ${p.intent}</p>
+            ${p.mergeTarget?`<p><strong>Action:</strong> ${p.mergeTarget}</p>`:''}
+            <p style="margin-top:8px">${p.reason}</p>
+            ${p.newTitle?`<h4>Recommended Title Tag</h4><p><code>${p.newTitle}</code></p>`:''}
+            ${p.targetWords?`<h4>Target Word Count</h4><p>${p.targetWords} words</p>`:''}
+          </div>
+          
+          <!-- INTERNAL LINKING -->
+          <div class="detail-section">
+            <h3>Internal Linking Architecture</h3>
+            ${p.pillarLinks>0?`<h4>Links TO Pillar (${p.pillarLinks}x)</h4>
+            <p>Link to <code>${PILLAR.url}</code> in ${p.pillarLinks} places using varied anchors: "types of online marketplaces", "marketplace types", "different marketplace models"</p>`:'<p style="color:var(--text3)">N/A — page is being redirected/merged</p>'}
+            ${p.siblingLinks.length>0?`<h4>Links TO Siblings (${p.siblingLinks.length})</h4>
+            <table class="link-table">
+              <tr><th>Target Page</th><th>Anchor Text</th><th>Placement</th></tr>
+              ${p.siblingLinks.map(s=>`<tr><td>#${s.id}</td><td class="anchor">${s.anchor}</td><td>${s.section}</td></tr>`).join('')}
+            </table>`:''}
+            ${p.linksFrom.length>0?`<h4>Incoming Links</h4>
+            <table class="link-table">
+              <tr><th>From Page</th><th>Action</th></tr>
+              ${p.linksFrom.map(l=>`<tr><td>#${l.id==='all'?'ALL':l.id}</td><td>${l.note}</td></tr>`).join('')}
+            </table>`:''}
+          </div>
+          
+          <!-- CONTENT TEMPLATE -->
+          ${templates.length>0 && p.action!=='redirect'?`<div class="detail-section full-width">
+            <h3>Content Template</h3>
+            ${templates.map(t=>`<div class="template-section">
+              <div class="section-label">${t.h}${t.words?`<span class="word-count">${t.words} words</span>`:''}</div>
+              <div class="section-content">${t.detail}</div>
+            </div>`).join('')}
+          </div>`:''}
+          
+          <!-- SCHEMA -->
+          ${p.schemas.length>0?`<div class="detail-section">
+            <h3>Schema Markup</h3>
+            <div class="schema-badges">${p.schemas.map(s=>`<span class="schema-badge">${s}</span>`).join('')}</div>
+          </div>`:''}
+        </div>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function togglePage(id) {
+  const detail = document.getElementById('detail-'+id);
+  const chev = document.getElementById('chev-'+id);
+  detail.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function renderClusters() {
+  const container = document.getElementById('tab-clusters');
+  let html = '';
+  subcategories.forEach(sc => {
+    const scPages = sc.ids.map(id => pages.find(p=>p.id===id)).filter(Boolean);
+    const totalClicks = scPages.reduce((s,p)=>s+p.clicks,0);
+    const totalImp = scPages.reduce((s,p)=>s+p.impressions,0);
+    html += `<div class="cluster-group">
+      <div class="cluster-title" style="color:${sc.color}">${sc.name} <span style="color:var(--text3);font-size:13px">(${scPages.length} pages · ${totalClicks.toLocaleString()} clicks · ${(totalImp/1000).toFixed(0)}K imp)</span></div>
+      <div class="cluster-sub">${sc.desc}</div>
+      <div class="cluster-pages">${scPages.map(p=>`<div class="cluster-page">
+        <span class="cp-id">#${p.id}</span>
+        <span class="cp-title">${p.title.substring(0,45)}${p.title.length>45?'…':''}</span>
+        <span class="cp-clicks">${p.clicks}c</span>
+        <span class="action-badge ${p.action}" style="margin-left:8px;font-size:10px;padding:2px 6px">${p.action}</span>
+      </div>`).join('')}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function renderLinkMap() {
+  const container = document.getElementById('tab-linkmap');
+  const keepPages = pages.filter(p=>p.action==='keep');
+  let html = `<div style="margin-bottom:24px">
+    <h2 style="font-size:20px;margin-bottom:8px">Pillar Link Architecture</h2>
+    <p style="color:var(--text2);font-size:14px">Every <span style="color:var(--keep)">KEEP</span> page links to the pillar 2–3 times and to 3–5 sibling pages. This map shows the post-consolidation link structure.</p>
+  </div>`;
+  
+  html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px">
+    <h3 style="color:var(--accent2);margin-bottom:16px;font-size:14px">PILLAR: /blog/types-of-online-marketplaces</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">`;
+  
+  keepPages.forEach(p => {
+    html += `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span class="page-id">#${p.id}</span>
+        <span style="font-size:12px;font-weight:600;color:var(--text)">${p.title.substring(0,40)}${p.title.length>40?'…':''}</span>
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:6px">${p.clicks} clicks · ${(p.impressions/1000).toFixed(0)}K imp</div>
+      <div style="font-size:11px;color:var(--accent)">↑ ${p.pillarLinks}x to pillar</div>
+      ${p.siblingLinks.length>0?`<div style="font-size:11px;color:var(--green);margin-top:2px">→ ${p.siblingLinks.map(s=>'#'+s.id).join(', ')}</div>`:''}
+    </div>`;
+  });
+  
+  html += `</div></div>`;
+  
+  // Key linking hubs
+  html += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px">
+    <h3 style="color:var(--yellow);margin-bottom:16px;font-size:14px">TOP LINKING HUBS (Most Connected Pages)</h3>
+    <table class="link-table" style="font-size:13px">
+      <tr><th>Page</th><th>Inbound Links</th><th>Outbound Links</th><th>Role</th></tr>`;
+  
+  const linkCounts = {};
+  pages.forEach(p => {
+    if (!linkCounts[p.id]) linkCounts[p.id]={in:0,out:p.siblingLinks?.length||0};
+    (p.siblingLinks||[]).forEach(s => {
+      if (!linkCounts[s.id]) linkCounts[s.id]={in:0,out:0};
+      linkCounts[s.id].in++;
+    });
+  });
+  
+  const hubs = Object.entries(linkCounts)
+    .map(([id,c])=>({id:+id,total:c.in+c.out,...c}))
+    .sort((a,b)=>b.total-a.total)
+    .slice(0,10);
+  
+  hubs.forEach(h => {
+    const p = pages.find(pp=>pp.id===h.id);
+    if (!p) return;
+    html += `<tr>
+      <td><strong>#${h.id}</strong> ${p.title.substring(0,45)}…</td>
+      <td style="color:var(--green)">${h.in} incoming</td>
+      <td style="color:var(--accent)">${h.out} outgoing</td>
+      <td>${h.in>5?'Authority Hub':h.out>4?'Link Distributor':'Standard'}</td>
+    </tr>`;
+  });
+  
+  html += `</table></div>`;
+  container.innerHTML = html;
+}
+
+function renderChecklist() {
+  const container = document.getElementById('tab-checklist');
+  const redirects = pages.filter(p=>p.action==='redirect');
+  const merges = pages.filter(p=>p.action==='merge');
+  const rewrites = pages.filter(p=>p.action==='rewrite');
+  const keeps = pages.filter(p=>p.action==='keep');
+  
+  let html = `<div style="margin-bottom:24px">
+    <h2 style="font-size:20px;margin-bottom:8px">Execution Checklist</h2>
+    <p style="color:var(--text2);font-size:14px">Complete in this order: Redirects → Merges → Rewrites → Keep Refreshes.</p>
+  </div>`;
+  
+  // Phase 1: Redirects
+  html += `<div class="cluster-group">
+    <div class="cluster-title" style="color:var(--red)">Phase 1: Implement Redirects (${redirects.length} pages)</div>
+    <div class="cluster-sub">Quick wins. Implement 301 redirects to consolidate link equity.</div>
+    <table class="link-table" style="font-size:13px">
+      <tr><th>#</th><th>From</th><th>To</th><th>Done</th></tr>
+      ${redirects.map(p=>`<tr>
+        <td>#${p.id}</td>
+        <td style="color:var(--text)">${p.title.substring(0,50)}…</td>
+        <td style="color:var(--green)">${p.mergeTarget||'—'}</td>
+        <td>☐</td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+  
+  // Phase 2: Merges
+  html += `<div class="cluster-group">
+    <div class="cluster-title" style="color:var(--yellow)">Phase 2: Execute Merges (${merges.length} pages)</div>
+    <div class="cluster-sub">Extract unique content before redirecting. Preserve valuable angles as sections within winner pages.</div>
+    <table class="link-table" style="font-size:13px">
+      <tr><th>#</th><th>Source Page</th><th>Merge Target</th><th>Content Extracted</th><th>301 Set</th></tr>
+      ${merges.map(p=>`<tr>
+        <td>#${p.id}</td>
+        <td style="color:var(--text)">${p.title.substring(0,45)}…</td>
+        <td style="color:var(--green)">${p.mergeTarget||'—'}</td>
+        <td>☐</td>
+        <td>☐</td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+  
+  // Phase 3: Rewrites
+  html += `<div class="cluster-group">
+    <div class="cluster-title" style="color:var(--rewrite)">Phase 3: Content Rewrites (${rewrites.length} pages)</div>
+    <div class="cluster-sub">Full rewrites using the content templates. Highest effort, highest impact.</div>
+    <table class="link-table" style="font-size:13px">
+      <tr><th>#</th><th>Page</th><th>New Title</th><th>Target Words</th><th>Drafted</th><th>Published</th></tr>
+      ${rewrites.map(p=>`<tr>
+        <td>#${p.id}</td>
+        <td style="color:var(--text)">${p.title.substring(0,35)}…</td>
+        <td style="color:var(--accent);font-size:11px">${(p.newTitle||'—').substring(0,40)}…</td>
+        <td>${p.targetWords||'—'}</td>
+        <td>☐</td>
+        <td>☐</td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+  
+  // Phase 4: Keep/Refresh
+  html += `<div class="cluster-group">
+    <div class="cluster-title" style="color:var(--keep)">Phase 4: Refresh Existing Winners (${keeps.length} pages)</div>
+    <div class="cluster-sub">Update titles, add schemas, strengthen internal links, refresh data. Lower effort, protects existing rankings.</div>
+    <table class="link-table" style="font-size:13px">
+      <tr><th>#</th><th>Page</th><th>Clicks</th><th>Conv</th><th>Title Updated</th><th>Links Added</th><th>Schema Added</th></tr>
+      ${keeps.map(p=>`<tr>
+        <td>#${p.id}</td>
+        <td style="color:var(--text)">${p.title.substring(0,40)}…</td>
+        <td>${p.clicks}</td>
+        <td>${p.conv}</td>
+        <td>☐</td>
+        <td>☐</td>
+        <td>☐</td>
+      </tr>`).join('')}
+    </table>
+  </div>`;
+  
+  // Universal checklist
+  html += `<div class="cluster-group">
+    <div class="cluster-title" style="color:var(--accent)">Universal Quality Checklist (Apply to Every Keep/Rewrite Page)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;font-size:13px;color:var(--text2)">
+      <div>
+        <h4 style="color:var(--text);font-size:13px;margin-bottom:8px">Content Structure</h4>
+        <div>☐ H1 contains primary keyword</div>
+        <div>☐ Title tag under 60 characters</div>
+        <div>☐ Meta description 140–160 characters</div>
+        <div>☐ Every H2 has direct-answer block (40–60 words)</div>
+        <div>☐ Paragraphs max 4 lines</div>
+        <div>☐ No filler content or vague claims</div>
+        <div>☐ Real examples included</div>
+        <div>☐ Comparison table present (where applicable)</div>
+      </div>
+      <div>
+        <h4 style="color:var(--text);font-size:13px;margin-bottom:8px">Linking & Schema</h4>
+        <div>☐ Links to pillar page 2–3 times</div>
+        <div>☐ Links to 3–5 sibling cluster pages</div>
+        <div>☐ Anchor text is varied (not repetitive)</div>
+        <div>☐ FAQ section has 5–8 questions</div>
+        <div>☐ FAQ schema markup implemented</div>
+        <div>☐ Article schema with dateModified</div>
+        <div>☐ Soft CTA present (not aggressive)</div>
+        <div>☐ Passes writing style rules (simple, no jargon)</div>
+      </div>
+    </div>
+  </div>`;
+  
+  container.innerHTML = html;
+}
+
+// ───── EVENT HANDLERS ─────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderPages();
+  });
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    // Show/hide controls (filters only for pages tab)
+    document.getElementById('controls').style.display = btn.dataset.tab==='pages'?'flex':'none';
+  });
+});
+
+document.getElementById('searchBox').addEventListener('input', renderPages);
+
+// ───── INIT ─────
+renderStats();
+renderPages();
+renderClusters();
+renderLinkMap();
+renderChecklist();
+</script>
+</body>
+</html>

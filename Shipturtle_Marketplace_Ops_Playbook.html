@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — Marketplace Ops & Features Pillar: Child Page Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0e14;--surface:#141722;--surface2:#1a1f2e;--surface3:#222840;--border:#2a3050;--text:#e0e4f0;--text2:#8b93b0;--text3:#5a6380;--accent:#ec4899;--accent2:#f43f5e;--green:#34d399;--green-dim:rgba(52,211,153,0.12);--yellow:#fbbf24;--yellow-dim:rgba(251,191,36,0.12);--red:#f87171;--red-dim:rgba(248,113,113,0.12);--orange:#fb923c;--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.12);--purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);--keep:#34d399;--merge:#fbbf24;--rewrite:#60a5fa;--redirect:#f87171;--repillar:#a78bfa;--font:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:linear-gradient(135deg,#141722 0%,#ec489915 50%,#141722 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px}
+.header-inner{max-width:1400px;margin:0 auto}.header-top{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.header-badge{background:linear-gradient(135deg,#ec4899,#f43f5e);color:#000;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:4px}
+.header h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff 0%,#ec4899 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-sub{color:var(--text2);font-size:15px;margin-top:8px;max-width:800px}
+.pillar-url{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 16px;color:var(--accent)}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:1400px;margin:24px auto;padding:0 40px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-align:center}
+.stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}.stat-card .value{font-size:28px;font-weight:700;color:var(--text)}.stat-card .sub{font-size:11px;color:var(--text3);margin-top:2px}
+.stat-card.keep .value{color:var(--keep)}.stat-card.merge .value{color:var(--merge)}.stat-card.rewrite .value{color:var(--rewrite)}.stat-card.redirect .value{color:var(--redirect)}.stat-card.repillar .value{color:var(--purple)}.stat-card.exclude .value{color:var(--text3)}
+.controls{max-width:1400px;margin:0 auto;padding:20px 40px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.controls .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;font-size:13px;font-family:var(--font);cursor:pointer;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--text)}.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.filter-btn.keep.active{background:var(--keep)}.filter-btn.merge.active{background:var(--merge)}.filter-btn.rewrite.active{background:var(--rewrite)}.filter-btn.redirect.active{background:var(--redirect)}.filter-btn.repillar.active{background:var(--purple)}.filter-btn.exclude.active{background:var(--text3)}
+.search-box{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 14px;color:var(--text);font-size:13px;font-family:var(--font);width:240px;outline:none}.search-box:focus{border-color:var(--accent)}.search-box::placeholder{color:var(--text3)}
+.main{max-width:1400px;margin:0 auto;padding:24px 40px 80px}
+.page-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color .2s}.page-card:hover{border-color:var(--accent)}
+.page-card-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.page-id{font-family:var(--mono);font-size:12px;color:var(--text3);background:var(--surface2);border-radius:4px;padding:2px 8px;min-width:36px;text-align:center}
+.page-title{font-weight:600;font-size:14px;flex:1;min-width:200px}.page-metrics{display:flex;gap:16px;font-size:13px}.page-metrics span{display:flex;align-items:center;gap:4px}
+.metric-clicks{color:var(--accent)}.metric-imp{color:var(--text2)}.metric-conv{color:var(--green)}
+.action-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:4px 10px;border-radius:4px}
+.action-badge.keep{background:var(--green-dim);color:var(--keep)}.action-badge.merge{background:var(--yellow-dim);color:var(--merge)}.action-badge.rewrite{background:var(--blue-dim);color:var(--rewrite)}.action-badge.redirect{background:var(--red-dim);color:var(--redirect)}.action-badge.repillar{background:var(--purple-dim);color:var(--purple)}.action-badge.exclude{background:rgba(90,99,128,.15);color:var(--text3)}
+.chevron{color:var(--text3);transition:transform .2s;font-size:18px}.chevron.open{transform:rotate(180deg)}
+.page-detail{display:none;padding:0 20px 24px}.page-detail.open{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.detail-section{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;break-inside:avoid}
+.detail-section h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.detail-section h4{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 6px}.detail-section p,.detail-section li{font-size:13px;color:var(--text2);line-height:1.7}
+.detail-section ul{padding-left:16px}.detail-section li{margin-bottom:4px}
+.detail-section code{font-family:var(--mono);font-size:12px;background:var(--surface3);padding:1px 6px;border-radius:3px;color:var(--accent)}
+.full-width{grid-column:1/-1}.url-row{font-family:var(--mono);font-size:12px;color:var(--text3);padding:0 20px 12px}
+.link-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.link-table th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.link-table td{padding:6px 8px;border-bottom:1px solid rgba(42,48,80,.4);color:var(--text2)}.link-table tr:last-child td{border-bottom:none}.link-table .anchor{color:var(--green);font-family:var(--mono);font-size:11px}
+.template-section{background:var(--surface3);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 6px 6px 0;margin:8px 0}
+.template-section .section-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.template-section .section-content{font-size:12px;color:var(--text2);line-height:1.6}
+.template-section .word-count{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);padding:1px 6px;border-radius:3px;margin-left:8px}
+.schema-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.schema-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--surface3);color:var(--text2);border:1px solid var(--border)}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none}.back-link:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <div class="header-top"><span class="header-badge">Pillar Playbook</span><span class="header-badge">Marketplace Ops & Features</span></div>
+  <h1>Marketplace Ops & Features — Child Page Playbook</h1>
+  <p class="header-sub">48 child pages covering vendor management, payments, shipping, marketing, security, and growth operations. Contains critical operations content including vendor payouts, seller onboarding, and AI vendor management.</p>
+  <div class="pillar-url">PILLAR → /blog/features-to-build-multi-vendor-marketplace</div>
+</div></div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="label">Pages</div><div class="value">42</div><div class="sub">16 at zero traffic</div></div>
+  <div class="stat-card"><div class="label">Clicks</div><div class="value">410</div><div class="sub">170K impressions</div></div>
+  <div class="stat-card"><div class="label">Conversions</div><div class="value">2</div></div>
+  <div class="stat-card keep"><div class="label">Keep</div><div class="value">19</div></div>
+  <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">6</div></div>
+  <div class="stat-card merge"><div class="label">Merge</div><div class="value">7</div></div>
+  <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">7</div></div>
+  <div class="stat-card repillar"><div class="label">Re-Pillar</div><div class="value">3</div></div>
+  
+</div>
+
+<div class="controls">
+  <span class="label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All (42)</button>
+  <button class="filter-btn" data-filter="keep">Keep (19)</button>
+  <button class="filter-btn" data-filter="rewrite">Rewrite (6)</button>
+  <button class="filter-btn" data-filter="merge">Merge (7)</button>
+  <button class="filter-btn" data-filter="redirect">Redirect (7)</button>
+  <button class="filter-btn" data-filter="repillar">Re-Pillar (3)</button>
+  
+  <input type="text" class="search-box" id="searchBox" placeholder="Search pages...">
+</div>
+
+<div class="main">
+  <a href="Shipturtle_SEO_Command_Center_v2.html" class="back-link">← Back to Command Center</a>
+  <div id="pageList">
+
+    <div class="page-card" data-action="keep" data-search="7 ways to make money on a marketplace [one bonus tip] blog/make-money-on-a-marketplace monetization">
+      <div class="page-card-header" onclick="togglePage(107)">
+        <span class="page-id">#107</span>
+        <span class="page-title">7 Ways To Make Money On A Marketplace [One Bonus Tip]</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">64 clicks</span>
+          <span class="metric-imp">38.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-107">▾</span>
+      </div>
+      <div class="url-row">/blog/make-money-on-a-marketplace</div>
+      <div class="page-detail" id="detail-107">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Monetization</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid performer — 64 clicks, 38.7K impressions. Refresh with updated revenue examples.</p>
+            <h4>Recommended Title Tag</h4><p><code>7 Ways to Make Money on a Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#108</td><td class="anchor">collaborative commerce</td><td>Revenue trend</td></tr><tr><td>#135</td><td class="anchor">DTC vs dropshipping</td><td>Model comparison</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: 7 Revenue Strategies (each as H3)<span class="word-count">1,500–1,800 words</span></div>
+              <div class="section-content">Commission, subscription, listing fees, featured listings, lead gen, ads, data monetization.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Revenue Model Comparison Table<span class="word-count">200–250 words</span></div>
+              <div class="section-content">AEO comparison table.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Marketplace revenue questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="change in marketplace trends: dropshipping to collaborative commerce blog/change-in-marketplace-trends-from-dropshipping-to-collaborative-commerce strategy">
+      <div class="page-card-header" onclick="togglePage(108)">
+        <span class="page-id">#108</span>
+        <span class="page-title">Change In Marketplace Trends: Dropshipping to Collaborative Commerce</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">3 clicks</span>
+          <span class="metric-imp">0.9K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-108">▾</span>
+      </div>
+      <div class="url-row">/blog/change-in-marketplace-trends-from-dropshipping-to-collaborative-commerce</div>
+      <div class="page-detail" id="detail-108">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Strategy</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strategic positioning piece. Core Shipturtle narrative. Refresh with data.</p>
+            <h4>Recommended Title Tag</h4><p><code>Collaborative Commerce vs Dropshipping: Why Brands Are Switching [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#135</td><td class="anchor">DTC vs dropshipping</td><td>Related comparison</td></tr><tr><td>#110</td><td class="anchor">platform thinking</td><td>Strategy</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Platform Thinking?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Brand owner → marketplace operator shift. Network effects. Platform vs pipeline business model.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Why Brands Are Becoming Platforms<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Revenue diversification, inventory-light expansion, customer data, ecosystem building. Real examples.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: 5 Steps to Shift from Brand to Platform<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each step as H3. Numbered list (AEO). Mindset shift → Vendor strategy → Technology selection → Operations → Growth.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Platform Thinking in Practice<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Case studies: brands that successfully became marketplaces. Revenue before/after data.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Platform thinking questions: when to shift, risks, technology requirements, vendor management, customer experience.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="embracing platform thinking: from brand owner to marketplace operator blog/embracing-platform-thinking-from-brand-owner-to-marketplace-operator strategy">
+      <div class="page-card-header" onclick="togglePage(110)">
+        <span class="page-id">#110</span>
+        <span class="page-title">Embracing Platform Thinking: From Brand Owner to Marketplace Operator</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">15 clicks</span>
+          <span class="metric-imp">7.3K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-110">▾</span>
+      </div>
+      <div class="url-row">/blog/embracing-platform-thinking-from-brand-owner-to-marketplace-operator</div>
+      <div class="page-detail" id="detail-110">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Strategy</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Thought leadership. 15 clicks, 7.3K imp. Add transformation framework.</p>
+            <h4>Recommended Title Tag</h4><p><code>From Brand Owner to Marketplace Operator: The Platform Thinking Guide</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#108</td><td class="anchor">collaborative commerce</td><td>Trend context</td></tr><tr><td>#107</td><td class="anchor">marketplace revenue</td><td>Revenue impact</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Platform Thinking?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Brand owner → marketplace operator shift. Network effects. Platform vs pipeline business model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Why Brands Are Becoming Platforms<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Revenue diversification, inventory-light expansion, customer data, ecosystem building. Real examples.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 5 Steps to Shift from Brand to Platform<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each step as H3. Numbered list (AEO). Mindset shift → Vendor strategy → Technology selection → Operations → Growth.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Platform Thinking in Practice<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Case studies: brands that successfully became marketplaces. Revenue before/after data.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Platform thinking questions: when to shift, risks, technology requirements, vendor management, customer experience.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="effective marketing strategies for your multi-vendor marketplace in 2025 blog/effective-marketing-strategies-for-your-multi-vendor-marketplace-in-2025 marketing">
+      <div class="page-card-header" onclick="togglePage(109)">
+        <span class="page-id">#109</span>
+        <span class="page-title">Effective Marketing Strategies for Your Multi-Vendor Marketplace in 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">17 clicks</span>
+          <span class="metric-imp">2.6K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-109">▾</span>
+      </div>
+      <div class="url-row">/blog/effective-marketing-strategies-for-your-multi-vendor-marketplace-in-2025</div>
+      <div class="page-detail" id="detail-109">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Marketing</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid ops topic. 17 clicks. Expand with channel breakdowns.</p>
+            <h4>Recommended Title Tag</h4><p><code>Multi-Vendor Marketplace Marketing Strategies for 2026 [Complete Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#107</td><td class="anchor">marketplace revenue</td><td>Revenue/marketing link</td></tr><tr><td>#115</td><td class="anchor">attract sellers</td><td>Supply-side marketing</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Marketplace Marketing Is Different<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Two-sided marketing (vendors + buyers). Chicken-and-egg problem. Key metrics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 10 Marketing Strategies for Multi-Vendor Marketplaces<span class="word-count">600–800 words</span></div>
+              <div class="section-content">Each strategy as H3. Numbered list (AEO). SEO → Content marketing → Social proof → Vendor spotlights → Email segmentation → Referral programs → Paid acquisition → Community → Partnerships → Retention.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Vendor Acquisition Marketing<span class="word-count">250–300 words</span></div>
+              <div class="section-content">How to attract first 100 vendors. Outreach templates, incentives, onboarding funnel.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Buyer Acquisition Strategies<span class="word-count">250–300 words</span></div>
+              <div class="section-content">SEO, social commerce, influencer partnerships, launch promotions, category expansion.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Marketplace marketing questions: budget allocation, vendor vs buyer marketing split, ROI metrics, social media, SEO.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="marketplace shipping faqs: enhance your shopify multivendor stores blog/marketplace-shipping-faqs shipping">
+      <div class="page-card-header" onclick="togglePage(111)">
+        <span class="page-id">#111</span>
+        <span class="page-title">Marketplace Shipping FAQs: Enhance Your Shopify Multivendor Stores</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">19 clicks</span>
+          <span class="metric-imp">7.5K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-111">▾</span>
+      </div>
+      <div class="url-row">/blog/marketplace-shipping-faqs</div>
+      <div class="page-detail" id="detail-111">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shipping</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Shipping = Shipturtle's core differentiator. FAQ format is AEO-friendly.</p>
+            <h4>Recommended Title Tag</h4><p><code>Marketplace Shipping FAQ: Everything You Need to Know [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#122</td><td class="anchor">fulfillment automation</td><td>Related</td></tr><tr><td>#123</td><td class="anchor">order tracking</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: How Does Marketplace Shipping Work?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Multi-vendor shipping orchestration. Split shipments, vendor-direct, marketplace-fulfilled models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Shipping Challenges in Multi-Vendor Marketplaces<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Split shipments, rate negotiations, label generation, tracking consolidation, returns handling, international shipping.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Set Up Shipping for Your Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Choose shipping model → Carrier integration → Rate configuration → Label automation → Tracking → Returns process.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Shipping Automation with Shipturtle<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Auto carrier assignment, vendor shipping profiles, consolidated tracking, branded tracking pages, WISMO reduction.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (8 questions)<span class="word-count">400–480 words</span></div>
+              <div class="section-content">Extended FAQ section (this IS the shipping FAQ page). Split shipments, rates, international, returns, tracking, vendor fulfillment times, packaging, insurance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="what is a vendor management system and why your marketplace needs one blog/what-is-a-vendor-management-system vendor mgmt">
+      <div class="page-card-header" onclick="togglePage(112)">
+        <span class="page-id">#112</span>
+        <span class="page-title">What is a Vendor Management System and Why Your Marketplace Needs One</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">5 clicks</span>
+          <span class="metric-imp">2.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-112">▾</span>
+      </div>
+      <div class="url-row">/blog/what-is-a-vendor-management-system</div>
+      <div class="page-detail" id="detail-112">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vendor Mgmt</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Definitional page. 'VMS' is high-value B2B keyword. Needs expansion.</p>
+            <h4>Recommended Title Tag</h4><p><code>What Is a Vendor Management System (VMS)? Complete Marketplace Guide</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#114</td><td class="anchor">seller onboarding</td><td>VMS feature</td></tr><tr><td>#115</td><td class="anchor">attract sellers</td><td>VMS benefit</td></tr><tr><td>#127</td><td class="anchor">AI vendor management</td><td>AI enhancement</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: How AI Is Transforming Vendor Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). AI applications in marketplace operations: matching, pricing, quality control, fraud detection. Market trend data.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: 6 AI Use Cases for Vendor Management<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each use case as H3. Automated onboarding → Smart product categorization → Dynamic pricing → Fraud detection → Performance prediction → Demand forecasting.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: AI-Powered Vendor Matching<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Algorithm for matching buyers with best vendors based on location, inventory, reviews, fulfillment speed.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Implementation Roadmap<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Phase 1: Basic automation → Phase 2: ML models → Phase 3: Predictive analytics → Phase 4: Autonomous optimization.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">AI vendor management questions: implementation cost, data requirements, accuracy, vendor acceptance, ROI timeline.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to simplify seller onboarding for your multi-vendor marketplace blog/how-to-simplify-seller-onboarding-for-your-multi-vendor-marketplace vendor mgmt">
+      <div class="page-card-header" onclick="togglePage(114)">
+        <span class="page-id">#114</span>
+        <span class="page-title">How to Simplify Seller Onboarding for Your Multi-Vendor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">38 clicks</span>
+          <span class="metric-imp">16.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-114">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-simplify-seller-onboarding-for-your-multi-vendor-marketplace</div>
+      <div class="page-detail" id="detail-114">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vendor Mgmt</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strong — 38 clicks, 16.1K imp. Add onboarding checklist template.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Simplify Seller Onboarding for Your Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management system</td><td>VMS context</td></tr><tr><td>#115</td><td class="anchor">attract sellers</td><td>Lifecycle</td></tr><tr><td>#126</td><td class="anchor">vendor retention</td><td>Lifecycle</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Vendor Retention Is Critical<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Cost of vendor churn. Retention vs acquisition economics. Key retention metrics.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: 8 Vendor Retention Strategies<span class="word-count">600–700 words</span></div>
+              <div class="section-content">Each strategy as H3. Numbered list (AEO). Timely payouts → Analytics dashboard → Marketing support → Featured placement → Community → Competitive commissions → Dedicated support → Growth tools.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Vendor Health Scoring<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Building a vendor health score: sales velocity, response time, review scores, return rates, compliance. Early warning system.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Vendor Loyalty Programs<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Tiered benefits, volume-based commission reduction, exclusive features, early access, co-marketing budgets.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Vendor retention questions: churn signals, win-back strategies, commission optimization, community building, vendor satisfaction surveys.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to attract quality sellers to your marketplace blog/how-to-attract-quality-sellers-to-your-marketplace vendor mgmt">
+      <div class="page-card-header" onclick="togglePage(115)">
+        <span class="page-id">#115</span>
+        <span class="page-title">How to Attract Quality Sellers to Your Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">18 clicks</span>
+          <span class="metric-imp">5.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-115">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-attract-quality-sellers-to-your-marketplace</div>
+      <div class="page-detail" id="detail-115">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vendor Mgmt</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Complements #114 (attract vs onboard). 18 clicks.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Attract Quality Sellers to Your Marketplace [2026 Playbook]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#114</td><td class="anchor">seller onboarding</td><td>Next step</td></tr><tr><td>#126</td><td class="anchor">vendor retention</td><td>Lifecycle</td></tr><tr><td>#109</td><td class="anchor">marketing strategies</td><td>Acquisition channels</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Seller Quality Defines Marketplace Success<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Quality sellers → better products → more buyers → more sellers (flywheel). Metrics: GMV per seller, return rate, review scores.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 8 Strategies to Attract Quality Sellers<span class="word-count">600–700 words</span></div>
+              <div class="section-content">Each strategy as H3. Numbered list (AEO). Targeted outreach → Competitive commissions → Easy onboarding → Marketing support → Analytics tools → Featured placement → Community → Exclusivity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Seller Outreach Templates &amp; Scripts<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Email templates, LinkedIn outreach scripts, marketplace pitch deck outline. Practical copy examples.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Seller Vetting Best Practices<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Application review criteria, sample product review, track record checks, trial period structure.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Seller attraction questions: where to find sellers, incentive structures, exclusivity deals, onboarding friction, retention.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to automate vendor payouts in your multi-vendor marketplace blog/how-to-automate-vendor-payouts-in-your-multi-vendor-marketplace payments">
+      <div class="page-card-header" onclick="togglePage(117)">
+        <span class="page-id">#117</span>
+        <span class="page-title">How to Automate Vendor Payouts in Your Multi-Vendor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">36 clicks</span>
+          <span class="metric-imp">16.2K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-117">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-automate-vendor-payouts-in-your-multi-vendor-marketplace</div>
+      <div class="page-detail" id="detail-117">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Payments</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">CANONICAL PAYOUT PAGE — 36 clicks, 16.2K imp. Absorb #118, #119, #120.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Automate Vendor Payouts in Your Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (3x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 3 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management</td><td>VMS context</td></tr><tr><td>#107</td><td class="anchor">marketplace revenue</td><td>Revenue/payout link</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Automate Payouts?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Cost of manual payouts (from #119).</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Commission Models Compared<span class="word-count">300–400 words</span></div>
+              <div class="section-content">From #118. Fixed, percentage, tiered, hybrid.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Complex Fee Structures<span class="word-count">250–300 words</span></div>
+              <div class="section-content">From #120. Multi-currency, tax-inclusive, split payments.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Payout Automation<span class="word-count">400–500 words</span></div>
+              <div class="section-content">How-to schema. Stripe Connect, PayPal, custom.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Payout-focused.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="vendor payouts and commission models in pod marketplace blog/vendor-payouts-commission-models-in-pod-marketplace pod / payments">
+      <div class="page-card-header" onclick="togglePage(118)">
+        <span class="page-id">#118</span>
+        <span class="page-title">Vendor Payouts And Commission Models In POD Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">1.4K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-118">▾</span>
+      </div>
+      <div class="url-row">/blog/vendor-payouts-commission-models-in-pod-marketplace</div>
+      <div class="page-detail" id="detail-118">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> POD / Payments</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #117</p>
+            <p style="margin-top:8px">CANNIBALIZES #117. Merge commission content into #117.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #117</div>
+              <div class="section-content">POD payout content merges into #117 (vendor payouts canonical). Extract POD-specific commission calculations as section.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="the cost of poor payment processing blog/cost-of-poor-payment-processing payments">
+      <div class="page-card-header" onclick="togglePage(119)">
+        <span class="page-id">#119</span>
+        <span class="page-title">The Cost of Poor Payment Processing</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">4 clicks</span>
+          <span class="metric-imp">0.7K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-119">▾</span>
+      </div>
+      <div class="url-row">/blog/cost-of-poor-payment-processing</div>
+      <div class="page-detail" id="detail-119">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Payments</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #117</p>
+            <p style="margin-top:8px">CANNIBALIZES #117. Merge as intro section.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #117</div>
+              <div class="section-content">Cost-of-failure content becomes section in #117 (vendor payouts). &#x27;Why Automate Payouts&#x27; justification section.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="the smarter way to run a digital marketplace with complex fees blog/run-a-digital-marketplace-with-fee-automation payments">
+      <div class="page-card-header" onclick="togglePage(120)">
+        <span class="page-id">#120</span>
+        <span class="page-title">The Smarter Way to Run a Digital Marketplace With Complex Fees</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-120">▾</span>
+      </div>
+      <div class="url-row">/blog/run-a-digital-marketplace-with-fee-automation</div>
+      <div class="page-detail" id="detail-120">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Payments</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #117</p>
+            <p style="margin-top:8px">CANNIBALIZES #117. Complex fee section in #117.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #117</div>
+              <div class="section-content">Complex fee structures content merges into #117. Adds advanced commission model section.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to automate order fulfillment across multiple warehouses blog/how-to-automate-order-fulfillment-across-multiple-warehouses fulfillment">
+      <div class="page-card-header" onclick="togglePage(122)">
+        <span class="page-id">#122</span>
+        <span class="page-title">How to Automate Order Fulfillment Across Multiple Warehouses</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">8 clicks</span>
+          <span class="metric-imp">10.9K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-122">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-automate-order-fulfillment-across-multiple-warehouses</div>
+      <div class="page-detail" id="detail-122">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Fulfillment</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">High impressions (10.9K) relative to clicks = title optimization opportunity.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Automate Marketplace Order Fulfillment Across Warehouses [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#111</td><td class="anchor">marketplace shipping FAQ</td><td>Related</td></tr><tr><td>#123</td><td class="anchor">order tracking</td><td>Post-fulfillment</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Multi-Warehouse Order Fulfillment?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Multi-vendor fulfillment orchestration. Vendor-direct vs centralized vs hybrid models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Fulfillment Automation Features<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Auto order routing, warehouse proximity matching, split order management, carrier selection, packing slip generation, inventory sync, SLA monitoring.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Automate Fulfillment Across Warehouses<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. How-to schema. Map warehouse network → Set routing rules → Integrate carriers → Automate labels → Track across vendors → Handle exceptions.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Fulfillment SLA Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Setting vendor SLAs, monitoring compliance, automated alerts, performance scorecards, penalty/incentive structures.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Multi-warehouse questions: routing logic, split shipments, vendor SLAs, carrier integration, inventory sync across locations.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to reduce wismo queries using branded order tracking blog/reduce-wismo-queries-using-branded-order-tracking order tracking">
+      <div class="page-card-header" onclick="togglePage(123)">
+        <span class="page-id">#123</span>
+        <span class="page-title">How to Reduce WISMO Queries Using Branded Order Tracking</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">3 clicks</span>
+          <span class="metric-imp">3.2K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-123">▾</span>
+      </div>
+      <div class="url-row">/blog/reduce-wismo-queries-using-branded-order-tracking</div>
+      <div class="page-detail" id="detail-123">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Order Tracking</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Has a conversion despite 3 clicks. High-intent audience.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Reduce WISMO Queries in Marketplaces [Branded Tracking Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#122</td><td class="anchor">fulfillment automation</td><td>Pre-tracking</td></tr><tr><td>#111</td><td class="anchor">shipping FAQ</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Are WISMO Queries?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). &#x27;Where Is My Order&#x27; as #1 support ticket category. Cost per WISMO query. Impact on CSAT.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 5 Strategies to Reduce WISMO<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each strategy as H3. Numbered list (AEO). Proactive notifications → Branded tracking page → Real-time updates → Self-service portal → Vendor SLA enforcement.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Branded Order Tracking Implementation<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Custom tracking page design, status update automation, estimated delivery dates, multi-carrier consolidation.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Measuring WISMO Reduction ROI<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Cost per ticket, ticket volume before/after, CSAT improvement, repeat purchase correlation.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">WISMO questions: branded tracking setup, notification timing, carrier integration, customer expectations, vendor accountability.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="implementing robust security for your multi-vendor marketplace blog/implementing-robust-security-for-your-multi-vendor-marketplace security">
+      <div class="page-card-header" onclick="togglePage(124)">
+        <span class="page-id">#124</span>
+        <span class="page-title">Implementing Robust Security for Your Multi-Vendor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">9 clicks</span>
+          <span class="metric-imp">1.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-124">▾</span>
+      </div>
+      <div class="url-row">/blog/implementing-robust-security-for-your-multi-vendor-marketplace</div>
+      <div class="page-detail" id="detail-124">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Security</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid ops topic. Expand with PCI compliance, fraud prevention.</p>
+            <h4>Recommended Title Tag</h4><p><code>Marketplace Security Guide: Protecting Your Multi-Vendor Platform [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#125</td><td class="anchor">marketplace trust</td><td>Trust complement</td></tr><tr><td>#112</td><td class="anchor">vendor management</td><td>Vendor security</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Security Matters for Multi-Vendor Marketplaces<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Attack vectors: payment fraud, fake vendors, data breaches. Cost of security failures.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 8 Security Best Practices<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each practice as H3. PCI compliance → Vendor verification → SSL/encryption → Fraud detection → Data access controls → Payment tokenization → Activity monitoring → Incident response.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Vendor Verification Security<span class="word-count">250–300 words</span></div>
+              <div class="section-content">KYC for vendors, business document verification, identity validation, ongoing monitoring.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Payment Security Architecture<span class="word-count">200–250 words</span></div>
+              <div class="section-content">PCI DSS compliance, tokenization, 3D Secure, fraud scoring, chargeback prevention.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Marketplace security questions: PCI compliance, vendor fraud, data protection, GDPR, incident response.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="building trust through transparency: your marketplace's secret weapon blog/building-trust-through-transparency-your-marketplaces trust">
+      <div class="page-card-header" onclick="togglePage(125)">
+        <span class="page-id">#125</span>
+        <span class="page-title">Building Trust Through Transparency: Your Marketplace's Secret Weapon</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">4 clicks</span>
+          <span class="metric-imp">3.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-125">▾</span>
+      </div>
+      <div class="url-row">/blog/building-trust-through-transparency-your-marketplaces</div>
+      <div class="page-detail" id="detail-125">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Trust</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Complements #124. Add review systems, dispute resolution.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build Trust in Your Multi-Vendor Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#124</td><td class="anchor">marketplace security</td><td>Security complement</td></tr><tr><td>#114</td><td class="anchor">seller onboarding</td><td>Trust starts at onboarding</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Trust Is Your Marketplace&#x27;s Competitive Advantage<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Trust as conversion driver. Two-sided trust (buyer ↔ vendor). Trust metrics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 7 Trust-Building Strategies<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each strategy as H3. Verified reviews → Transparent pricing → Seller ratings → Buyer protection → Clear policies → Communication tools → Dispute resolution.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Building Vendor Trust<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Timely payouts, clear commission structure, performance dashboards, support access, community forums.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Transparency Best Practices<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Fee disclosure, policy clarity, refund process visibility, seller performance metrics, marketplace health reporting.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Trust questions: fake reviews, dispute resolution, seller verification, buyer protection guarantees, transparency reporting.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="ultimate guide to vendor retention blog/ultimate-guide-to-vendor-retention vendor mgmt">
+      <div class="page-card-header" onclick="togglePage(126)">
+        <span class="page-id">#126</span>
+        <span class="page-title">Ultimate Guide to Vendor Retention</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">3 clicks</span>
+          <span class="metric-imp">1.4K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-126">▾</span>
+      </div>
+      <div class="url-row">/blog/ultimate-guide-to-vendor-retention</div>
+      <div class="page-detail" id="detail-126">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vendor Mgmt</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Completes vendor lifecycle: Attract → Onboard → Retain.</p>
+            <h4>Recommended Title Tag</h4><p><code>Vendor Retention for Marketplaces: The Complete Guide [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#114</td><td class="anchor">seller onboarding</td><td>Lifecycle</td></tr><tr><td>#115</td><td class="anchor">attract sellers</td><td>Lifecycle</td></tr><tr><td>#127</td><td class="anchor">AI vendor management</td><td>AI retention</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Vendor Retention Is Critical<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Cost of vendor churn. Retention vs acquisition economics. Key retention metrics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 8 Vendor Retention Strategies<span class="word-count">600–700 words</span></div>
+              <div class="section-content">Each strategy as H3. Numbered list (AEO). Timely payouts → Analytics dashboard → Marketing support → Featured placement → Community → Competitive commissions → Dedicated support → Growth tools.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Vendor Health Scoring<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Building a vendor health score: sales velocity, response time, review scores, return rates, compliance. Early warning system.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Vendor Loyalty Programs<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Tiered benefits, volume-based commission reduction, exclusive features, early access, co-marketing budgets.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Vendor retention questions: churn signals, win-back strategies, commission optimization, community building, vendor satisfaction surveys.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how ai is changing vendor management in marketplaces blog/how-ai-is-changing-vendor-management-in-marketplaces vendor mgmt / ai">
+      <div class="page-card-header" onclick="togglePage(127)">
+        <span class="page-id">#127</span>
+        <span class="page-title">How AI Is Changing Vendor Management in Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">25 clicks</span>
+          <span class="metric-imp">5.4K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-127">▾</span>
+      </div>
+      <div class="url-row">/blog/how-ai-is-changing-vendor-management-in-marketplaces</div>
+      <div class="page-detail" id="detail-127">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vendor Mgmt / AI</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Timely topic with a conversion. 'AI vendor management' growing.</p>
+            <h4>Recommended Title Tag</h4><p><code>How AI Is Transforming Vendor Management in Marketplaces [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management system</td><td>VMS context</td></tr><tr><td>#114</td><td class="anchor">seller onboarding</td><td>AI onboarding</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: How AI Is Transforming Vendor Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). AI applications in marketplace operations: matching, pricing, quality control, fraud detection. Market trend data.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 6 AI Use Cases for Vendor Management<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each use case as H3. Automated onboarding → Smart product categorization → Dynamic pricing → Fraud detection → Performance prediction → Demand forecasting.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: AI-Powered Vendor Matching<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Algorithm for matching buyers with best vendors based on location, inventory, reviews, fulfillment speed.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Implementation Roadmap<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Phase 1: Basic automation → Phase 2: ML models → Phase 3: Predictive analytics → Phase 4: Autonomous optimization.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">AI vendor management questions: implementation cost, data requirements, accuracy, vendor acceptance, ROI timeline.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="why multi-vendor management fails in many marketplaces blog/multivendor-management vendor mgmt">
+      <div class="page-card-header" onclick="togglePage(128)">
+        <span class="page-id">#128</span>
+        <span class="page-title">Why Multi-Vendor Management Fails in Many Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">5 clicks</span>
+          <span class="metric-imp">6.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-128">▾</span>
+      </div>
+      <div class="url-row">/blog/multivendor-management</div>
+      <div class="page-detail" id="detail-128">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vendor Mgmt</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Problem-focused content attracts solution-seekers. 6.1K imp.</p>
+            <h4>Recommended Title Tag</h4><p><code>Why Multi-Vendor Management Fails (And How to Fix It) [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management system</td><td>Solution</td></tr><tr><td>#127</td><td class="anchor">AI vendor management</td><td>AI fix</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Multi-Vendor Management Fails<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Common failure patterns: vendor sprawl, inconsistent quality, payment disputes, communication breakdowns.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 7 Common Failure Patterns<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each pattern as H3. Numbered list (AEO). Poor onboarding → No quality standards → Payment delays → Communication silos → No performance tracking → Scaling without process → Ignoring vendor feedback.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Prevent Each Failure<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Prevention checklist mapped to each failure pattern. Practical process recommendations.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Vendor Management Framework<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Structured framework: Recruit → Onboard → Monitor → Support → Optimize → Retain.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Management failure questions: early warning signs, recovery strategies, scaling challenges, vendor communication, quality enforcement.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="marketplace growth hacks in 2025 blog/marketplace-growth-hacks growth">
+      <div class="page-card-header" onclick="togglePage(129)">
+        <span class="page-id">#129</span>
+        <span class="page-title">Marketplace Growth Hacks in 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">5 clicks</span>
+          <span class="metric-imp">3.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-129">▾</span>
+      </div>
+      <div class="url-row">/blog/marketplace-growth-hacks</div>
+      <div class="page-detail" id="detail-129">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Growth</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Winner of growth cluster. Absorb #130.</p>
+            <h4>Recommended Title Tag</h4><p><code>Marketplace Growth Hacks for 2026 [Data-Driven Tactics]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#107</td><td class="anchor">marketplace revenue</td><td>Revenue growth</td></tr><tr><td>#109</td><td class="anchor">marketing strategies</td><td>Growth channels</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Are Marketplace Growth Hacks?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Growth hacking vs traditional marketing. Marketplace-specific growth levers.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 10 Marketplace Growth Hacks for 2026<span class="word-count">600–800 words</span></div>
+              <div class="section-content">Each hack as H3. Numbered list (AEO). Vendor referral → Buyer incentives → SEO clusters → Social proof → Cross-selling → Email sequences → Partnership → Community → Data-driven expansion → Viral mechanics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Profitability Hacks (from #130)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Absorb #130 content. Unit economics, commission optimization, reducing CAC, increasing LTV, operational efficiency.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Growth Metrics Dashboard<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Key metrics to track: GMV, take rate, vendor/buyer ratio, CAC, LTV, retention, NPS.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Growth hack questions: best first hack, budget requirements, timeline to results, measuring success, scaling.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="hacks to build a marketplace that is profitable blog/hacks-to-build-a-marketplace growth">
+      <div class="page-card-header" onclick="togglePage(130)">
+        <span class="page-id">#130</span>
+        <span class="page-title">Hacks to Build a Marketplace That is Profitable</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">0.6K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-130">▾</span>
+      </div>
+      <div class="url-row">/blog/hacks-to-build-a-marketplace</div>
+      <div class="page-detail" id="detail-130">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Growth</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #129</p>
+            <p style="margin-top:8px">CANNIBALIZES #129. Merge profitability angle into #129.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #129</div>
+              <div class="section-content">Profitability hacks content merges into #129 growth hacks. Becomes &#x27;Profitability Hacks&#x27; H2 section. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="integrating offline print partners into your pod marketplace blog/integrating-offline-print-partners pod">
+      <div class="page-card-header" onclick="togglePage(113)">
+        <span class="page-id">#113</span>
+        <span class="page-title">Integrating Offline Print Partners Into Your POD Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-113">▾</span>
+      </div>
+      <div class="url-row">/blog/integrating-offline-print-partners</div>
+      <div class="page-detail" id="detail-113">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> POD</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into consolidated POD guide</p>
+            <p style="margin-top:8px">Ultra-niche POD. Merge into consolidated POD guide.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into consolidated POD operations guide</div>
+              <div class="section-content">Offline print partner content merges into POD operations consolidation with #121 and #134. Extract unique offline integration angle.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="order management software for custom print orders blog/order-management-software-custom-print-orders pod">
+      <div class="page-card-header" onclick="togglePage(121)">
+        <span class="page-id">#121</span>
+        <span class="page-title">Order Management Software For Custom Print Orders</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-121">▾</span>
+      </div>
+      <div class="url-row">/blog/order-management-software-custom-print-orders</div>
+      <div class="page-detail" id="detail-121">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> POD</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into consolidated POD guide</p>
+            <p style="margin-top:8px">Zero traffic. Merge into POD guide.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into POD consolidation</div>
+              <div class="section-content">POD order management merges into consolidated POD guide with #113 and #134.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="how to handle product personalization in pod marketplace blog/product-personalization-in-pod-marketplace pod">
+      <div class="page-card-header" onclick="togglePage(134)">
+        <span class="page-id">#134</span>
+        <span class="page-title">How To Handle Product Personalization in POD Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-134">▾</span>
+      </div>
+      <div class="url-row">/blog/product-personalization-in-pod-marketplace</div>
+      <div class="page-detail" id="detail-134">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> POD</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into consolidated POD guide</p>
+            <p style="margin-top:8px">Zero traffic. Merge into POD guide.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into POD consolidation</div>
+              <div class="section-content">Product personalization content merges into consolidated POD guide with #113 and #121.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="repillar" data-search="laravel shopify app development: build and host on cloudways blog/integrate-laravel-shopify-on-cloudways technical">
+      <div class="page-card-header" onclick="togglePage(132)">
+        <span class="page-id">#132</span>
+        <span class="page-title">Laravel Shopify App Development: Build And Host on Cloudways</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">88 clicks</span>
+          <span class="metric-imp">20.1K imp</span>
+          
+        </span>
+        <span class="action-badge repillar">repillar</span>
+        <span class="chevron" id="chev-132">▾</span>
+      </div>
+      <div class="url-row">/blog/integrate-laravel-shopify-on-cloudways</div>
+      <div class="page-detail" id="detail-132">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Technical</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Move to How to Build or Dev section</p>
+            <p style="margin-top:8px">MISPLACED — developer tutorial, not ops content. 88 clicks, 20K imp. Move to How to Build or standalone Dev section.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Laravel Shopify App Development?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Laravel + Shopify API integration. Custom app development beyond Liquid. Why developers choose Laravel.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Development Environment Setup<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Step-by-step: Laravel installation, Shopify API credentials, OAuth flow, Cloudways hosting setup, environment configuration, database setup.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Building Your Laravel Shopify App<span class="word-count">600–700 words</span></div>
+              <div class="section-content">Core development as H3s. How-to schema. Authentication → API integration → Webhooks → Data sync → Admin dashboard → Testing → Deployment.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Hosting on Cloudways<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Cloudways setup, server configuration, SSL, performance optimization, deployment workflow, monitoring.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Common Challenges &amp; Solutions<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Rate limiting, webhook reliability, session management, API versioning, performance optimization.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Laravel Shopify questions: hosting costs, API limits, app submission, custom vs embedded, Cloudways vs alternatives.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="the power of great ux in building a successful multi-vendor marketplace blog/the-power-of-great-ux-in-building-a-successful-multi-vendor-marketplace ux">
+      <div class="page-card-header" onclick="togglePage(133)">
+        <span class="page-id">#133</span>
+        <span class="page-title">The Power of Great UX in Building a Successful Multi-Vendor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">1.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-133">▾</span>
+      </div>
+      <div class="url-row">/blog/the-power-of-great-ux-in-building-a-successful-multi-vendor-marketplace</div>
+      <div class="page-detail" id="detail-133">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> UX</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid ops topic. Needs depth expansion.</p>
+            <h4>Recommended Title Tag</h4><p><code>Marketplace UX Best Practices: Vendor Dashboard, Buyer Journey & Checkout [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#125</td><td class="anchor">marketplace trust</td><td>Trust via UX</td></tr><tr><td>#114</td><td class="anchor">seller onboarding</td><td>Onboarding UX</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why UX Defines Marketplace Success<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). UX impact on conversion rates, vendor satisfaction, buyer retention. Data on UX investment ROI.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: 6 UX Principles for Multi-Vendor Marketplaces<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each principle as H3. Search &amp; discovery → Product pages → Checkout → Vendor dashboards → Trust signals → Mobile-first. With real examples.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Buyer UX vs Vendor UX<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Two-sided design challenges. Buyer flow optimization. Vendor dashboard best practices. Balancing both experiences.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: UX Audit Checklist<span class="word-count">200–250 words</span></div>
+              <div class="section-content">15-point checklist for marketplace UX audit. Navigation, search, filters, product pages, checkout, mobile, accessibility.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Marketplace UX questions: mobile optimization, vendor dashboard design, search UX, trust signals, accessibility.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="direct to consumer marketplace vs dropshipping: what's the difference? blog/direct-to-consumer-marketplace-vs-dropshipping comparison">
+      <div class="page-card-header" onclick="togglePage(135)">
+        <span class="page-id">#135</span>
+        <span class="page-title">Direct To Consumer Marketplace vs Dropshipping: What's The Difference?</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">26 clicks</span>
+          <span class="metric-imp">11.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-135">▾</span>
+      </div>
+      <div class="url-row">/blog/direct-to-consumer-marketplace-vs-dropshipping</div>
+      <div class="page-detail" id="detail-135">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Comparison</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strong comparison — 26 clicks, 11.8K imp. Add comparison table.</p>
+            <h4>Recommended Title Tag</h4><p><code>DTC Marketplace vs Dropshipping: What's the Difference? [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#108</td><td class="anchor">collaborative commerce</td><td>Trend context</td></tr><tr><td>#107</td><td class="anchor">marketplace revenue</td><td>Revenue comparison</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Quick Answer (AEO)<span class="word-count">60 words</span></div>
+              <div class="section-content">Direct answer block.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Comparison Table<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Featured snippet target.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: When to Choose DTC Marketplace<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Use cases.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: When to Choose Dropshipping<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Use cases.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">DTC vs dropshipping questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="the hidden infrastructure behind brazil's fastest growing ethical marketplaces blog/structured-metafields-for-ethical-marketplaces geo: brazil">
+      <div class="page-card-header" onclick="togglePage(116)">
+        <span class="page-id">#116</span>
+        <span class="page-title">The Hidden Infrastructure Behind Brazil's Fastest Growing Ethical Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-116">▾</span>
+      </div>
+      <div class="url-row">/blog/structured-metafields-for-ethical-marketplaces</div>
+      <div class="page-detail" id="detail-116">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Brazil</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid concept (structured metafields). Rewrite for SEO.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Use Structured Metafields for Marketplace Product Management</code></p>
+            <h4>Target Word Count</h4><p>2,000–2,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management</td><td>Product management</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Brazil Ethical Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Brazil ecommerce market, ethical commerce growth, structured metafields for product transparency.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Technical Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Shopify metafields for certifications, Portuguese localization, PIX payments, ethical sourcing verification.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps as H3s. Define ethical criteria → Vendor vetting → Metafield configuration → Payment (PIX, Mercado Pago) → Fulfillment.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Brazil ethical marketplace questions: certifications, metafields, payment gateways, logistics.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="c2c resale marketplaces are exploding blog/resale-marketplace-automation-shipturtle c2c operations">
+      <div class="page-card-header" onclick="togglePage(131)">
+        <span class="page-id">#131</span>
+        <span class="page-title">C2C Resale Marketplaces Are Exploding</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-131">▾</span>
+      </div>
+      <div class="url-row">/blog/resale-marketplace-automation-shipturtle</div>
+      <div class="page-detail" id="detail-131">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> C2C Operations</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent. Rewrite as 'How to Automate C2C Resale Marketplace Operations'.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Automate C2C Resale Marketplace Operations [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#117</td><td class="anchor">vendor payouts</td><td>Payout automation</td></tr><tr><td>#122</td><td class="anchor">fulfillment</td><td>Operations</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why C2C Resale Marketplaces Are Booming<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Market data, sustainability trends, Gen Z resale behavior, Depop/Vinted growth.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Operational Requirements for Resale Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Authentication, condition grading, shipping logistics, quality photos, return handling, pricing guidance.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Set Up Resale Operations<span class="word-count">400–500 words</span></div>
+              <div class="section-content">6 steps as H3s. Define categories → Condition standards → Seller onboarding → Listing workflows → Payment → Fulfillment.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Resale operations questions: quality control, returns, authentication, seller guidelines.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="repillar" data-search="author marketplaces 2.0 blog/build-an-author-marketplace-new-zealand geo: nz">
+      <div class="page-card-header" onclick="togglePage(142)">
+        <span class="page-id">#142</span>
+        <span class="page-title">Author Marketplaces 2.0</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge repillar">repillar</span>
+        <span class="chevron" id="chev-142">▾</span>
+      </div>
+      <div class="url-row">/blog/build-an-author-marketplace-new-zealand</div>
+      <div class="page-detail" id="detail-142">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: NZ</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Move to Industry Marketplaces</p>
+            <p style="margin-top:8px">MISPLACED — industry vertical. Move to Industry Marketplaces.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Author Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Digital presence for writers. Self-publishing vs traditional. Creator economy for authors.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Author Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Author profiles, book catalog, digital delivery, preview/sample, reviews, event booking (readings), print-on-demand integration, subscription for serialized content.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Author Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define model → Author onboarding → Content catalog → Digital delivery → Payment (royalties) → Community.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Author marketplace questions: royalty splits, digital delivery, print-on-demand, discoverability.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="repillar" data-search="the peer to peer service marketplace redefining how repairs move across italy blog/build-a-peer-to-peer-repair-marketplace-italy geo: italy">
+      <div class="page-card-header" onclick="togglePage(143)">
+        <span class="page-id">#143</span>
+        <span class="page-title">The Peer to Peer Service Marketplace Redefining How Repairs Move Across Italy</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">0.1K imp</span>
+          
+        </span>
+        <span class="action-badge repillar">repillar</span>
+        <span class="chevron" id="chev-143">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-peer-to-peer-repair-marketplace-italy</div>
+      <div class="page-detail" id="detail-143">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Italy</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Move to Industry Marketplaces</p>
+            <p style="margin-top:8px">MISPLACED — industry vertical. Move to Industry Marketplaces.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Peer-to-Peer Repair Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Connecting people who need repairs with skilled fixers. Sustainability angle. Italian context.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Repair Marketplaces<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Skill/trade categories, location-based matching, scheduling, before/after photos, price estimates, insurance, reviews.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps as H3s. Define repair categories → Fixer onboarding → Booking system → Payment (escrow) → Reviews.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Repair marketplace questions: insurance, quality guarantees, pricing, fixer vetting.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="how boutique marketplaces scale faster with inventory precision blog/build-a-multi-store-fashion-marketplace-usa geo: usa">
+      <div class="page-card-header" onclick="togglePage(144)">
+        <span class="page-id">#144</span>
+        <span class="page-title">How Boutique Marketplaces Scale Faster With Inventory Precision</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-144">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-multi-store-fashion-marketplace-usa</div>
+      <div class="page-detail" id="detail-144">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: USA</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #122</p>
+            <p style="margin-top:8px">Weak fit. Redirect to #122 (fulfillment).</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Boutique Marketplaces Need Precise Inventory<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition. Small-batch production challenges. Overselling risk. Customer experience impact.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Inventory Synchronization for Boutiques<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Real-time sync, low-stock alerts, multi-channel inventory, automated reordering, vendor inventory feeds.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Connect vendor inventory → Set sync frequency → Buffer stock rules → Multi-channel management → Alerts.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Boutique inventory questions: sync delays, overselling prevention, multi-location, small-batch management.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="the streetwear marketplace brazil has been waiting for blog/build-a-multi-vendor-streetwear-platform-brazil geo: brazil">
+      <div class="page-card-header" onclick="togglePage(145)">
+        <span class="page-id">#145</span>
+        <span class="page-title">The Streetwear Marketplace Brazil Has Been Waiting For</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-145">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-multi-vendor-streetwear-platform-brazil</div>
+      <div class="page-detail" id="detail-145">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Brazil</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #74</p>
+            <p style="margin-top:8px">Off-brand for ops pillar. Redirect to #74 in Industry.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Brazil Streetwear Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Brazil streetwear market, youth culture, independent designer scene, market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Drop calendar, limited editions, size charts, designer profiles, social integration, PIX payments.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define brand → Designer onboarding → Drop management → Payment (PIX, Mercado Pago) → Fulfillment.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Brazil streetwear questions: designer acquisition, drop management, payment, fulfillment.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="building strength in uk b2b marketplaces through intelligent vendor rules blog/build-a-b2b-marketplace-uk-industrial geo: uk b2b">
+      <div class="page-card-header" onclick="togglePage(146)">
+        <span class="page-id">#146</span>
+        <span class="page-title">Building Strength in UK B2B Marketplaces Through Intelligent Vendor Rules</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-146">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-b2b-marketplace-uk-industrial</div>
+      <div class="page-detail" id="detail-146">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: UK B2B</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid concept (vendor rules automation). Rewrite.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Set Up Automated Vendor Rules for B2B Marketplaces [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management</td><td>VMS context</td></tr><tr><td>#117</td><td class="anchor">vendor payouts</td><td>Commission rules</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: UK B2B Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">UK B2B ecommerce market size, digital transformation trends, procurement automation demand.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Intelligent Workflow Features<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Automated reordering, approval chains, budget tracking, PO generation, vendor scorecards, inventory forecasting, integration with UK accounting (Xero, Sage).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build B2B Workflows for UK Marketplaces<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define procurement workflow → Approval chains → Vendor catalog → Payment (GBP, Net 30) → Integration → Automation.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">UK B2B questions: approval workflows, compliance, accounting integration, vendor management.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="where everyday sellers become a marketplace without professional tools blog/build-a-c2c-marketplace-with-smart-shipping c2c shipping">
+      <div class="page-card-header" onclick="togglePage(147)">
+        <span class="page-id">#147</span>
+        <span class="page-title">Where Everyday Sellers Become a Marketplace Without Professional Tools</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">3 clicks</span>
+          <span class="metric-imp">0.2K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-147">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-c2c-marketplace-with-smart-shipping</div>
+      <div class="page-detail" id="detail-147">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> C2C Shipping</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid concept (C2C smart shipping). Rewrite.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Simplify Shipping for C2C Marketplace Sellers [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,000–2,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#111</td><td class="anchor">shipping FAQ</td><td>Related</td></tr><tr><td>#131</td><td class="anchor">C2C operations</td><td>C2C context</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Simplified C2C Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition. Removing barriers for everyday sellers. Mobile-first listing. Comparison with complex platforms.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Simplification Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Photo-first listing, AI price suggestion, simplified shipping, instant payment, no-fee tiers, social sharing, one-tap listing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define simplicity criteria → Mobile-first design → Seller onboarding (under 2 min) → Payment → Shipping automation.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Simple C2C questions: listing time, fees, shipping, buyer protection.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="uae wellness marketplaces winning with real-time inventory truth blog/uae-online-wellness-marketplace geo: uae">
+      <div class="page-card-header" onclick="togglePage(148)">
+        <span class="page-id">#148</span>
+        <span class="page-title">UAE Wellness Marketplaces Winning With Real-Time Inventory Truth</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-148">▾</span>
+      </div>
+      <div class="url-row">/blog/uae-online-wellness-marketplace</div>
+      <div class="page-detail" id="detail-148">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: UAE</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #71</p>
+            <p style="margin-top:8px">Redirect to #71 in Industry.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: UAE Wellness Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">UAE wellness market, health-conscious consumer demographics, real-time inventory needs.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Real-Time Inventory for Wellness<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Expiry date tracking, batch management, temperature-sensitive logistics, halal certification, supplement regulations.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Market research → Inventory system setup → Vendor integration → Regulatory compliance → Local delivery.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">UAE wellness questions: halal certification, expiry tracking, supplement regulations, inventory sync.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="how india's b2b marketplaces build through workflow intelligence blog/wholesale-marketplace-operations-india geo: india">
+      <div class="page-card-header" onclick="togglePage(149)">
+        <span class="page-id">#149</span>
+        <span class="page-title">How India's B2B Marketplaces Build Through Workflow Intelligence</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-149">▾</span>
+      </div>
+      <div class="url-row">/blog/wholesale-marketplace-operations-india</div>
+      <div class="page-detail" id="detail-149">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: India</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #53</p>
+            <p style="margin-top:8px">Redirect to #53 in How to Build.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: India B2B Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">India B2B ecommerce market size, wholesale digitization, GST impact on procurement.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Workflow Intelligence Features<span class="word-count">350–400 words</span></div>
+              <div class="section-content">GST-compliant invoicing, UPI B2B payments, bulk order management, credit terms, regional language support, logistics integration (Delhivery, Shiprocket B2B).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide for India B2B<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps. Market selection → GST compliance → Vendor onboarding → Payment (UPI, credit) → Logistics → Scaling.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">India B2B questions: GST compliance, payment terms, logistics, regional expansion.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="how privacy builds vendor trust in wholesale marketplaces blog/indian-b2b-textile-marketplace geo: india">
+      <div class="page-card-header" onclick="togglePage(150)">
+        <span class="page-id">#150</span>
+        <span class="page-title">How Privacy Builds Vendor Trust in Wholesale Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">4 clicks</span>
+          <span class="metric-imp">0.1K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-150">▾</span>
+      </div>
+      <div class="url-row">/blog/indian-b2b-textile-marketplace</div>
+      <div class="page-detail" id="detail-150">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: India</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid concept (vendor privacy). URL mismatch. Rewrite.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Protect Vendor Privacy in B2B Wholesale Marketplaces [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,000–2,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#124</td><td class="anchor">marketplace security</td><td>Privacy/security</td></tr><tr><td>#112</td><td class="anchor">vendor management</td><td>VMS privacy</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Privacy Matters in Wholesale Marketplaces<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Vendor data sensitivity in B2B. Pricing confidentiality. Competitive intelligence risks.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Privacy Features for Vendor Protection<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Hidden vendor identity from buyers, private pricing tiers, NDA-backed catalog access, data compartmentalization, selective inventory visibility.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Implement Vendor Privacy<span class="word-count">400–500 words</span></div>
+              <div class="section-content">6 steps as H3s. Audit data exposure → Privacy controls → Role-based access → Vendor agreements → Monitoring → Compliance.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Vendor privacy questions: data sharing controls, competitive protection, compliance, buyer transparency balance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="how brand and vendor separation unlocks clean catalogs blog/scaling-retail-marketplaces-with-brand-logic catalog mgmt">
+      <div class="page-card-header" onclick="togglePage(151)">
+        <span class="page-id">#151</span>
+        <span class="page-title">How Brand and Vendor Separation Unlocks Clean Catalogs</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-151">▾</span>
+      </div>
+      <div class="url-row">/blog/scaling-retail-marketplaces-with-brand-logic</div>
+      <div class="page-detail" id="detail-151">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Catalog Mgmt</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid concept. Zero traffic. Rewrite.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Manage Multi-Brand Catalogs in Your Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/features-to-build-multi-vendor-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#112</td><td class="anchor">vendor management</td><td>VMS catalog</td></tr><tr><td>#116</td><td class="anchor">metafields</td><td>Technical catalog</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Brand-Vendor Separation?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Why multi-brand marketplaces need clean catalog separation. Customer confusion risks.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Catalog Architecture for Multi-Brand<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Brand-level catalog zones, vendor attribution, SKU management, brand-specific search filters, unified checkout with brand clarity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Implementation Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define brand hierarchy → Catalog structure → Vendor mapping → Display rules → Quality enforcement.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Brand separation questions: catalog management, vendor conflicts, customer experience, brand control.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="uk multi vendor marketplaces keep product sync stable at scale blog/develop-uk-digital-credit-marketplace-workflows geo: uk">
+      <div class="page-card-header" onclick="togglePage(152)">
+        <span class="page-id">#152</span>
+        <span class="page-title">UK Multi Vendor Marketplaces Keep Product Sync Stable at Scale</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-152">▾</span>
+      </div>
+      <div class="url-row">/blog/develop-uk-digital-credit-marketplace-workflows</div>
+      <div class="page-detail" id="detail-152">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: UK</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #122</p>
+            <p style="margin-top:8px">Title-URL mismatch. Redirect to #122.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Product Sync Stability Matters at Scale<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition. Sync failures impact: overselling, wrong prices, customer complaints. Cost of sync errors.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Sync Stability Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Real-time vs batch sync, conflict resolution, error handling, retry logic, audit trails, vendor feed management.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Keep Product Sync Stable<span class="word-count">400–500 words</span></div>
+              <div class="section-content">6 steps. Assess sync architecture → Set sync frequency → Error monitoring → Conflict resolution → Vendor feed standards → Scale testing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Product sync questions: sync frequency, error handling, multi-channel sync, scaling.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="australian rental marketplaces scale faster with automated kyc blog/peer-to-peer-rental-marketplace-australia geo: australia">
+      <div class="page-card-header" onclick="togglePage(153)">
+        <span class="page-id">#153</span>
+        <span class="page-title">Australian Rental Marketplaces Scale Faster With Automated KYC</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-153">▾</span>
+      </div>
+      <div class="url-row">/blog/peer-to-peer-rental-marketplace-australia</div>
+      <div class="page-detail" id="detail-153">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Australia</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #114</p>
+            <p style="margin-top:8px">Redirect to #114 (seller onboarding).</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Rental Marketplaces Need KYC Automation<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition. Identity verification for rental trust. Australian regulatory context. Fraud prevention.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: KYC &amp; Onboarding Automation Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">ID verification, credit checks, deposit handling, insurance integration, automated approval workflows.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Implementation Guide for Australian Market<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define verification requirements → Integration (Australia Post ID) → Automated workflows → Deposit system → Compliance monitoring.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">KYC rental questions: verification methods, privacy compliance, deposit handling, insurance requirements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="australian home service marketplaces solving contractor reliability blog/australian-home-services-marketplace-workflow geo: australia">
+      <div class="page-card-header" onclick="togglePage(154)">
+        <span class="page-id">#154</span>
+        <span class="page-title">Australian Home Service Marketplaces Solving Contractor Reliability</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-154">▾</span>
+      </div>
+      <div class="url-row">/blog/australian-home-services-marketplace-workflow</div>
+      <div class="page-detail" id="detail-154">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Australia</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to pillar page</p>
+            <p style="margin-top:8px">Redirect to pillar page.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Australian Home Service Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Market size, contractor reliability issues, Airtasker/Hipages competitive landscape.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Contractor Reliability<span class="word-count">300–350 words</span></div>
+              <div class="section-content">License verification, insurance proof, background checks, job photo evidence, real-time scheduling, GPS tracking, automated invoicing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide for Australia<span class="word-count">400–500 words</span></div>
+              <div class="section-content">6 steps. Define service categories → Contractor vetting → Booking system → Payment → Job verification → Reviews.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Australian service questions: contractor licensing, insurance, dispute resolution, booking management.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePage(id){const d=document.getElementById('detail-'+id);const c=document.getElementById('chev-'+id);d.classList.toggle('open');c.classList.toggle('open')}
+let currentFilter='all';
+document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterPages()})});
+document.getElementById('searchBox').addEventListener('input',filterPages);
+function filterPages(){const s=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.page-card').forEach(c=>{const matchFilter=currentFilter==='all'||c.dataset.action===currentFilter;const matchSearch=!s||c.dataset.search.includes(s);c.style.display=matchFilter&&matchSearch?'block':'none'})}
+</script>
+</body>
+</html>

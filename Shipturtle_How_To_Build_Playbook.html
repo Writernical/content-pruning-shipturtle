@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — How to Build Pillar: Child Page Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0e14;--surface:#141722;--surface2:#1a1f2e;--surface3:#222840;--border:#2a3050;--text:#e0e4f0;--text2:#8b93b0;--text3:#5a6380;--accent:#f59e0b;--accent2:#f97316;--green:#34d399;--green-dim:rgba(52,211,153,0.12);--yellow:#fbbf24;--yellow-dim:rgba(251,191,36,0.12);--red:#f87171;--red-dim:rgba(248,113,113,0.12);--orange:#fb923c;--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.12);--purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);--keep:#34d399;--merge:#fbbf24;--rewrite:#60a5fa;--redirect:#f87171;--repillar:#a78bfa;--font:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:linear-gradient(135deg,#141722 0%,#f59e0b15 50%,#141722 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px}
+.header-inner{max-width:1400px;margin:0 auto}.header-top{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.header-badge{background:linear-gradient(135deg,#f59e0b,#f97316);color:#000;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:4px}
+.header h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff 0%,#f59e0b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-sub{color:var(--text2);font-size:15px;margin-top:8px;max-width:800px}
+.pillar-url{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 16px;color:var(--accent)}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:1400px;margin:24px auto;padding:0 40px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-align:center}
+.stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}.stat-card .value{font-size:28px;font-weight:700;color:var(--text)}.stat-card .sub{font-size:11px;color:var(--text3);margin-top:2px}
+.stat-card.keep .value{color:var(--keep)}.stat-card.merge .value{color:var(--merge)}.stat-card.rewrite .value{color:var(--rewrite)}.stat-card.redirect .value{color:var(--redirect)}.stat-card.repillar .value{color:var(--purple)}.stat-card.exclude .value{color:var(--text3)}
+.controls{max-width:1400px;margin:0 auto;padding:20px 40px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.controls .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;font-size:13px;font-family:var(--font);cursor:pointer;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--text)}.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.filter-btn.keep.active{background:var(--keep)}.filter-btn.merge.active{background:var(--merge)}.filter-btn.rewrite.active{background:var(--rewrite)}.filter-btn.redirect.active{background:var(--redirect)}.filter-btn.repillar.active{background:var(--purple)}.filter-btn.exclude.active{background:var(--text3)}
+.search-box{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 14px;color:var(--text);font-size:13px;font-family:var(--font);width:240px;outline:none}.search-box:focus{border-color:var(--accent)}.search-box::placeholder{color:var(--text3)}
+.main{max-width:1400px;margin:0 auto;padding:24px 40px 80px}
+.page-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color .2s}.page-card:hover{border-color:var(--accent)}
+.page-card-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.page-id{font-family:var(--mono);font-size:12px;color:var(--text3);background:var(--surface2);border-radius:4px;padding:2px 8px;min-width:36px;text-align:center}
+.page-title{font-weight:600;font-size:14px;flex:1;min-width:200px}.page-metrics{display:flex;gap:16px;font-size:13px}.page-metrics span{display:flex;align-items:center;gap:4px}
+.metric-clicks{color:var(--accent)}.metric-imp{color:var(--text2)}.metric-conv{color:var(--green)}
+.action-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:4px 10px;border-radius:4px}
+.action-badge.keep{background:var(--green-dim);color:var(--keep)}.action-badge.merge{background:var(--yellow-dim);color:var(--merge)}.action-badge.rewrite{background:var(--blue-dim);color:var(--rewrite)}.action-badge.redirect{background:var(--red-dim);color:var(--redirect)}.action-badge.repillar{background:var(--purple-dim);color:var(--purple)}.action-badge.exclude{background:rgba(90,99,128,.15);color:var(--text3)}
+.chevron{color:var(--text3);transition:transform .2s;font-size:18px}.chevron.open{transform:rotate(180deg)}
+.page-detail{display:none;padding:0 20px 24px}.page-detail.open{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.detail-section{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;break-inside:avoid}
+.detail-section h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.detail-section h4{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 6px}.detail-section p,.detail-section li{font-size:13px;color:var(--text2);line-height:1.7}
+.detail-section ul{padding-left:16px}.detail-section li{margin-bottom:4px}
+.detail-section code{font-family:var(--mono);font-size:12px;background:var(--surface3);padding:1px 6px;border-radius:3px;color:var(--accent)}
+.full-width{grid-column:1/-1}.url-row{font-family:var(--mono);font-size:12px;color:var(--text3);padding:0 20px 12px}
+.link-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.link-table th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.link-table td{padding:6px 8px;border-bottom:1px solid rgba(42,48,80,.4);color:var(--text2)}.link-table tr:last-child td{border-bottom:none}.link-table .anchor{color:var(--green);font-family:var(--mono);font-size:11px}
+.template-section{background:var(--surface3);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 6px 6px 0;margin:8px 0}
+.template-section .section-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.template-section .section-content{font-size:12px;color:var(--text2);line-height:1.6}
+.template-section .word-count{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);padding:1px 6px;border-radius:3px;margin-left:8px}
+.schema-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.schema-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--surface3);color:var(--text2);border:1px solid var(--border)}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none}.back-link:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <div class="header-top"><span class="header-badge">Pillar Playbook</span><span class="header-badge">How to Build</span></div>
+  <h1>How to Build — Child Page Playbook</h1>
+  <p class="header-sub">Build guides for B2B, B2C, service, clone marketplaces. Contains the #2 highest-performing page (#62 — Cost to Build, 341 clicks, 5 conv) and the eBay clone guide (#58 — 180 clicks).</p>
+  <div class="pillar-url">PILLAR → /blog/how-to-build-a-marketplace</div>
+</div></div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="label">Pages</div><div class="value">13</div><div class="sub">1 at zero traffic</div></div>
+  <div class="stat-card"><div class="label">Clicks</div><div class="value">742</div><div class="sub">393K impressions</div></div>
+  <div class="stat-card"><div class="label">Conversions</div><div class="value">7</div></div>
+  <div class="stat-card keep"><div class="label">Keep</div><div class="value">7</div></div>
+  <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">2</div></div>
+  <div class="stat-card merge"><div class="label">Merge</div><div class="value">3</div></div>
+  <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">1</div></div>
+  
+  
+</div>
+
+<div class="controls">
+  <span class="label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All (13)</button>
+  <button class="filter-btn" data-filter="keep">Keep (7)</button>
+  <button class="filter-btn" data-filter="rewrite">Rewrite (2)</button>
+  <button class="filter-btn" data-filter="merge">Merge (3)</button>
+  <button class="filter-btn" data-filter="redirect">Redirect (1)</button>
+  
+  
+  <input type="text" class="search-box" id="searchBox" placeholder="Search pages...">
+</div>
+
+<div class="main">
+  <a href="Shipturtle_SEO_Command_Center_v2.html" class="back-link">← Back to Command Center</a>
+  <div id="pageList">
+
+    <div class="page-card" data-action="keep" data-search="how to build an mvp for marketplace apps blog/how-to-build-an-mvp-for-marketplace-apps mvp / validation">
+      <div class="page-card-header" onclick="togglePage(51)">
+        <span class="page-id">#51</span>
+        <span class="page-title">How to Build an MVP for Marketplace Apps</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">18 clicks</span>
+          <span class="metric-imp">12.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-51">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-build-an-mvp-for-marketplace-apps</div>
+      <div class="page-detail" id="detail-51">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> MVP / Validation</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique MVP validation angle. 12.7K impressions. Refresh with lean canvas template, cost benchmarks. Link to #62.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an MVP for Your Marketplace App [Step-by-Step]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">cost to build a marketplace</td><td>Budget section</td></tr><tr><td>#61</td><td class="anchor">launch marketplace in 30 days</td><td>Timeline</td></tr><tr><td>#53</td><td class="anchor">B2B marketplace platform</td><td>Examples</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Marketplace MVP?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Minimum viable marketplace vs full product. Real examples of marketplace MVPs.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: 6 Steps to Build a Marketplace MVP<span class="word-count">800–1000 words</span></div>
+              <div class="section-content">Each step as H3. Numbered list (AEO). Market validation → Core feature set → Platform choice → Build → Test → Iterate.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Marketplace MVP Cost Benchmarks<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Cost ranges by approach. Link to #62.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Common MVP Mistakes<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Over-building, wrong market, no supply-side strategy.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">MVP-focused standalone answers.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="how to build a successful b2b marketplace: ultimate guide 2025 blog/how-to-build-a-successful-b2b-marketplace-the-ultimate-guide-in-2025 build: b2b">
+      <div class="page-card-header" onclick="togglePage(52)">
+        <span class="page-id">#52</span>
+        <span class="page-title">How to Build a Successful B2B Marketplace: Ultimate Guide 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">0.1K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-52">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-build-a-successful-b2b-marketplace-the-ultimate-guide-in-2025</div>
+      <div class="page-detail" id="detail-52">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build: B2B</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #53</p>
+            <p style="margin-top:8px">CANNIBALIZES #53. Only 146 impressions vs 86K for #53. Merge platform comparison content into #53.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #53</div>
+              <div class="section-content">Extract platform comparison angle as a section within #53. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="b2b marketplace platform: how to build wholesale marketplaces blog/building-a-b2b-marketplace-platform build: b2b">
+      <div class="page-card-header" onclick="togglePage(53)">
+        <span class="page-id">#53</span>
+        <span class="page-title">B2B Marketplace Platform: How to Build Wholesale Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">88 clicks</span>
+          <span class="metric-imp">86.6K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-53">▾</span>
+      </div>
+      <div class="url-row">/blog/building-a-b2b-marketplace-platform</div>
+      <div class="page-detail" id="detail-53">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build: B2B</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">PILLAR PERFORMER — 88 clicks, 86.6K impressions. Absorb #52. Expand with wholesale-specific workflows (RFQ, bulk pricing, MOQ).</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a B2B Marketplace: Complete Wholesale Platform Guide [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (3x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 3 places with varied anchors.</p>
+            <h4>Links TO Siblings (4)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">cost to build a marketplace</td><td>Budget section</td></tr><tr><td>#51</td><td class="anchor">marketplace MVP</td><td>Starting point</td></tr><tr><td>#54</td><td class="anchor">B2C marketplace</td><td>Comparison</td></tr><tr><td>#55</td><td class="anchor">service marketplace guide</td><td>Cross-reference</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a B2B Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Direct 50-word definition (AEO). Wholesale vs retail marketplace distinction.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: B2B Marketplace Features & Requirements<span class="word-count">400–500 words</span></div>
+              <div class="section-content">RFQ system, bulk ordering, tiered pricing, buyer approval, trade credit. Feature matrix.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–800 words</span></div>
+              <div class="section-content">6 steps as H3s. How-to schema. Shopify + Shipturtle workflow.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Platform Comparison for B2B<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Absorb from #52. Comparison table of platforms.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: B2B Marketplace Examples<span class="word-count">250–300 words</span></div>
+              <div class="section-content">5–8 real platforms with analysis.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">B2B build-focused standalone answers.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="building a b2c marketplace platform that can scale automatically blog/building-a-b2c-marketplace-platform build: b2c">
+      <div class="page-card-header" onclick="togglePage(54)">
+        <span class="page-id">#54</span>
+        <span class="page-title">Building A B2C Marketplace Platform That Can Scale Automatically</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">29 clicks</span>
+          <span class="metric-imp">27.0K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-54">▾</span>
+      </div>
+      <div class="url-row">/blog/building-a-b2c-marketplace-platform</div>
+      <div class="page-detail" id="detail-54">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build: B2C</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid performer (29 clicks, 27K impressions). No cannibalization. Add scalability benchmarks.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a B2C Marketplace Platform That Scales [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">marketplace build costs</td><td>Budget</td></tr><tr><td>#53</td><td class="anchor">B2B marketplace</td><td>B2B vs B2C comparison</td></tr><tr><td>#58</td><td class="anchor">build a website like eBay</td><td>Clone approach</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a B2C Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition. B2C model explained.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Features for B2C Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Product catalog, reviews, payment, shipping automation.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: How to Build a Scalable B2C Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Step-by-step with auto-scaling architecture.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: B2C vs B2B Build Differences<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Comparison table.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">B2C build-focused.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to build a successful service marketplace in 2025 blog/how-to-build-a-successful-service-marketplace-in-2025 build: service">
+      <div class="page-card-header" onclick="togglePage(55)">
+        <span class="page-id">#55</span>
+        <span class="page-title">How to Build a Successful Service Marketplace in 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">23 clicks</span>
+          <span class="metric-imp">10.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-55">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-build-a-successful-service-marketplace-in-2025</div>
+      <div class="page-detail" id="detail-55">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build: Service</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Winner of service marketplace cluster. Absorb #56 no-code angle. Expand with booking system, provider onboarding.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Service Marketplace: Complete Guide [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">marketplace costs</td><td>Budget</td></tr><tr><td>#53</td><td class="anchor">B2B marketplace</td><td>Cross-reference</td></tr><tr><td>#58</td><td class="anchor">build a website like eBay</td><td>Clone alternative</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Service Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition. Service vs product marketplace.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">500–600 words</span></div>
+              <div class="section-content">7 steps. Booking system, provider profiles, payment splits.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: No-Code Path (Absorbed from #56)<span class="word-count">300–350 words</span></div>
+              <div class="section-content">How to build without coding using Shipturtle.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Features Checklist<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Booking, scheduling, reviews, messaging, dispute resolution.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Service marketplace build questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="how to build a service marketplace without writing a single line of code blog/how-to-build-a-service-marketplace-without-writing-a-single-line-of-code build: service">
+      <div class="page-card-header" onclick="togglePage(56)">
+        <span class="page-id">#56</span>
+        <span class="page-title">How to Build a Service Marketplace Without Writing a Single Line of Code</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">20 clicks</span>
+          <span class="metric-imp">8.2K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-56">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-build-a-service-marketplace-without-writing-a-single-line-of-code</div>
+      <div class="page-detail" id="detail-56">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build: Service</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #55</p>
+            <p style="margin-top:8px">CANNIBALIZES #55. No-code angle merges as section in #55. 301 redirect.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #55</div>
+              <div class="section-content">No-code content becomes H2 section within #55. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="the multi vendor ecommerce marketplace singapore has been waiting for blog/build-a-scalable-multi-vendor-ecommerce-platform geo story">
+      <div class="page-card-header" onclick="togglePage(57)">
+        <span class="page-id">#57</span>
+        <span class="page-title">The Multi Vendor Ecommerce Marketplace Singapore Has Been Waiting For</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-57">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-scalable-multi-vendor-ecommerce-platform</div>
+      <div class="page-detail" id="detail-57">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo Story</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent (Singapore ecommerce hub). Editorial title + URL mismatch kills SEO. Rewrite with Singapore-specific content.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Multi-Vendor Marketplace in Singapore [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">marketplace costs</td><td>Budget</td></tr><tr><td>#54</td><td class="anchor">B2C marketplace guide</td><td>Model reference</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Singapore Marketplace Landscape<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Market size, key players, growth data.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Singapore-Specific Requirements<span class="word-count">400–500 words</span></div>
+              <div class="section-content">PayNow, GrabPay, GST, local logistics (Ninja Van, Lalamove).</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Shopify + Shipturtle for Singapore.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Singapore-specific marketplace questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="build a website like ebay: create a used goods marketplace blog/build-a-website-ebay-used-goods-marketplace build: clone">
+      <div class="page-card-header" onclick="togglePage(58)">
+        <span class="page-id">#58</span>
+        <span class="page-title">Build a Website like eBay: Create a Used Goods Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">180 clicks</span>
+          <span class="metric-imp">50.6K imp</span>
+          <span class="metric-conv">2 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-58">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-website-ebay-used-goods-marketplace</div>
+      <div class="page-detail" id="detail-58">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build: Clone</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">HIGH PERFORMER — 180 clicks, 50K impressions, 2 conversions. Proven commercial keyword. Refresh with 2026 comparisons. Add How-to schema.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Website Like eBay: Used Goods Marketplace Guide [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">marketplace costs</td><td>Budget</td></tr><tr><td>#51</td><td class="anchor">marketplace MVP</td><td>Starting lean</td></tr><tr><td>#61</td><td class="anchor">launch in 30 days</td><td>Timeline</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Makes eBay's Marketplace Model Work?<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Key features that define eBay: auctions, Buy It Now, seller ratings, buyer protection.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: eBay Feature Checklist to Replicate<span class="word-count">300–400 words</span></div>
+              <div class="section-content">Feature-by-feature mapping for clone build.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Using Shopify + Shipturtle. How-to schema.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: eBay Clone vs Building from Scratch<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Cost and time comparison table.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">eBay clone questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="multi-vendor ecommerce development: a complete guide for 2025 blog/multi-vendor-ecommerce-development-a-complete-guide-for-2025 general guide">
+      <div class="page-card-header" onclick="togglePage(59)">
+        <span class="page-id">#59</span>
+        <span class="page-title">Multi-Vendor Ecommerce Development: A Complete Guide for 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">11 clicks</span>
+          <span class="metric-imp">8.9K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-59">▾</span>
+      </div>
+      <div class="url-row">/blog/multi-vendor-ecommerce-development-a-complete-guide-for-2025</div>
+      <div class="page-detail" id="detail-59">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> General Guide</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent but underperforming (0.12% CTR). Differentiate as technical-audience guide: tech stack, API architecture.</p>
+            <h4>Recommended Title Tag</h4><p><code>Multi-Vendor Ecommerce Development: Technical Guide for 2026</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">cost benchmarks</td><td>Budget</td></tr><tr><td>#53</td><td class="anchor">B2B build guide</td><td>Vertical reference</td></tr><tr><td>#61</td><td class="anchor">30-day launch</td><td>Fast track</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Multi-Vendor Architecture Overview<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Tech stack decisions: headless vs monolithic, API-first design.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Database Design for Multi-Vendor<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Schema design, vendor isolation, multi-tenancy.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Core Technical Components<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Catalog engine, order router, payment splitter, shipping orchestrator.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: SaaS vs Custom Build Decision<span class="word-count">250–300 words</span></div>
+              <div class="section-content">When to use Shopify+Shipturtle vs custom. Link to #62.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Technical development questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="how to launch a no code marketplace from scratch using shipturtle blog/how-to-launch-a-no-code-marketplace-from-scratch no-code launch">
+      <div class="page-card-header" onclick="togglePage(60)">
+        <span class="page-id">#60</span>
+        <span class="page-title">How to Launch a No Code Marketplace from Scratch Using Shipturtle</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">15 clicks</span>
+          <span class="metric-imp">2.4K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-60">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-launch-a-no-code-marketplace-from-scratch</div>
+      <div class="page-detail" id="detail-60">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> No-Code Launch</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #61</p>
+            <p style="margin-top:8px">CANNIBALIZES #61. Shipturtle-branded URL limits organic reach. Merge no-code content into #61.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #61</div>
+              <div class="section-content">No-code Shipturtle tutorial becomes implementation section in #61. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to launch a multi-vendor online marketplace platform in just 30 days blog/how-to-launch-a-multi-vendor-online-marketplace-platform-in-just-30-days quick launch">
+      <div class="page-card-header" onclick="togglePage(61)">
+        <span class="page-id">#61</span>
+        <span class="page-title">How to Launch a Multi-Vendor Online Marketplace Platform in Just 30 Days</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">8 clicks</span>
+          <span class="metric-imp">4.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-61">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-launch-a-multi-vendor-online-marketplace-platform-in-just-30-days</div>
+      <div class="page-detail" id="detail-61">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Quick Launch</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Winner of 'launch quickly' cluster. '30 days' hook is compelling. Absorb #60. Add week-by-week timeline.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Launch a Multi-Vendor Marketplace in 30 Days [2026 Playbook]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#62</td><td class="anchor">marketplace costs</td><td>Budget planning</td></tr><tr><td>#51</td><td class="anchor">marketplace MVP</td><td>Validation first</td></tr><tr><td>#58</td><td class="anchor">eBay clone</td><td>Clone approach</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Can You Really Launch in 30 Days?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Direct answer (AEO). What's realistic and what's not.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Week-by-Week Launch Timeline<span class="word-count">600–800 words</span></div>
+              <div class="section-content">Week 1–4 breakdown. Each week as H3. How-to schema.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: No-Code Path with Shipturtle (from #60)<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Absorbed from #60. Step-by-step Shipturtle setup.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Launch Checklist<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Pre-launch requirements. Numbered list.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Launch timeline questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="7 examples: how much does it cost to build an online marketplace website? blog/cost-to-build-an-online-marketplace-website cost / budget">
+      <div class="page-card-header" onclick="togglePage(62)">
+        <span class="page-id">#62</span>
+        <span class="page-title">7 Examples: How Much Does it Cost to Build an Online Marketplace Website?</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">341 clicks</span>
+          <span class="metric-imp">171.2K imp</span>
+          <span class="metric-conv">5 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-62">▾</span>
+      </div>
+      <div class="url-row">/blog/cost-to-build-an-online-marketplace-website</div>
+      <div class="page-detail" id="detail-62">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Cost / Budget</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">★★★ STAR PAGE — 341 clicks, 171K impressions, 5 conversions. #2 highest performer across all Shipturtle content. PROTECT FIERCELY. Refresh costs quarterly. Every How to Build page must link TO this.</p>
+            <h4>Recommended Title Tag</h4><p><code>How Much Does It Cost to Build a Marketplace? 7 Real Examples [2026]</code></p>
+            <h4>Target Word Count</h4><p>4,000–5,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (3x)</h4><p>Link to <code>/blog/how-to-build-a-marketplace</code> in 3 places with varied anchors.</p>
+            <h4>Links TO Siblings (5)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#51</td><td class="anchor">marketplace MVP</td><td>Start lean</td></tr><tr><td>#53</td><td class="anchor">B2B marketplace</td><td>B2B costs</td></tr><tr><td>#55</td><td class="anchor">service marketplace</td><td>Service costs</td></tr><tr><td>#58</td><td class="anchor">eBay clone</td><td>Clone costs</td></tr><tr><td>#61</td><td class="anchor">30-day launch</td><td>Fast track costs</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: How Much Does a Marketplace Cost? (Direct Answer)<span class="word-count">100–150 words</span></div>
+              <div class="section-content">AEO block: $5K–$500K range depending on approach. Featured snippet target.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: 7 Real Marketplace Cost Examples<span class="word-count">1,000–1,200 words</span></div>
+              <div class="section-content">Each example as H3 with breakdown. Custom build vs SaaS vs hybrid.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Cost Comparison Table<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Custom dev vs Shopify+Shipturtle vs other platforms. AEO table.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Hidden Costs Most Founders Miss<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Payment processing fees, hosting, marketing, vendor acquisition.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: How to Reduce Marketplace Build Costs<span class="word-count">300–350 words</span></div>
+              <div class="section-content">MVP approach, SaaS platforms, phased development.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (8 questions)<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Cost-specific questions with concrete ranges.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="what is a marketplace development solution? blog/what-is-a-marketplace-development-solution-and-why-you-shouldnt-build-from-scratch build vs buy">
+      <div class="page-card-header" onclick="togglePage(63)">
+        <span class="page-id">#63</span>
+        <span class="page-title">What Is a Marketplace Development Solution?</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">7 clicks</span>
+          <span class="metric-imp">9.3K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-63">▾</span>
+      </div>
+      <div class="url-row">/blog/what-is-a-marketplace-development-solution-and-why-you-shouldnt-build-from-scratch</div>
+      <div class="page-detail" id="detail-63">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build vs Buy</p>
+            <p><strong>Intent:</strong> duplicate</p>
+            <p><strong>Action:</strong> → 301 to canonical in Marketplace Types</p>
+            <p style="margin-top:8px">CROSS-PILLAR DUPLICATE — same URL assigned to Marketplace Types. 301 redirect from this pillar.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — 301 Redirect (cross-pillar duplicate)</div>
+              <div class="section-content">Keep canonical in Marketplace Types. Remove from How to Build internal linking.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePage(id){const d=document.getElementById('detail-'+id);const c=document.getElementById('chev-'+id);d.classList.toggle('open');c.classList.toggle('open')}
+let currentFilter='all';
+document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterPages()})});
+document.getElementById('searchBox').addEventListener('input',filterPages);
+function filterPages(){const s=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.page-card').forEach(c=>{const matchFilter=currentFilter==='all'||c.dataset.action===currentFilter;const matchSearch=!s||c.dataset.search.includes(s);c.style.display=matchFilter&&matchSearch?'block':'none'})}
+</script>
+</body>
+</html>

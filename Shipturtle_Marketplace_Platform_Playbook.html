@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — Marketplace Platform Pillar: Child Page Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0e14;--surface:#141722;--surface2:#1a1f2e;--surface3:#222840;--border:#2a3050;--text:#e0e4f0;--text2:#8b93b0;--text3:#5a6380;--accent:#818cf8;--accent2:#6366f1;--green:#34d399;--green-dim:rgba(52,211,153,0.12);--yellow:#fbbf24;--yellow-dim:rgba(251,191,36,0.12);--red:#f87171;--red-dim:rgba(248,113,113,0.12);--orange:#fb923c;--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.12);--purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);--keep:#34d399;--merge:#fbbf24;--rewrite:#60a5fa;--redirect:#f87171;--repillar:#a78bfa;--font:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:linear-gradient(135deg,#141722 0%,#818cf815 50%,#141722 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px}
+.header-inner{max-width:1400px;margin:0 auto}.header-top{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.header-badge{background:linear-gradient(135deg,#818cf8,#6366f1);color:#000;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:4px}
+.header h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff 0%,#818cf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-sub{color:var(--text2);font-size:15px;margin-top:8px;max-width:800px}
+.pillar-url{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 16px;color:var(--accent)}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:1400px;margin:24px auto;padding:0 40px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-align:center}
+.stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}.stat-card .value{font-size:28px;font-weight:700;color:var(--text)}.stat-card .sub{font-size:11px;color:var(--text3);margin-top:2px}
+.stat-card.keep .value{color:var(--keep)}.stat-card.merge .value{color:var(--merge)}.stat-card.rewrite .value{color:var(--rewrite)}.stat-card.redirect .value{color:var(--redirect)}.stat-card.repillar .value{color:var(--purple)}.stat-card.exclude .value{color:var(--text3)}
+.controls{max-width:1400px;margin:0 auto;padding:20px 40px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.controls .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;font-size:13px;font-family:var(--font);cursor:pointer;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--text)}.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.filter-btn.keep.active{background:var(--keep)}.filter-btn.merge.active{background:var(--merge)}.filter-btn.rewrite.active{background:var(--rewrite)}.filter-btn.redirect.active{background:var(--redirect)}.filter-btn.repillar.active{background:var(--purple)}.filter-btn.exclude.active{background:var(--text3)}
+.search-box{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 14px;color:var(--text);font-size:13px;font-family:var(--font);width:240px;outline:none}.search-box:focus{border-color:var(--accent)}.search-box::placeholder{color:var(--text3)}
+.main{max-width:1400px;margin:0 auto;padding:24px 40px 80px}
+.page-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color .2s}.page-card:hover{border-color:var(--accent)}
+.page-card-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.page-id{font-family:var(--mono);font-size:12px;color:var(--text3);background:var(--surface2);border-radius:4px;padding:2px 8px;min-width:36px;text-align:center}
+.page-title{font-weight:600;font-size:14px;flex:1;min-width:200px}.page-metrics{display:flex;gap:16px;font-size:13px}.page-metrics span{display:flex;align-items:center;gap:4px}
+.metric-clicks{color:var(--accent)}.metric-imp{color:var(--text2)}.metric-conv{color:var(--green)}
+.action-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:4px 10px;border-radius:4px}
+.action-badge.keep{background:var(--green-dim);color:var(--keep)}.action-badge.merge{background:var(--yellow-dim);color:var(--merge)}.action-badge.rewrite{background:var(--blue-dim);color:var(--rewrite)}.action-badge.redirect{background:var(--red-dim);color:var(--redirect)}.action-badge.repillar{background:var(--purple-dim);color:var(--purple)}.action-badge.exclude{background:rgba(90,99,128,.15);color:var(--text3)}
+.chevron{color:var(--text3);transition:transform .2s;font-size:18px}.chevron.open{transform:rotate(180deg)}
+.page-detail{display:none;padding:0 20px 24px}.page-detail.open{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.detail-section{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;break-inside:avoid}
+.detail-section h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.detail-section h4{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 6px}.detail-section p,.detail-section li{font-size:13px;color:var(--text2);line-height:1.7}
+.detail-section ul{padding-left:16px}.detail-section li{margin-bottom:4px}
+.detail-section code{font-family:var(--mono);font-size:12px;background:var(--surface3);padding:1px 6px;border-radius:3px;color:var(--accent)}
+.full-width{grid-column:1/-1}.url-row{font-family:var(--mono);font-size:12px;color:var(--text3);padding:0 20px 12px}
+.link-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.link-table th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.link-table td{padding:6px 8px;border-bottom:1px solid rgba(42,48,80,.4);color:var(--text2)}.link-table tr:last-child td{border-bottom:none}.link-table .anchor{color:var(--green);font-family:var(--mono);font-size:11px}
+.template-section{background:var(--surface3);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 6px 6px 0;margin:8px 0}
+.template-section .section-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.template-section .section-content{font-size:12px;color:var(--text2);line-height:1.6}
+.template-section .word-count{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);padding:1px 6px;border-radius:3px;margin-left:8px}
+.schema-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.schema-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--surface3);color:var(--text2);border:1px solid var(--border)}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none}.back-link:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <div class="header-top"><span class="header-badge">Pillar Playbook</span><span class="header-badge">Marketplace Platform</span></div>
+  <h1>Marketplace Platform — Child Page Playbook</h1>
+  <p class="header-sub">38 pages — more conversions (34) than all other pillars combined. Crown jewel: #166 (Create Marketplace on Shopify, 392 clicks, 9 conv). Includes Shopify-specific content, platform comparisons, and 7 comparison landing pages.</p>
+  <div class="pillar-url">PILLAR → /blog/marketplace-platform-builder</div>
+</div></div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="label">Pages</div><div class="value">38</div><div class="sub">4 at zero traffic</div></div>
+  <div class="stat-card"><div class="label">Clicks</div><div class="value">2,311</div><div class="sub">531K impressions</div></div>
+  <div class="stat-card"><div class="label">Conversions</div><div class="value">34</div></div>
+  <div class="stat-card keep"><div class="label">Keep</div><div class="value">22</div></div>
+  <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">0</div></div>
+  <div class="stat-card merge"><div class="label">Merge</div><div class="value">4</div></div>
+  <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">3</div></div>
+  <div class="stat-card repillar"><div class="label">Re-Pillar</div><div class="value">1</div></div>
+  <div class="stat-card exclude"><div class="label">Exclude</div><div class="value">8</div></div>
+</div>
+
+<div class="controls">
+  <span class="label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All (38)</button>
+  <button class="filter-btn" data-filter="keep">Keep (22)</button>
+  
+  <button class="filter-btn" data-filter="merge">Merge (4)</button>
+  <button class="filter-btn" data-filter="redirect">Redirect (3)</button>
+  <button class="filter-btn" data-filter="repillar">Re-Pillar (1)</button>
+  <button class="filter-btn" data-filter="exclude">Exclude (8)</button>
+  <input type="text" class="search-box" id="searchBox" placeholder="Search pages...">
+</div>
+
+<div class="main">
+  <a href="Shipturtle_SEO_Command_Center_v2.html" class="back-link">← Back to Command Center</a>
+  <div id="pageList">
+
+    <div class="page-card" data-action="keep" data-search="top 7 shopify themes for multi-vendor marketplaces [2024] blog/top-shopify-themes-for-multi-vendor-marketplaces shopify themes">
+      <div class="page-card-header" onclick="togglePage(155)">
+        <span class="page-id">#155</span>
+        <span class="page-title">Top 7 Shopify Themes for Multi-Vendor Marketplaces [2024]</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">560 clicks</span>
+          <span class="metric-imp">32.5K imp</span>
+          <span class="metric-conv">6 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-155">▾</span>
+      </div>
+      <div class="url-row">/blog/top-shopify-themes-for-multi-vendor-marketplaces</div>
+      <div class="page-detail" id="detail-155">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Themes</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">PILLAR STAR — 560 clicks, 32.5K imp, 6 conv. Absorb #156. Update year to 2026.</p>
+            <h4>Recommended Title Tag</h4><p><code>Top 7 Shopify Themes for Multi-Vendor Marketplaces [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (3x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 3 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Build guide</td></tr><tr><td>#163</td><td class="anchor">Shopify marketplace plugins</td><td>Plugin stack</td></tr><tr><td>#167</td><td class="anchor">no-code marketplace</td><td>No-code path</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a No-Code Shopify Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Building a multi-vendor marketplace without coding using Shopify + apps. No-code movement context.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step No-Code Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">8 steps as H3s. How-to schema. Choose Shopify plan → Install theme → Add Shipturtle → Configure vendors → Set commissions → Setup shipping → Test → Launch.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: No-Code vs Custom Development Comparison<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: time, cost, flexibility, maintenance, scaling. When no-code is enough vs when you need custom.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Features Available Without Coding<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Vendor onboarding, product sync, order management, commission tracking, shipping, analytics. What you get without writing code.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">No-code marketplace questions: limitations, cost, scaling, customization, vendor limits, performance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="best shopify themes for multi-vendor marketplace [updated 2025] blog/best-shopify-themes-for-multi-vendor-marketplace shopify themes">
+      <div class="page-card-header" onclick="togglePage(156)">
+        <span class="page-id">#156</span>
+        <span class="page-title">Best Shopify Themes For Multi-Vendor Marketplace [Updated 2025]</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">66 clicks</span>
+          <span class="metric-imp">8.3K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-156">▾</span>
+      </div>
+      <div class="url-row">/blog/best-shopify-themes-for-multi-vendor-marketplace</div>
+      <div class="page-detail" id="detail-156">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Themes</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → 301 to #155</p>
+            <p style="margin-top:8px">CANNIBALIZES #155. Merge 2025 picks into #155.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #155</div>
+              <div class="section-content">Duplicate of #155. Updated 2025 version. Merge best content into #155, 301 redirect. #155 becomes the single canonical themes page.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="shopify marketplace development services: what's possible & what needs 3rd party blog/shopify-marketplace-development-services shopify dev">
+      <div class="page-card-header" onclick="togglePage(157)">
+        <span class="page-id">#157</span>
+        <span class="page-title">Shopify Marketplace Development Services: What's Possible & What Needs 3rd Party</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">8 clicks</span>
+          <span class="metric-imp">5.3K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-157">▾</span>
+      </div>
+      <div class="url-row">/blog/shopify-marketplace-development-services</div>
+      <div class="page-detail" id="detail-157">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Dev</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Maps Shopify native capabilities vs Shipturtle gaps. Expand with feature comparison table.</p>
+            <h4>Recommended Title Tag</h4><p><code>Shopify Marketplace Development: What's Native vs What Needs Apps [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Build reference</td></tr><tr><td>#161</td><td class="anchor">Shopify outside custom inside</td><td>Architecture</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Are Shopify Marketplace Development Services?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Custom development vs app-based. What&#x27;s possible on Shopify vs what needs custom work.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: What&#x27;s Possible on Shopify<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Native capabilities, Liquid customization, app ecosystem, checkout extensibility, Shopify Functions. Limitations.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: When to Go Custom<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Decision framework: custom checkout, unique workflows, API integrations, performance needs. Build vs buy comparison table.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Choose a Development Service<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Evaluation criteria: Shopify Plus experience, marketplace expertise, portfolio, pricing models, support SLAs.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Shopify dev services questions: cost ranges, timeline, Shopify Plus vs standard, maintenance, custom app development.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="shopify marketplace connect app: full review, pricing & alternatives 2025 blog/shopify-marketplace-connect-app-full-review shopify app review">
+      <div class="page-card-header" onclick="togglePage(158)">
+        <span class="page-id">#158</span>
+        <span class="page-title">Shopify Marketplace Connect App: Full Review, Pricing & Alternatives 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">26 clicks</span>
+          <span class="metric-imp">19.0K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-158">▾</span>
+      </div>
+      <div class="url-row">/blog/shopify-marketplace-connect-app-full-review</div>
+      <div class="page-detail" id="detail-158">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify App Review</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strong — 26 clicks, 19K imp. Positions Shipturtle as alternative.</p>
+            <h4>Recommended Title Tag</h4><p><code>Shopify Marketplace Connect App Review: Features, Pricing & Alternatives [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#162</td><td class="anchor">Shopify Collective benefits</td><td>Related Shopify feature</td></tr><tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Build guide</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Shopify Marketplace Connect?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Official Shopify app for connecting to external marketplaces (Amazon, eBay, Walmart). Purpose and positioning.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Features &amp; Capabilities<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Multi-marketplace sync, inventory management, order routing, listing management, pricing rules, supported marketplaces list.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Pricing &amp; Plans<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Current pricing tiers, per-order fees, volume discounts. Cost comparison at different volumes.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Connect vs Multi-Vendor Solutions<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table. Connect (sell on external marketplaces) vs Shipturtle (build your own marketplace). Different use cases.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Setup Guide<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Step-by-step app installation and configuration. How-to schema.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Marketplace Connect questions: supported platforms, sync frequency, pricing, limitations, alternatives.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="is shopify the right platform for building a marketplace blog/is-shopify-the-right-platform-for-building-a-marketplace shopify evaluation">
+      <div class="page-card-header" onclick="togglePage(159)">
+        <span class="page-id">#159</span>
+        <span class="page-title">Is Shopify the Right Platform for Building a Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">41 clicks</span>
+          <span class="metric-imp">12.3K imp</span>
+          <span class="metric-conv">3 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-159">▾</span>
+      </div>
+      <div class="url-row">/blog/is-shopify-the-right-platform-for-building-a-marketplace</div>
+      <div class="page-detail" id="detail-159">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Evaluation</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">CONVERSION DRIVER — 41 clicks, 3 conv. Absorb #165. Protect.</p>
+            <h4>Recommended Title Tag</h4><p><code>Is Shopify Good for Building a Marketplace? Complete Analysis [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Yes → how</td></tr><tr><td>#170</td><td class="anchor">WooCommerce marketplace</td><td>Alternative</td></tr><tr><td>#171</td><td class="anchor">custom vs off-the-shelf</td><td>Build options</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Multi-Vendor WooCommerce Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). WooCommerce + multi-vendor plugins. WordPress flexibility. Market share.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key WooCommerce Multi-Vendor Plugins<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Dokan, WCFM, WC Vendors, Shipturtle. Feature comparison table. Pricing comparison.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. WordPress/WooCommerce setup → Plugin selection → Theme → Vendor setup → Payment → Shipping → Launch.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: WooCommerce vs Shopify for Marketplaces<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: customization, hosting, security, cost, scalability, plugin ecosystem.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">WooCommerce marketplace questions: hosting requirements, security, scaling, plugin conflicts, migration to Shopify.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="shopify as marketplace: migrating from woocommerce to shopify blog/shopify-as-marketplace-migrating-from-woocommerce-to-shopify migration">
+      <div class="page-card-header" onclick="togglePage(160)">
+        <span class="page-id">#160</span>
+        <span class="page-title">Shopify As Marketplace: Migrating From Woocommerce To Shopify</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">10 clicks</span>
+          <span class="metric-imp">3.2K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-160">▾</span>
+      </div>
+      <div class="url-row">/blog/shopify-as-marketplace-migrating-from-woocommerce-to-shopify</div>
+      <div class="page-detail" id="detail-160">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Migration</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique migration content. Expand with checklist, data transfer guide.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Migrate Your Marketplace from WooCommerce to Shopify [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#170</td><td class="anchor">WooCommerce marketplace</td><td>Before migration</td></tr><tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>After migration</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Migrate from WooCommerce to Shopify for Marketplaces?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). WooCommerce limitations for multi-vendor. Shopify advantages. Migration trend data.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Migration Planning Checklist<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Data inventory, URL mapping, redirect strategy, plugin equivalents, theme migration, testing plan, downtime minimization.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Migration Guide<span class="word-count">500–600 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Audit current store → Data export → Shopify setup → Theme selection → Data import → Redirect mapping → Testing → Launch.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Common Migration Pitfalls<span class="word-count">200–250 words</span></div>
+              <div class="section-content">SEO ranking loss, URL structure changes, payment gateway differences, plugin gap analysis, customer account migration.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Migration questions: SEO impact, downtime, data transfer, cost, timeline.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="marketplace technology: shopify outside, custom inside blog/marketplace-technology-shopify-outside-custom-inside shopify architecture">
+      <div class="page-card-header" onclick="togglePage(161)">
+        <span class="page-id">#161</span>
+        <span class="page-title">Marketplace Technology: Shopify Outside, Custom Inside</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">17 clicks</span>
+          <span class="metric-imp">3.9K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-161">▾</span>
+      </div>
+      <div class="url-row">/blog/marketplace-technology-shopify-outside-custom-inside</div>
+      <div class="page-detail" id="detail-161">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Architecture</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strong positioning piece. 17 clicks. Add architecture diagrams.</p>
+            <h4>Recommended Title Tag</h4><p><code>Shopify + Custom Marketplace Engine: The Hybrid Architecture Explained</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#173</td><td class="anchor">marketplace tech stack</td><td>Technology context</td></tr><tr><td>#171</td><td class="anchor">custom vs off-the-shelf</td><td>Build approach</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is the Hybrid Marketplace Architecture?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Shopify as frontend/storefront + custom backend for marketplace logic. Best of both worlds.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Architecture Overview<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Shopify storefront layer, custom API layer, database architecture, vendor management system, order routing engine. Diagram description.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: When to Use Hybrid Architecture<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Decision criteria: complex workflows, custom commission logic, unique vendor features, performance requirements vs pure Shopify.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Implementation Roadmap<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Phase 1: Shopify store → Phase 2: Custom API → Phase 3: Vendor system → Phase 4: Advanced features. Timeline estimates.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Hybrid architecture questions: cost, maintenance, Shopify API limits, developer requirements, scaling.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="top benefits of using shopify collective for your online store blog/top-benefits-of-using-shopify-collective-for-your-online-store shopify collective">
+      <div class="page-card-header" onclick="togglePage(162)">
+        <span class="page-id">#162</span>
+        <span class="page-title">Top Benefits of Using Shopify Collective for Your Online Store</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">126 clicks</span>
+          <span class="metric-imp">34.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-162">▾</span>
+      </div>
+      <div class="url-row">/blog/top-benefits-of-using-shopify-collective-for-your-online-store</div>
+      <div class="page-detail" id="detail-162">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Collective</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STRONG — 126 clicks, 34.7K imp. Add 'Collective vs Shipturtle' section.</p>
+            <h4>Recommended Title Tag</h4><p><code>Shopify Collective: Benefits, Limitations & Multi-Vendor Alternatives [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#158</td><td class="anchor">Marketplace Connect review</td><td>Related Shopify feature</td></tr><tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Build guide</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Shopify Collective?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Shopify&#x27;s native feature for cross-store selling. How it works. Who it&#x27;s for. Launch date and current status.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Benefits of Shopify Collective<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Zero inventory risk, brand partnerships, automated fulfillment, discovery network, commission-based model, no coding required. Each benefit as detailed point.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Shopify Collective vs Building Your Own Marketplace<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Comparison table. Collective (limited control, Shopify ecosystem only) vs Shipturtle (full control, any vendor). Feature-by-feature comparison.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Set Up Shopify Collective<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Step-by-step setup guide. How-to schema. Eligibility → Application → Partner finding → Product sync → Fulfillment → Tracking.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Limitations to Consider<span class="word-count">200–250 words</span></div>
+              <div class="section-content">US-only, Shopify merchants only, limited customization, commission constraints, brand control limitations.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Shopify Collective questions: eligibility, commission rates, international availability, product limits, vs Shipturtle, setup time.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="14 must-have shopify plugins for scaling your online marketplace 2025 blog/shopify-plugins-for-online-marketplace-2025 shopify plugins">
+      <div class="page-card-header" onclick="togglePage(163)">
+        <span class="page-id">#163</span>
+        <span class="page-title">14 Must-Have Shopify Plugins For Scaling Your Online Marketplace 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">33 clicks</span>
+          <span class="metric-imp">12.0K imp</span>
+          <span class="metric-conv">2 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-163">▾</span>
+      </div>
+      <div class="url-row">/blog/shopify-plugins-for-online-marketplace-2025</div>
+      <div class="page-detail" id="detail-163">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Plugins</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid with conversions — 33 clicks, 2 conv. Refresh 2026.</p>
+            <h4>Recommended Title Tag</h4><p><code>14 Must-Have Shopify Plugins for Multi-Vendor Marketplaces [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#155</td><td class="anchor">Shopify themes</td><td>Design stack</td></tr><tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Build guide</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: 14 Plugins (each as H3)<span class="word-count">2,000–2,500 words</span></div>
+              <div class="section-content">Each plugin: description, pricing, use case, Shipturtle integration.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Plugin Stack Recommendations<span class="word-count">300–400 words</span></div>
+              <div class="section-content">By use case: product marketplace, service, rental.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Plugin questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="shopify vs. custom development: what's better for your marketplace? blog/shopify-vs-custom-development-whats-better-for-your-multi-vendor-marketplace build vs buy">
+      <div class="page-card-header" onclick="togglePage(164)">
+        <span class="page-id">#164</span>
+        <span class="page-title">Shopify vs. Custom Development: What's Better for Your Marketplace?</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">7 clicks</span>
+          <span class="metric-imp">7.3K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-164">▾</span>
+      </div>
+      <div class="url-row">/blog/shopify-vs-custom-development-whats-better-for-your-multi-vendor-marketplace</div>
+      <div class="page-detail" id="detail-164">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build vs Buy</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #171</p>
+            <p style="margin-top:8px">CANNIBALIZES #171. Merge Shopify-specific angle into #171.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #171</div>
+              <div class="section-content">Shopify vs custom content merges into #171 (custom vs off-the-shelf canonical, 43 clicks). Adds Shopify-specific comparison angle. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="is shopify a marketplace? building a marketplace on shopify the right way blog/is-shopify-a-marketplace shopify evaluation">
+      <div class="page-card-header" onclick="togglePage(165)">
+        <span class="page-id">#165</span>
+        <span class="page-title">Is Shopify a Marketplace? Building A Marketplace On Shopify The Right Way</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">33 clicks</span>
+          <span class="metric-imp">6.6K imp</span>
+          <span class="metric-conv">2 conv</span>
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-165">▾</span>
+      </div>
+      <div class="url-row">/blog/is-shopify-a-marketplace</div>
+      <div class="page-detail" id="detail-165">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Evaluation</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → 301 to #159</p>
+            <p style="margin-top:8px">CANNIBALIZES #159 + #166. Merge into #159.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Is Shopify a Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Direct answer (AEO): No, Shopify is an ecommerce platform, not a marketplace. But you can BUILD a marketplace on Shopify. Key distinction.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Turn Shopify into a Marketplace<span class="word-count">400–500 words</span></div>
+              <div class="section-content">3 approaches as H3s: Shopify Collective, multi-vendor apps (Shipturtle), custom development. Comparison table of approaches.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Shopify Marketplace Features You Need<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Vendor onboarding, product sync, commission management, order routing, vendor dashboard. Feature checklist.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Shopify Marketplace vs Other Platforms<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: Shopify + app vs Sharetribe vs CS-Cart vs custom. Cost, features, scalability.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Is Shopify a marketplace questions: technical difference, can I build one, cost, timeline, vendor limits, Shopify Plus requirements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to create a successful multivendor marketplace on shopify? blog/create-multivendor-marketplace-on-shopify shopify build">
+      <div class="page-card-header" onclick="togglePage(166)">
+        <span class="page-id">#166</span>
+        <span class="page-title">How To Create A Successful Multivendor Marketplace On Shopify?</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">392 clicks</span>
+          <span class="metric-imp">92.8K imp</span>
+          <span class="metric-conv">9 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-166">▾</span>
+      </div>
+      <div class="url-row">/blog/create-multivendor-marketplace-on-shopify</div>
+      <div class="page-detail" id="detail-166">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Build</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">★★★ CROWN JEWEL — 392 clicks, 92.8K imp, 9 conv. #1 money keyword. PROTECT ABSOLUTELY. 4000+ words.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Create a Multi-Vendor Marketplace on Shopify [Complete 2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>4,000–5,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (3x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 3 places with varied anchors.</p>
+            <h4>Links TO Siblings (5)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#155</td><td class="anchor">Shopify themes</td><td>Theme selection</td></tr><tr><td>#163</td><td class="anchor">Shopify plugins</td><td>Plugin stack</td></tr><tr><td>#167</td><td class="anchor">no-code approach</td><td>No-code path</td></tr><tr><td>#179</td><td class="anchor">seller sync</td><td>Vendor setup</td></tr><tr><td>#159</td><td class="anchor">is Shopify right for marketplace</td><td>Platform evaluation</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Seller Sync for Shopify Marketplaces?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Real-time synchronization between marketplace and vendor Shopify stores. Product, inventory, order, tracking sync.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Seller Sync Features<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Product sync (images, variants, pricing), inventory sync (real-time stock), order sync (auto-routing), tracking sync (branded tracking), vendor dashboard, bulk operations, conflict resolution.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: How Seller Sync Works (Architecture)<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Technical overview: webhook-based sync, API polling, conflict resolution, retry logic. Sync flow diagram description.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Setup Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">How-to schema. Install Shipturtle → Connect vendor stores → Configure sync rules → Map products → Test sync → Go live. Screenshots/steps.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Seller Sync vs Manual Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Comparison table: time savings, error reduction, scalability, real-time accuracy. ROI calculation.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Seller sync questions: sync speed, conflict handling, vendor limits, product types, pricing sync, inventory buffer.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to start a multivendor marketplace on shopify without coding blog/start-multivendor-marketplace-on-shopify-without-coding shopify no-code">
+      <div class="page-card-header" onclick="togglePage(167)">
+        <span class="page-id">#167</span>
+        <span class="page-title">How To Start A Multivendor Marketplace On Shopify Without Coding</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">67 clicks</span>
+          <span class="metric-imp">17.3K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-167">▾</span>
+      </div>
+      <div class="url-row">/blog/start-multivendor-marketplace-on-shopify-without-coding</div>
+      <div class="page-detail" id="detail-167">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify No-Code</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strong companion to #166. 67 clicks, 17.3K imp. Different intent (CAN I build without code).</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Shopify Marketplace Without Coding [No-Code Guide 2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">full Shopify marketplace guide</td><td>Complete guide</td></tr><tr><td>#155</td><td class="anchor">Shopify themes</td><td>Theme setup</td></tr><tr><td>#179</td><td class="anchor">seller sync</td><td>Vendor connect</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a No-Code Shopify Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Building a multi-vendor marketplace without coding using Shopify + apps. No-code movement context.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step No-Code Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">8 steps as H3s. How-to schema. Choose Shopify plan → Install theme → Add Shipturtle → Configure vendors → Set commissions → Setup shipping → Test → Launch.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: No-Code vs Custom Development Comparison<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: time, cost, flexibility, maintenance, scaling. When no-code is enough vs when you need custom.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Features Available Without Coding<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Vendor onboarding, product sync, order management, commission tracking, shipping, analytics. What you get without writing code.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">No-code marketplace questions: limitations, cost, scaling, customization, vendor limits, performance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to connect your shopify store to multiple marketplaces blog/how-to-connect-your-shopify-store-to-multiple-marketplaces multi-channel">
+      <div class="page-card-header" onclick="togglePage(168)">
+        <span class="page-id">#168</span>
+        <span class="page-title">How to Connect Your Shopify Store to Multiple Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">21 clicks</span>
+          <span class="metric-imp">5.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-168">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-connect-your-shopify-store-to-multiple-marketplaces</div>
+      <div class="page-detail" id="detail-168">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Multi-Channel</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique multi-channel angle. 21 clicks. Add integration guides.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Connect Your Shopify Store to Multiple Marketplaces [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#158</td><td class="anchor">Marketplace Connect review</td><td>Official tool</td></tr><tr><td>#176</td><td class="anchor">inventory sync</td><td>Sync solution</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Connect Your Shopify Store to Multiple Marketplaces?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Multichannel selling benefits: expanded reach, revenue diversification, reduced risk.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Supported Marketplace Integrations<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Amazon, eBay, Walmart, Etsy, Google Shopping. Per-marketplace setup requirements and capabilities.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Integration Guide<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. How-to schema. Choose marketplaces → Install connector → Map products → Sync inventory → Route orders → Monitor performance.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Inventory Sync Challenges<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Overselling prevention, price parity, listing optimization per marketplace, return handling across channels.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Multi-marketplace questions: sync frequency, overselling, pricing strategy, returns, performance tracking.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to integrate marketplace management software with shopify and woocommerce blog/how-to-integrate-marketplace-management-software-with-shopify-and-woocommerce integration">
+      <div class="page-card-header" onclick="togglePage(169)">
+        <span class="page-id">#169</span>
+        <span class="page-title">How to Integrate Marketplace Management Software with Shopify and WooCommerce</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">20 clicks</span>
+          <span class="metric-imp">15.0K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-169">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-integrate-marketplace-management-software-with-shopify-and-woocommerce</div>
+      <div class="page-detail" id="detail-169">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Integration</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Cross-platform — 20 clicks, 15K imp, 1 conv. Expand with API docs.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Integrate Marketplace Software with Shopify & WooCommerce [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#170</td><td class="anchor">WooCommerce marketplace</td><td>WooCommerce guide</td></tr><tr><td>#176</td><td class="anchor">inventory sync</td><td>Sync solution</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Marketplace Management Software?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Centralized tools for managing multi-vendor operations. Integration with Shopify and WooCommerce.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Integration Features<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Product sync, order routing, vendor management, commission calculation, inventory sync, analytics, shipping integration.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Integrate with Shopify<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Step-by-step for Shopify. App installation → Configuration → Vendor setup → Product sync → Order flow → Testing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Integrate with WooCommerce<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Step-by-step for WooCommerce. Plugin installation → API setup → Vendor configuration → Sync → Testing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Shopify vs WooCommerce for Marketplace Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Comparison table: ease of integration, app ecosystem, customization, cost, performance.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Integration questions: setup time, sync frequency, vendor limits, API requirements, migration between platforms.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to build a powerful multi vendor marketplace on woocommerce blog/build-multi-vendor-marketplace-on-woocommerce woocommerce">
+      <div class="page-card-header" onclick="togglePage(170)">
+        <span class="page-id">#170</span>
+        <span class="page-title">How To Build A Powerful Multi Vendor Marketplace On WooCommerce</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">46 clicks</span>
+          <span class="metric-imp">9.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-170">▾</span>
+      </div>
+      <div class="url-row">/blog/build-multi-vendor-marketplace-on-woocommerce</div>
+      <div class="page-detail" id="detail-170">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> WooCommerce</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">WooCommerce counterpart to #166. 46 clicks. Plugin comparisons needed.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Multi-Vendor Marketplace on WooCommerce [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">Shopify marketplace guide</td><td>Shopify alternative</td></tr><tr><td>#169</td><td class="anchor">integration guide</td><td>Cross-platform</td></tr><tr><td>#160</td><td class="anchor">WooCommerce to Shopify migration</td><td>Migration option</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Multi-Vendor WooCommerce Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). WooCommerce + multi-vendor plugins. WordPress flexibility. Market share.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key WooCommerce Multi-Vendor Plugins<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Dokan, WCFM, WC Vendors, Shipturtle. Feature comparison table. Pricing comparison.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. WordPress/WooCommerce setup → Plugin selection → Theme → Vendor setup → Payment → Shipping → Launch.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: WooCommerce vs Shopify for Marketplaces<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: customization, hosting, security, cost, scalability, plugin ecosystem.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">WooCommerce marketplace questions: hosting requirements, security, scaling, plugin conflicts, migration to Shopify.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="custom marketplace development vs off-the-shelf software blog/custom-marketplace-development-vs-off-the-shelf-solutions build vs buy">
+      <div class="page-card-header" onclick="togglePage(171)">
+        <span class="page-id">#171</span>
+        <span class="page-title">Custom Marketplace Development vs Off-the-Shelf Software</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">43 clicks</span>
+          <span class="metric-imp">46.3K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-171">▾</span>
+      </div>
+      <div class="url-row">/blog/custom-marketplace-development-vs-off-the-shelf-solutions</div>
+      <div class="page-detail" id="detail-171">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build vs Buy</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">HIGH IMPRESSIONS — 43 clicks, 46.3K imp, 1 conv. Absorb #164, #172. Definitive build-vs-buy guide.</p>
+            <h4>Recommended Title Tag</h4><p><code>Custom vs Off-the-Shelf Marketplace Software: Complete Comparison [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#173</td><td class="anchor">marketplace tech stack</td><td>Technology context</td></tr><tr><td>#174</td><td class="anchor">best marketplace software</td><td>Software options</td></tr><tr><td>#177</td><td class="anchor">hiring developers</td><td>Custom path</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Hire Specialized Marketplace Developers?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). General web dev vs marketplace-specific expertise. Skills needed. When to hire vs use no-code.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Skills to Look For<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Shopify/WooCommerce expertise, marketplace architecture, API integration, payment systems, vendor management, multi-tenant systems, scalability.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Where to Find Marketplace Developers<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Agencies, freelance platforms, Shopify Partner directory, development communities. Pros/cons of each channel.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Hiring Process & Budget<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Interview questions, portfolio evaluation, test projects, cost ranges (hourly/project), contract structures.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Hiring questions: cost, timeline, Shopify Plus experience, freelancer vs agency, ongoing maintenance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="can online marketplace creators compete with custom development? blog/online-marketplace-creators-vs-custom-development build vs buy">
+      <div class="page-card-header" onclick="togglePage(172)">
+        <span class="page-id">#172</span>
+        <span class="page-title">Can Online Marketplace Creators Compete with Custom Development?</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">6 clicks</span>
+          <span class="metric-imp">2.1K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-172">▾</span>
+      </div>
+      <div class="url-row">/blog/online-marketplace-creators-vs-custom-development</div>
+      <div class="page-detail" id="detail-172">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Build vs Buy</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → 301 to #171</p>
+            <p style="margin-top:8px">CANNIBALIZES #171. Merge into #171.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #171</div>
+              <div class="section-content">Overlaps with #171 (custom vs off-the-shelf). Merge &#x27;marketplace creators&#x27; angle into #171. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="technology for online marketplace: multi-vendor platform in 2024 blog/tech-for-marketplace tech stack">
+      <div class="page-card-header" onclick="togglePage(173)">
+        <span class="page-id">#173</span>
+        <span class="page-title">Technology for Online Marketplace: Multi-Vendor Platform in 2024</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">54 clicks</span>
+          <span class="metric-imp">14.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-173">▾</span>
+      </div>
+      <div class="url-row">/blog/tech-for-marketplace</div>
+      <div class="page-detail" id="detail-173">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Tech Stack</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid — 54 clicks, 14.7K imp. Update to 2026. Expand with AI, headless.</p>
+            <h4>Recommended Title Tag</h4><p><code>Marketplace Technology Stack: Complete Guide for 2026</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#161</td><td class="anchor">Shopify + custom hybrid</td><td>Architecture</td></tr><tr><td>#171</td><td class="anchor">custom vs off-the-shelf</td><td>Build decision</td></tr><tr><td>#174</td><td class="anchor">best marketplace software</td><td>Software picks</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Technology Do You Need for an Online Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Technology stack overview: frontend, backend, payments, logistics, vendor management.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Technology Stack Breakdown<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Each layer as H3. Frontend (Shopify, WooCommerce, custom) → Backend (API, database) → Payments (Stripe, PayPal) → Logistics → Vendor management → Analytics. Comparison table per layer.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build vs Buy Technology Decision<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Decision framework: custom development vs platform + apps. Cost/time/flexibility tradeoffs. Comparison table.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Technology Stack by Marketplace Stage<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Startup (Shopify + Shipturtle) → Growth (custom integrations) → Scale (hybrid architecture). Recommended stack per stage.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Tech stack questions: minimum viable tech, cost, developer requirements, scaling, security.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="best marketplace software compared for 2025 blog/best-marketplace-software-compared-for-2025 software comparison">
+      <div class="page-card-header" onclick="togglePage(174)">
+        <span class="page-id">#174</span>
+        <span class="page-title">Best Marketplace Software Compared for 2025</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">18 clicks</span>
+          <span class="metric-imp">13.2K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-174">▾</span>
+      </div>
+      <div class="url-row">/blog/best-marketplace-software-compared-for-2025</div>
+      <div class="page-detail" id="detail-174">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Software Comparison</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Category comparison — 18 clicks, 13.2K imp. Refresh 2026.</p>
+            <h4>Recommended Title Tag</h4><p><code>Best Marketplace Software Compared [2026 Rankings & Reviews]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#171</td><td class="anchor">custom vs off-the-shelf</td><td>Build decision</td></tr><tr><td>#173</td><td class="anchor">tech stack</td><td>Technology context</td></tr><tr><td>#175</td><td class="anchor">commission tools</td><td>Feature-specific</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Marketplace Software?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Marketplace platforms vs plugins vs custom solutions. Purpose and market overview.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Top Marketplace Software Compared<span class="word-count">600–700 words</span></div>
+              <div class="section-content">Feature comparison table (8–10 platforms). Shopify + Shipturtle, Sharetribe, CS-Cart, Arcadier, Mirakl, Yo!Kart, Kreezalid. Pricing, features, scalability.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Choose the Right Software<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Decision criteria: budget, scale, customization, industry, technical resources. Scoring framework.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Software Pricing Comparison<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Pricing table: monthly cost, transaction fees, setup costs. TCO comparison at different volumes.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Software comparison questions: best for beginners, most scalable, cheapest, most customizable, migration paths.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="best marketplace commission automation tools blog/marketplace-commission-automation-tools commission tools">
+      <div class="page-card-header" onclick="togglePage(175)">
+        <span class="page-id">#175</span>
+        <span class="page-title">Best Marketplace Commission Automation Tools</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">10 clicks</span>
+          <span class="metric-imp">5.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-175">▾</span>
+      </div>
+      <div class="url-row">/blog/marketplace-commission-automation-tools</div>
+      <div class="page-detail" id="detail-175">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Commission Tools</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique tool comparison. 10 clicks. Expand with pricing matrix.</p>
+            <h4>Recommended Title Tag</h4><p><code>Best Commission Automation Tools for Marketplaces [2026 Comparison]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#174</td><td class="anchor">best marketplace software</td><td>Broader comparison</td></tr><tr><td>#176</td><td class="anchor">inventory sync</td><td>Related tools</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Marketplace Commission Automation?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Automated commission calculation, splits, payouts. Why manual is unsustainable at scale.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Top Commission Automation Tools<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Tool comparison: Shipturtle, Stripe Connect, PayPal for Marketplaces, custom solutions. Feature comparison table.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Commission Models Explained<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Flat rate vs percentage vs tiered vs hybrid. Per-model configuration guide. Real-world examples.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Set Up Commission Automation<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Step-by-step for Shopify. How-to schema. Choose model → Configure rules → Set payout schedule → Test → Monitor.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Commission questions: model selection, payout timing, tax handling, vendor disputes, multi-currency.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="marketplace management software: top apps for syncing inventory blog/online-marketplace-management-software-sync-inventory inventory sync">
+      <div class="page-card-header" onclick="togglePage(176)">
+        <span class="page-id">#176</span>
+        <span class="page-title">Marketplace Management Software: Top Apps for Syncing Inventory</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">62 clicks</span>
+          <span class="metric-imp">47.0K imp</span>
+          <span class="metric-conv">3 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-176">▾</span>
+      </div>
+      <div class="url-row">/blog/online-marketplace-management-software-sync-inventory</div>
+      <div class="page-detail" id="detail-176">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Inventory Sync</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STRONG — 62 clicks, 47K imp, 3 conv. Expand with sync methodologies.</p>
+            <h4>Recommended Title Tag</h4><p><code>Best Marketplace Management Software for Inventory Sync [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#179</td><td class="anchor">seller sync</td><td>Sync solution</td></tr><tr><td>#174</td><td class="anchor">best marketplace software</td><td>Broader comparison</td></tr><tr><td>#168</td><td class="anchor">connect to multiple marketplaces</td><td>Multi-channel</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Comparison Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Marketplace Management Software?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Centralized tools for inventory, orders, vendors across marketplace channels.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Top Marketplace Management Apps Compared<span class="word-count">500–600 words</span></div>
+              <div class="section-content">Comparison table (6–8 apps). Shipturtle, Sellbrite, ChannelAdvisor, Zentail, Linnworks. Features, pricing, integrations.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Inventory Sync Across Channels<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Real-time sync architecture, buffer stock rules, oversell prevention, multi-warehouse, sync conflict resolution.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Choose the Right Tool<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Decision criteria: channels supported, sync speed, automation, pricing, Shopify/WooCommerce compatibility.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Setup Guide<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Step-by-step app installation and inventory sync configuration. How-to schema.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Management software questions: sync frequency, overselling, multi-warehouse, pricing, migration, API integration.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="hiring multi-vendor marketplace website developers blog/multi-vendor-marketplace-website-developers developer hiring">
+      <div class="page-card-header" onclick="togglePage(177)">
+        <span class="page-id">#177</span>
+        <span class="page-title">Hiring Multi-Vendor Marketplace Website Developers</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">20 clicks</span>
+          <span class="metric-imp">15.6K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-177">▾</span>
+      </div>
+      <div class="url-row">/blog/multi-vendor-marketplace-website-developers</div>
+      <div class="page-detail" id="detail-177">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Developer Hiring</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique angle. 20 clicks, 15.6K imp. Expand with skill requirements.</p>
+            <h4>Recommended Title Tag</h4><p><code>Hiring Marketplace Developers: Skills, Costs & Where to Find Them [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#178</td><td class="anchor">marketplace dev companies</td><td>Agency alternative</td></tr><tr><td>#171</td><td class="anchor">custom vs off-the-shelf</td><td>Build decision</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Hire Specialized Marketplace Developers?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). General web dev vs marketplace-specific expertise. Skills needed. When to hire vs use no-code.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Skills to Look For<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Shopify/WooCommerce expertise, marketplace architecture, API integration, payment systems, vendor management, multi-tenant systems, scalability.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Where to Find Marketplace Developers<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Agencies, freelance platforms, Shopify Partner directory, development communities. Pros/cons of each channel.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Hiring Process &amp; Budget<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Interview questions, portfolio evaluation, test projects, cost ranges (hourly/project), contract structures.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Hiring questions: cost, timeline, Shopify Plus experience, freelancer vs agency, ongoing maintenance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="online marketplace development companies for multivendor solutions blog/marketplace-software-development-company dev companies">
+      <div class="page-card-header" onclick="togglePage(178)">
+        <span class="page-id">#178</span>
+        <span class="page-title">Online Marketplace Development Companies for Multivendor Solutions</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">38 clicks</span>
+          <span class="metric-imp">28.8K imp</span>
+          <span class="metric-conv">2 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-178">▾</span>
+      </div>
+      <div class="url-row">/blog/marketplace-software-development-company</div>
+      <div class="page-detail" id="detail-178">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Dev Companies</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid with conv — 38 clicks, 28.8K imp, 2 conv. Refresh profiles.</p>
+            <h4>Recommended Title Tag</h4><p><code>Best Marketplace Development Companies [2026 Rankings & Reviews]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#177</td><td class="anchor">hiring developers</td><td>Individual option</td></tr><tr><td>#171</td><td class="anchor">custom vs off-the-shelf</td><td>Build decision</td></tr><tr><td>#174</td><td class="anchor">marketplace software</td><td>Software alternative</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">Article Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Are Marketplace Development Companies?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Full-service agencies vs specialized marketplace builders. What they offer.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Top Marketplace Development Companies<span class="word-count">500–600 words</span></div>
+              <div class="section-content">8–10 companies compared. Specialization, platform expertise, pricing ranges, notable projects, client reviews.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Evaluate a Development Company<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Evaluation criteria: marketplace portfolio, platform expertise, pricing transparency, support SLAs, scalability experience, references.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Cost &amp; Timeline Expectations<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Typical marketplace development costs by complexity. MVP vs full build. Timeline ranges.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Development company questions: cost, timeline, platform recommendation, ongoing support, custom vs off-the-shelf.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="seller sync solution for marketplace on shopify blog/seller-sync-solution seller sync">
+      <div class="page-card-header" onclick="togglePage(179)">
+        <span class="page-id">#179</span>
+        <span class="page-title">Seller Sync Solution for Marketplace on Shopify</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">182 clicks</span>
+          <span class="metric-imp">8.5K imp</span>
+          <span class="metric-conv">4 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-179">▾</span>
+      </div>
+      <div class="url-row">/blog/seller-sync-solution</div>
+      <div class="page-detail" id="detail-179">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Seller Sync</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">CONVERSION CHAMPION — 182 clicks, 4 conv, 2.15% CTR. PROTECT.</p>
+            <h4>Recommended Title Tag</h4><p><code>Seller Sync for Shopify Marketplaces: Connect Vendors Instantly [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">create marketplace on Shopify</td><td>Full build guide</td></tr><tr><td>#176</td><td class="anchor">inventory sync software</td><td>Broader sync</td></tr><tr><td>#167</td><td class="anchor">no-code marketplace</td><td>No-code sync</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is Seller Sync for Shopify Marketplaces?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Real-time synchronization between marketplace and vendor Shopify stores. Product, inventory, order, tracking sync.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Seller Sync Features<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Product sync (images, variants, pricing), inventory sync (real-time stock), order sync (auto-routing), tracking sync (branded tracking), vendor dashboard, bulk operations, conflict resolution.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How Seller Sync Works (Architecture)<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Technical overview: webhook-based sync, API polling, conflict resolution, retry logic. Sync flow diagram description.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Setup Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">How-to schema. Install Shipturtle → Connect vendor stores → Configure sync rules → Map products → Test sync → Go live. Screenshots/steps.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Seller Sync vs Manual Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Comparison table: time savings, error reduction, scalability, real-time accuracy. ROI calculation.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Seller sync questions: sync speed, conflict handling, vendor limits, product types, pricing sync, inventory buffer.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how shipturtle enhances shipping strategy using shopify marketplace kit blog/how-shipturtle-enhances-your-shipping-strategy-when-using-the-shopify-marketplace-kit shopify kit">
+      <div class="page-card-header" onclick="togglePage(181)">
+        <span class="page-id">#181</span>
+        <span class="page-title">How Shipturtle Enhances Shipping Strategy Using Shopify Marketplace Kit</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">11 clicks</span>
+          <span class="metric-imp">6.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-181">▾</span>
+      </div>
+      <div class="url-row">/blog/how-shipturtle-enhances-your-shipping-strategy-when-using-the-shopify-marketplace-kit</div>
+      <div class="page-detail" id="detail-181">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shopify Kit</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Developer content. 11 clicks, 6.1K imp. Add technical integration guide.</p>
+            <h4>Recommended Title Tag</h4><p><code>Shopify Marketplace Kit + Shipturtle: Complete Shipping Integration Guide</code></p>
+            <h4>Target Word Count</h4><p>2,000–2,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (1x)</h4><p>Link to <code>/blog/marketplace-platform-builder</code> in 1 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#166</td><td class="anchor">Shopify marketplace guide</td><td>Build context</td></tr><tr><td>#161</td><td class="anchor">hybrid architecture</td><td>Architecture</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is the Shopify Marketplace Kit?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Shopify&#x27;s native shipping tools. How Shipturtle enhances the built-in shipping capabilities.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Shipping Limitations in Default Shopify<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Single-origin shipping assumption, no multi-vendor rate calculation, no vendor-specific carrier rules, limited tracking.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How Shipturtle Enhances Marketplace Shipping<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Multi-vendor shipping profiles, carrier assignment per vendor, split shipment handling, consolidated tracking, branded tracking pages, WISMO reduction.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Setup Guide<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Step-by-step. How-to schema. Install Shipturtle → Configure vendor shipping → Carrier integration → Tracking setup → Testing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Marketplace shipping questions: multi-vendor rates, carrier options, tracking, international shipping, returns.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="repillar" data-search="how eu riders are moving to a real c2c bike marketplace blog/build-a-c2c-bike-marketplace geo: eu">
+      <div class="page-card-header" onclick="togglePage(182)">
+        <span class="page-id">#182</span>
+        <span class="page-title">How EU Riders Are Moving to a Real C2C Bike Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge repillar">repillar</span>
+        <span class="chevron" id="chev-182">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-c2c-bike-marketplace</div>
+      <div class="page-detail" id="detail-182">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: EU</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Move to Industry Marketplaces</p>
+            <p style="margin-top:8px">MISPLACED — industry vertical. Move to Industry Marketplaces.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: EU C2C Bike Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">EU cycling market growth, sustainability, Facebook Groups → real marketplace migration.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Bike Marketplaces<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Frame size guides, component specs, condition grading, location-based search, shipping for oversized items.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define niche → Seller onboarding → Catalog (specs, condition) → Payment → Shipping (bikes are oversized).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Bike marketplace questions: shipping oversized items, condition guarantees, parts compatibility, EU regulations.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="how indian handmade marketplaces are scaling beyond wordpress blog/multi-vendor-handmade-promotion-workflows geo: india">
+      <div class="page-card-header" onclick="togglePage(183)">
+        <span class="page-id">#183</span>
+        <span class="page-title">How Indian Handmade Marketplaces Are Scaling Beyond WordPress</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-183">▾</span>
+      </div>
+      <div class="url-row">/blog/multi-vendor-handmade-promotion-workflows</div>
+      <div class="page-detail" id="detail-183">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: India</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #69</p>
+            <p style="margin-top:8px">Redirect to #69 (handmade crafts, 125 clicks).</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: India Handmade Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Indian handicraft market, artisan economy, scaling beyond WordPress/WooCommerce.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Handmade Marketplaces<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Artisan profiles, regional craft categories, quality photography, story-driven listings, shipping for fragile items.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide for India<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define craft categories → Artisan onboarding → Catalog → Payment (UPI, COD) → Shipping (India Post, Delhivery).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">India handmade questions: artisan onboarding, quality control, shipping fragile items, regional language support.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="the infrastructure behind indonesia's service booking marketplaces blog/indonesia-service-booking-marketplace-infrastructure geo: indonesia">
+      <div class="page-card-header" onclick="togglePage(184)">
+        <span class="page-id">#184</span>
+        <span class="page-title">The Infrastructure Behind Indonesia's Service Booking Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-184">▾</span>
+      </div>
+      <div class="url-row">/blog/indonesia-service-booking-marketplace-infrastructure</div>
+      <div class="page-detail" id="detail-184">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Indonesia</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #55</p>
+            <p style="margin-top:8px">Redirect to #55 (service marketplace build).</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Indonesia Service Booking Marketplace<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Indonesia services market, gig economy growth, mobile-first requirements.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Service booking, provider verification, location-based matching, GoPay/OVO payments, real-time scheduling.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define categories → Provider onboarding → Booking system → Payment → Rating system.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Indonesia service marketplace questions: payment gateways, provider vetting, booking management, mobile optimization.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="the hidden engine powering uae's fastest growing gear rental marketplaces blog/uae-equipment-rental-booking-marketplace geo: uae">
+      <div class="page-card-header" onclick="togglePage(185)">
+        <span class="page-id">#185</span>
+        <span class="page-title">The Hidden Engine Powering UAE's Fastest Growing Gear Rental Marketplaces</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-185">▾</span>
+      </div>
+      <div class="url-row">/blog/uae-equipment-rental-booking-marketplace</div>
+      <div class="page-detail" id="detail-185">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: UAE</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #6</p>
+            <p style="margin-top:8px">Redirect to #6 (P2P Rental, 400 clicks).</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: UAE Gear Rental Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">UAE adventure/outdoor market, tourism equipment demand, rental marketplace model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Availability calendar, deposit handling, condition tracking, insurance integration, delivery scheduling.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps. Define equipment categories → Vendor onboarding → Booking system → Payment (AED) → Delivery logistics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">UAE rental questions: deposit handling, damage policies, insurance, seasonal demand.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs puppet vendors compare/shipturtle-vs-puppetvendors site: vs page">
+      <div class="page-card-header" onclick="togglePage(186)">
+        <span class="page-id">#186</span>
+        <span class="page-title">Shipturtle vs Puppet Vendors</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">56 clicks</span>
+          <span class="metric-imp">7.3K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-186">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-puppetvendors</div>
+      <div class="page-detail" id="detail-186">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">Comparison landing page. Not blog cluster. Optimize independently.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs shopify collective compare/shipturtle-vs-shopify-collective site: vs page">
+      <div class="page-card-header" onclick="togglePage(187)">
+        <span class="page-id">#187</span>
+        <span class="page-title">Shipturtle vs Shopify Collective</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">113 clicks</span>
+          <span class="metric-imp">5.4K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-187">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-shopify-collective</div>
+      <div class="page-detail" id="detail-187">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">113 clicks. Strong conversion intent. CRO optimization needed.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs syncio compare/shipturtle-vs-syncio site: vs page">
+      <div class="page-card-header" onclick="togglePage(188)">
+        <span class="page-id">#188</span>
+        <span class="page-title">Shipturtle vs Syncio</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">55 clicks</span>
+          <span class="metric-imp">6.7K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-188">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-syncio</div>
+      <div class="page-detail" id="detail-188">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">55 clicks. Exclude from pillar.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs cs cart compare/shipturtle-vs-onport site: vs page">
+      <div class="page-card-header" onclick="togglePage(189)">
+        <span class="page-id">#189</span>
+        <span class="page-title">Shipturtle vs CS Cart</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">29 clicks</span>
+          <span class="metric-imp">3.6K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-189">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-onport</div>
+      <div class="page-detail" id="detail-189">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">URL-title mismatch. Fix and optimize.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs onport compare/shipturtle-vs-sharetribe site: vs page">
+      <div class="page-card-header" onclick="togglePage(190)">
+        <span class="page-id">#190</span>
+        <span class="page-title">Shipturtle vs Onport</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">73 clicks</span>
+          <span class="metric-imp">9.1K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-190">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-sharetribe</div>
+      <div class="page-detail" id="detail-190">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">URL-title mismatch. 73 clicks. Fix and optimize.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs sharetribe compare/shipturtle-vs-cscart site: vs page">
+      <div class="page-card-header" onclick="togglePage(191)">
+        <span class="page-id">#191</span>
+        <span class="page-title">Shipturtle vs Sharetribe</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">33 clicks</span>
+          <span class="metric-imp">11.9K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-191">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-cscart</div>
+      <div class="page-detail" id="detail-191">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">URL-title mismatch. 11.9K impressions. Fix urgently.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="shipturtle vs carro compare/shipturtle-vs-carro site: vs page">
+      <div class="page-card-header" onclick="togglePage(192)">
+        <span class="page-id">#192</span>
+        <span class="page-title">Shipturtle vs Carro</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">11 clicks</span>
+          <span class="metric-imp">3.7K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-192">▾</span>
+      </div>
+      <div class="url-row">/compare/shipturtle-vs-carro</div>
+      <div class="page-detail" id="detail-192">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: vs Page</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">11 clicks. Exclude from pillar.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="exclude" data-search="all the features you need for a successful marketplace features site: features">
+      <div class="page-card-header" onclick="togglePage(180)">
+        <span class="page-id">#180</span>
+        <span class="page-title">All the features you need for a Successful Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">24 clicks</span>
+          <span class="metric-imp">9.7K imp</span>
+          
+        </span>
+        <span class="action-badge exclude">exclude</span>
+        <span class="chevron" id="chev-180">▾</span>
+      </div>
+      <div class="url-row">/features</div>
+      <div class="page-detail" id="detail-180">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Site: Features</p>
+            <p><strong>Intent:</strong> siteonly</p>
+            
+            <p style="margin-top:8px">Features page. Product page optimization needed.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePage(id){const d=document.getElementById('detail-'+id);const c=document.getElementById('chev-'+id);d.classList.toggle('open');c.classList.toggle('open')}
+let currentFilter='all';
+document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterPages()})});
+document.getElementById('searchBox').addEventListener('input',filterPages);
+function filterPages(){const s=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.page-card').forEach(c=>{const matchFilter=currentFilter==='all'||c.dataset.action===currentFilter;const matchSearch=!s||c.dataset.search.includes(s);c.style.display=matchFilter&&matchSearch?'block':'none'})}
+</script>
+</body>
+</html>

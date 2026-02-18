@@ -1,0 +1,2577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — Industry Marketplaces Pillar: Child Page Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0e14;--surface:#141722;--surface2:#1a1f2e;--surface3:#222840;--border:#2a3050;--text:#e0e4f0;--text2:#8b93b0;--text3:#5a6380;--accent:#10b981;--accent2:#059669;--green:#34d399;--green-dim:rgba(52,211,153,0.12);--yellow:#fbbf24;--yellow-dim:rgba(251,191,36,0.12);--red:#f87171;--red-dim:rgba(248,113,113,0.12);--orange:#fb923c;--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.12);--purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);--keep:#34d399;--merge:#fbbf24;--rewrite:#60a5fa;--redirect:#f87171;--repillar:#a78bfa;--font:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+.header{background:linear-gradient(135deg,#141722 0%,#10b98115 50%,#141722 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px}
+.header-inner{max-width:1400px;margin:0 auto}.header-top{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.header-badge{background:linear-gradient(135deg,#10b981,#059669);color:#000;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:4px}
+.header h1{font-size:clamp(28px,4vw,42px);font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff 0%,#10b981 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-sub{color:var(--text2);font-size:15px;margin-top:8px;max-width:800px}
+.pillar-url{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:13px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 16px;color:var(--accent)}
+.stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:1400px;margin:24px auto;padding:0 40px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-align:center}
+.stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}.stat-card .value{font-size:28px;font-weight:700;color:var(--text)}.stat-card .sub{font-size:11px;color:var(--text3);margin-top:2px}
+.stat-card.keep .value{color:var(--keep)}.stat-card.merge .value{color:var(--merge)}.stat-card.rewrite .value{color:var(--rewrite)}.stat-card.redirect .value{color:var(--redirect)}.stat-card.repillar .value{color:var(--purple)}.stat-card.exclude .value{color:var(--text3)}
+.controls{max-width:1400px;margin:0 auto;padding:20px 40px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border)}
+.controls .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-right:4px}
+.filter-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:6px;font-size:13px;font-family:var(--font);cursor:pointer;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--text)}.filter-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.filter-btn.keep.active{background:var(--keep)}.filter-btn.merge.active{background:var(--merge)}.filter-btn.rewrite.active{background:var(--rewrite)}.filter-btn.redirect.active{background:var(--redirect)}.filter-btn.repillar.active{background:var(--purple)}.filter-btn.exclude.active{background:var(--text3)}
+.search-box{margin-left:auto;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 14px;color:var(--text);font-size:13px;font-family:var(--font);width:240px;outline:none}.search-box:focus{border-color:var(--accent)}.search-box::placeholder{color:var(--text3)}
+.main{max-width:1400px;margin:0 auto;padding:24px 40px 80px}
+.page-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:border-color .2s}.page-card:hover{border-color:var(--accent)}
+.page-card-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.page-id{font-family:var(--mono);font-size:12px;color:var(--text3);background:var(--surface2);border-radius:4px;padding:2px 8px;min-width:36px;text-align:center}
+.page-title{font-weight:600;font-size:14px;flex:1;min-width:200px}.page-metrics{display:flex;gap:16px;font-size:13px}.page-metrics span{display:flex;align-items:center;gap:4px}
+.metric-clicks{color:var(--accent)}.metric-imp{color:var(--text2)}.metric-conv{color:var(--green)}
+.action-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:4px 10px;border-radius:4px}
+.action-badge.keep{background:var(--green-dim);color:var(--keep)}.action-badge.merge{background:var(--yellow-dim);color:var(--merge)}.action-badge.rewrite{background:var(--blue-dim);color:var(--rewrite)}.action-badge.redirect{background:var(--red-dim);color:var(--redirect)}.action-badge.repillar{background:var(--purple-dim);color:var(--purple)}.action-badge.exclude{background:rgba(90,99,128,.15);color:var(--text3)}
+.chevron{color:var(--text3);transition:transform .2s;font-size:18px}.chevron.open{transform:rotate(180deg)}
+.page-detail{display:none;padding:0 20px 24px}.page-detail.open{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.detail-section{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;break-inside:avoid}
+.detail-section h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.detail-section h4{font-size:13px;font-weight:600;color:var(--text);margin:12px 0 6px}.detail-section p,.detail-section li{font-size:13px;color:var(--text2);line-height:1.7}
+.detail-section ul{padding-left:16px}.detail-section li{margin-bottom:4px}
+.detail-section code{font-family:var(--mono);font-size:12px;background:var(--surface3);padding:1px 6px;border-radius:3px;color:var(--accent)}
+.full-width{grid-column:1/-1}.url-row{font-family:var(--mono);font-size:12px;color:var(--text3);padding:0 20px 12px}
+.link-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.link-table th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.link-table td{padding:6px 8px;border-bottom:1px solid rgba(42,48,80,.4);color:var(--text2)}.link-table tr:last-child td{border-bottom:none}.link-table .anchor{color:var(--green);font-family:var(--mono);font-size:11px}
+.template-section{background:var(--surface3);border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 6px 6px 0;margin:8px 0}
+.template-section .section-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.template-section .section-content{font-size:12px;color:var(--text2);line-height:1.6}
+.template-section .word-count{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);padding:1px 6px;border-radius:3px;margin-left:8px}
+.schema-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.schema-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--surface3);color:var(--text2);border:1px solid var(--border)}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none}.back-link:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="header"><div class="header-inner">
+  <div class="header-top"><span class="header-badge">Pillar Playbook</span><span class="header-badge">Industry Marketplaces</span></div>
+  <h1>Industry Marketplaces — Child Page Playbook</h1>
+  <p class="header-sub">43 child pages covering 30+ industry verticals — the largest pillar. Star performers: Event Planning (184 clicks, 4 conv), Health & Wellness (251 clicks, 2 conv), Sustainable Products (212 clicks), Handmade Crafts (125 clicks).</p>
+  <div class="pillar-url">PILLAR → /blog/industry-specific-marketplaces</div>
+</div></div>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="label">Pages</div><div class="value">43</div><div class="sub">9 at zero traffic</div></div>
+  <div class="stat-card"><div class="label">Clicks</div><div class="value">2,022</div><div class="sub">514K impressions</div></div>
+  <div class="stat-card"><div class="label">Conversions</div><div class="value">20</div></div>
+  <div class="stat-card keep"><div class="label">Keep</div><div class="value">26</div></div>
+  <div class="stat-card rewrite"><div class="label">Rewrite</div><div class="value">10</div></div>
+  <div class="stat-card merge"><div class="label">Merge</div><div class="value">4</div></div>
+  <div class="stat-card redirect"><div class="label">Redirect</div><div class="value">1</div></div>
+  <div class="stat-card repillar"><div class="label">Re-Pillar</div><div class="value">2</div></div>
+  
+</div>
+
+<div class="controls">
+  <span class="label">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All (43)</button>
+  <button class="filter-btn" data-filter="keep">Keep (26)</button>
+  <button class="filter-btn" data-filter="rewrite">Rewrite (10)</button>
+  <button class="filter-btn" data-filter="merge">Merge (4)</button>
+  <button class="filter-btn" data-filter="redirect">Redirect (1)</button>
+  <button class="filter-btn" data-filter="repillar">Re-Pillar (2)</button>
+  
+  <input type="text" class="search-box" id="searchBox" placeholder="Search pages...">
+</div>
+
+<div class="main">
+  <a href="Shipturtle_SEO_Command_Center_v2.html" class="back-link">← Back to Command Center</a>
+  <div id="pageList">
+
+    <div class="page-card" data-action="keep" data-search="selling gourmet and specialty foods online: develop multivendor marketplace blog/build-gourmet-specialty-foods-marketplace food & gourmet">
+      <div class="page-card-header" onclick="togglePage(64)">
+        <span class="page-id">#64</span>
+        <span class="page-title">Selling Gourmet And Specialty Foods Online: Develop Multivendor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">16 clicks</span>
+          <span class="metric-imp">4.3K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-64">▾</span>
+      </div>
+      <div class="url-row">/blog/build-gourmet-specialty-foods-marketplace</div>
+      <div class="page-detail" id="detail-64">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Food & Gourmet</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Niche with no cannibalization. Refresh with food compliance (FDA, labeling), cold-chain logistics.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Gourmet Food Marketplace on Shopify [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#66</td><td class="anchor">livestock marketplace</td><td>Related food vertical</td></tr><tr><td>#65</td><td class="anchor">farm-to-table marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Livestock & Poultry Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Difference from general food marketplaces. Farm-to-consumer vs farm-to-business models.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Features for Livestock Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Weight-based pricing, breed/species filters, health certification uploads, cold chain logistics, lot/auction bidding, veterinary compliance docs.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. How-to schema. Supplier onboarding → Product catalog (live animals, feed, equipment) → Payment (escrow for live animals) → Delivery/pickup logistics → Reviews → Launch.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Marketplace Examples & Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">3–5 real livestock platforms. Commission, subscription, listing fee models.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Compliance & Regulations<span class="word-count">200–250 words</span></div>
+              <div class="section-content">USDA, state agriculture regs, animal welfare, transport regulations by country.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Livestock marketplace FAQs with standalone 40–60 word answers.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="the easiest way to launch your farm to home marketplace blog/build-a-farm-to-home-marketplace food & agriculture">
+      <div class="page-card-header" onclick="togglePage(65)">
+        <span class="page-id">#65</span>
+        <span class="page-title">The Easiest Way to Launch Your Farm to Home Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-65">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-farm-to-home-marketplace</div>
+      <div class="page-detail" id="detail-65">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Food & Agriculture</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent — farm-to-home growing post-pandemic. Zero traffic = title failure.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Farm-to-Table Marketplace [Complete Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#64</td><td class="anchor">gourmet food marketplace</td><td>Related</td></tr><tr><td>#66</td><td class="anchor">livestock marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Farm-to-Table Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition. Local food movement examples.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Step-by-step.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Farm marketplace focused.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="building a farm market: multivendor marketplace for local poultry and livestock sale blog/build-local-poultry-and-livestock-marketplace food & agriculture">
+      <div class="page-card-header" onclick="togglePage(66)">
+        <span class="page-id">#66</span>
+        <span class="page-title">Building A Farm Market: Multivendor Marketplace For Local Poultry And Livestock Sale</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">68 clicks</span>
+          <span class="metric-imp">9.0K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-66">▾</span>
+      </div>
+      <div class="url-row">/blog/build-local-poultry-and-livestock-marketplace</div>
+      <div class="page-detail" id="detail-66">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Food & Agriculture</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique ultra-niche. 68 clicks. Refresh with livestock-specific features.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Livestock & Poultry Marketplace [Complete Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#64</td><td class="anchor">food marketplace</td><td>Related</td></tr><tr><td>#65</td><td class="anchor">farm marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Livestock &amp; Poultry Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Difference from general food marketplaces. Farm-to-consumer vs farm-to-business models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Livestock Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Weight-based pricing, breed/species filters, health certification uploads, cold chain logistics, lot/auction bidding, veterinary compliance docs.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. How-to schema. Supplier onboarding → Product catalog (live animals, feed, equipment) → Payment (escrow for live animals) → Delivery/pickup logistics → Reviews → Launch.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Examples &amp; Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">3–5 real livestock platforms. Commission, subscription, listing fee models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Compliance &amp; Regulations<span class="word-count">200–250 words</span></div>
+              <div class="section-content">USDA, state agriculture regs, animal welfare, transport regulations by country.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Livestock marketplace FAQs with standalone 40–60 word answers.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="sell antique: a guide to building a marketplace for vintage collectibles blog/build-antique-collectibles-marketplace antiques & vintage">
+      <div class="page-card-header" onclick="togglePage(67)">
+        <span class="page-id">#67</span>
+        <span class="page-title">Sell Antique: A Guide To Building A Marketplace For Vintage Collectibles</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">20 clicks</span>
+          <span class="metric-imp">7.9K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-67">▾</span>
+      </div>
+      <div class="url-row">/blog/build-antique-collectibles-marketplace</div>
+      <div class="page-detail" id="detail-67">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Antiques & Vintage</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique niche. Authentication/provenance features needed.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an Antique & Vintage Collectibles Marketplace</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#69</td><td class="anchor">handmade crafts marketplace</td><td>Related artisan</td></tr><tr><td>#68</td><td class="anchor">art marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Antique &amp; Vintage Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Difference from general secondhand. Era classification (antique 100+ years, vintage 20–100 years).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Antique Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Authentication/provenance tracking, condition grading system, high-res image galleries, price guides/appraisals, certificate of authenticity, escrow for high-value items.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Antique Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Niche selection → Seller vetting → Product listing standards → Trust &amp; authentication → Payment (escrow) → Shipping (fragile item logistics).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Examples<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Chairish, 1stDibs, Ruby Lane, EBTH. Analyze what makes each successful.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Authentication, insurance, returns policy, pricing strategy, seller onboarding questions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="create online art marketplace to sell local artists' artwork blog/build-online-art-marketplace art">
+      <div class="page-card-header" onclick="togglePage(68)">
+        <span class="page-id">#68</span>
+        <span class="page-title">Create Online Art Marketplace To Sell Local Artists' Artwork</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">42 clicks</span>
+          <span class="metric-imp">8.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-68">▾</span>
+      </div>
+      <div class="url-row">/blog/build-online-art-marketplace</div>
+      <div class="page-detail" id="detail-68">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Art</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid performer. 42 clicks. Add digital art/NFT section.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an Online Art Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#67</td><td class="anchor">vintage collectibles marketplace</td><td>Related</td></tr><tr><td>#69</td><td class="anchor">handmade crafts</td><td>Related</td></tr><tr><td>#85</td><td class="anchor">digital products marketplace</td><td>Digital art</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Online Art Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Physical art vs digital art vs prints. Artist-direct vs gallery model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Art Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Gallery-style layouts, artist profiles/portfolios, commission structures, framing options, certificate of authenticity, zoom/detail views, AR wall preview.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Art Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche (local, digital, prints) → Artist onboarding → Catalog setup → Payment (split commissions) → Shipping (oversized/fragile) → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Digital Art &amp; NFT Marketplace Section<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Digital downloads, limited editions, NFT integration considerations, licensing models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission (20-40%), listing fees, premium placement, subscription tiers for artists.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Art marketplace startup costs, artist acquisition, authentication, shipping art safely, pricing strategies.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to sell handmade crafts: build a marketplace for handicraft and artisan goods blog/create-handmade-crafts-and-artisan-goods-marketplace handmade & crafts">
+      <div class="page-card-header" onclick="togglePage(69)">
+        <span class="page-id">#69</span>
+        <span class="page-title">How to Sell Handmade Crafts: Build a Marketplace for Handicraft and Artisan Goods</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">125 clicks</span>
+          <span class="metric-imp">41.3K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-69">▾</span>
+      </div>
+      <div class="url-row">/blog/create-handmade-crafts-and-artisan-goods-marketplace</div>
+      <div class="page-detail" id="detail-69">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Handmade & Crafts</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STRONG PERFORMER — 125 clicks, 41K impressions. Link to Etsy clone page.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Handmade Crafts Marketplace Like Etsy [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#88</td><td class="anchor">create marketplace like Etsy</td><td>Clone approach</td></tr><tr><td>#68</td><td class="anchor">art marketplace</td><td>Related</td></tr><tr><td>#67</td><td class="anchor">vintage marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Makes Etsy's Marketplace Model Successful?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Handmade + vintage + craft supplies. Community-driven. Etsy's revenue model and market position.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Etsy Features to Replicate<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Shop customization, handmade badges, craft category taxonomy, reviews with photos, favorites/wishlists, conversation messaging, Etsy Ads model, seller tools dashboard, star seller program.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Step-by-Step: Build Your Etsy Alternative<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define niche → Seller onboarding → Shop setup → Category structure → Payment (vendor splits) → Shipping → Community building.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Etsy vs Your Marketplace Comparison<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: Etsy fees, lock-in, branding limitations vs your own platform. Why sellers want alternatives.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Revenue & Growth Strategy<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission (10–15%), listing fees, premium placement, advertising, subscription tiers.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Etsy alternative questions: seller migration, fee comparison, handmade verification, SEO, community building, scaling.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="the new way to build a connected wellness marketplace blog/build-a-multi-brand-wellness-marketplace-engine health & wellness">
+      <div class="page-card-header" onclick="togglePage(70)">
+        <span class="page-id">#70</span>
+        <span class="page-title">The New Way to Build a Connected Wellness Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">1 clicks</span>
+          <span class="metric-imp">0.4K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-70">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-multi-brand-wellness-marketplace-engine</div>
+      <div class="page-detail" id="detail-70">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Health & Wellness</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #71</p>
+            <p style="margin-top:8px">CANNIBALIZES #71. Editorial title fails SEO. Merge into #71.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #71</div>
+              <div class="section-content">Extract multi-brand wellness angle as section in #71. 301 redirect to #71.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="start a health and wellness marketplace blog/build-health-and-wellness-marketplace health & wellness">
+      <div class="page-card-header" onclick="togglePage(71)">
+        <span class="page-id">#71</span>
+        <span class="page-title">Start a Health and Wellness Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">251 clicks</span>
+          <span class="metric-imp">35.6K imp</span>
+          <span class="metric-conv">2 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-71">▾</span>
+      </div>
+      <div class="url-row">/blog/build-health-and-wellness-marketplace</div>
+      <div class="page-detail" id="detail-71">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Health & Wellness</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STAR PAGE — 251 clicks, 35.6K impressions, 2 conversions. Absorb #70.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Health & Wellness Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#75</td><td class="anchor">beauty marketplace</td><td>Related</td></tr><tr><td>#72</td><td class="anchor">fitness marketplace</td><td>Sub-vertical</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Beauty & Cosmetics Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Skincare vs makeup vs fragrance. Clean beauty movement. Market opportunity.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Key Features for Beauty Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Shade matching tools, ingredient transparency lists, skin type filters, sample/trial workflows, subscription boxes, allergen warnings, before/after galleries.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: How to Build a Beauty Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Brand/indie seller onboarding → Product catalog (shades, ingredients, skin types) → Compliance (FDA/EU cosmetics regs) → Fulfillment → Marketing.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission, subscription boxes, affiliate, exclusive launches. Comparison table.</div>
+            </div><div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Cosmetics compliance, ingredient listing, returns on opened products, shade matching, brand onboarding.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="the marketplace model redefining specialty fitness in latin america blog/build-a-speciality-fitness-marketplace fitness">
+      <div class="page-card-header" onclick="togglePage(72)">
+        <span class="page-id">#72</span>
+        <span class="page-title">The Marketplace Model Redefining Specialty Fitness in Latin America</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-72">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-speciality-fitness-marketplace</div>
+      <div class="page-detail" id="detail-72">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Fitness</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent buried. Rewrite as 'How to Build a Fitness Marketplace' broadly.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Fitness Marketplace: Equipment, Classes & Trainers</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#71</td><td class="anchor">wellness marketplace</td><td>Parent category</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Fitness Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Equipment vs classes vs trainers vs supplements. Market size data.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Fitness Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Class booking system, trainer profiles, equipment specs, subscription management, live streaming integration, location-based search.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Fitness Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define model → Vendor onboarding (gyms, trainers, brands) → Catalog configuration → Booking/scheduling → Payment splits → Launch.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models for Fitness Marketplaces<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission on bookings, subscription access, equipment sales commission, premium trainer placement.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Fitness marketplace questions covering booking, liability, trainer vetting, equipment shipping.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="setting up a marketplace to sell fashion jewelry and accessories blog/build-jewelry-and-accessories-marketplace jewelry & accessories">
+      <div class="page-card-header" onclick="togglePage(73)">
+        <span class="page-id">#73</span>
+        <span class="page-title">Setting Up A Marketplace To Sell Fashion Jewelry and Accessories</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">16 clicks</span>
+          <span class="metric-imp">8.5K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-73">▾</span>
+      </div>
+      <div class="url-row">/blog/build-jewelry-and-accessories-marketplace</div>
+      <div class="page-detail" id="detail-73">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Jewelry & Accessories</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Distinct niche. 8.4K impressions. Add sizing guides, material specs.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Jewelry & Accessories Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#74</td><td class="anchor">fashion marketplace</td><td>Parent category</td></tr><tr><td>#75</td><td class="anchor">beauty marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Jewelry &amp; Accessories Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Fine jewelry vs fashion jewelry vs handmade. Market opportunity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Jewelry Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Sizing guides (ring sizer, bracelet), material/metal specs, certification uploads (GIA), high-res zoom, try-on AR, customization (engraving).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Jewelry Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Niche selection → Seller vetting → Product catalog (material, size, certification) → Payment (high-value escrow) → Shipping (insured) → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Marketplace Examples &amp; Inspiration<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Etsy jewelry, Mejuri, Catbird, Blue Nile models analyzed.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Return policies, authentication, insurance, sizing, seller requirements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="start an online clothing store: build your multivendor fashion marketplace blog/build-fashion-apparel-marketplace fashion & apparel">
+      <div class="page-card-header" onclick="togglePage(74)">
+        <span class="page-id">#74</span>
+        <span class="page-title">Start An Online Clothing Store: Build Your Multivendor Fashion Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">41 clicks</span>
+          <span class="metric-imp">16.4K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-74">▾</span>
+      </div>
+      <div class="url-row">/blog/build-fashion-apparel-marketplace</div>
+      <div class="page-detail" id="detail-74">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Fashion & Apparel</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Canonical fashion page. 41 clicks. Absorb #78. Add size charts, seasonal inventory.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Fashion & Apparel Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (4)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#73</td><td class="anchor">jewelry marketplace</td><td>Sub-vertical</td></tr><tr><td>#75</td><td class="anchor">beauty marketplace</td><td>Related</td></tr><tr><td>#79</td><td class="anchor">shoe marketplace</td><td>Sub-vertical</td></tr><tr><td>#80</td><td class="anchor">sustainable products</td><td>Eco fashion</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Fashion Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). B2C vs C2C fashion. Multi-brand vs designer direct. Market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Fashion Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Size chart standardization, virtual try-on, seasonal collections, trend curation, designer profiles, lookbook galleries, sustainable fashion badges, return/exchange workflows.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define niche → Platform selection → Vendor onboarding → Catalog (sizes, colors, materials) → Payment → Shipping (returns handling) → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Sustainable Fashion Section (from #78)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Absorb #78 content. Eco-certified badges, sustainable material filters, carbon footprint display, ethical sourcing verification.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Fashion Marketplace Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission (15–25%), subscription, dropshipping model, premium placement, sponsored collections. Comparison table.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Fashion marketplace questions: returns, sizing, seasonal inventory, vendor acquisition, sustainable fashion integration.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="start a beauty product and cosmetics marketplace blog/build-beauty-product-cosmetics-marketplace beauty & cosmetics">
+      <div class="page-card-header" onclick="togglePage(75)">
+        <span class="page-id">#75</span>
+        <span class="page-title">Start a Beauty Product and Cosmetics Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">25 clicks</span>
+          <span class="metric-imp">7.2K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-75">▾</span>
+      </div>
+      <div class="url-row">/blog/build-beauty-product-cosmetics-marketplace</div>
+      <div class="page-detail" id="detail-75">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Beauty & Cosmetics</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Clean niche. 25 clicks. Add shade matching, ingredient transparency.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Beauty & Cosmetics Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#71</td><td class="anchor">wellness marketplace</td><td>Related</td></tr><tr><td>#74</td><td class="anchor">fashion marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Beauty &amp; Cosmetics Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Skincare vs makeup vs fragrance. Clean beauty movement. Market opportunity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Beauty Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Shade matching tools, ingredient transparency lists, skin type filters, sample/trial workflows, subscription boxes, allergen warnings, before/after galleries.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Beauty Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Brand/indie seller onboarding → Product catalog (shades, ingredients, skin types) → Compliance (FDA/EU cosmetics regs) → Fulfillment → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission, subscription boxes, affiliate, exclusive launches. Comparison table.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Cosmetics compliance, ingredient listing, returns on opened products, shade matching, brand onboarding.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="the marketplace model transforming the sustainable clothing world blog/build-a-sustainable-clothing-marketplace-platform fashion (sustainable)">
+      <div class="page-card-header" onclick="togglePage(78)">
+        <span class="page-id">#78</span>
+        <span class="page-title">The Marketplace Model Transforming the Sustainable Clothing World</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-78">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-sustainable-clothing-marketplace-platform</div>
+      <div class="page-detail" id="detail-78">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Fashion (Sustainable)</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #74</p>
+            <p style="margin-top:8px">CANNIBALIZES #74 + #80. Merge sustainable fashion angle into #74.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #74/#80</div>
+              <div class="section-content">Sustainable fashion content goes to #74 (fashion) and #80 (sustainable products). 301 redirect to #80.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="the future ready multi vendor shoe marketplace model blog/build-a-multi-vendor-shoe-marketplace shoes & footwear">
+      <div class="page-card-header" onclick="togglePage(79)">
+        <span class="page-id">#79</span>
+        <span class="page-title">The Future Ready Multi Vendor Shoe Marketplace Model</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-79">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-multi-vendor-shoe-marketplace</div>
+      <div class="page-detail" id="detail-79">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Shoes & Footwear</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent (StockX, GOAT prove model). Title failure. Rewrite.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Shoe & Sneaker Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#74</td><td class="anchor">fashion marketplace</td><td>Parent</td></tr><tr><td>#67</td><td class="anchor">vintage collectibles</td><td>Resale angle</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Shoe &amp; Sneaker Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Sneaker resale vs new shoes vs custom. StockX/GOAT model. Market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Shoe Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Size conversion charts, authentication system, condition grading, price tracking/charts, brand verification, release calendar, bid/ask system.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Shoe Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche (sneakers, luxury, athletic) → Authentication process → Seller onboarding → Catalog (size, condition, brand) → Payment → Shipping.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Authentication &amp; Trust<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Verification process, expert authentication, AI-assisted fakes detection, certificate issuance.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Shoe marketplace authentication, returns, size exchanges, sneaker drops, pricing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="create an online home decor marketplace blog/build-home-decor-marketplace home decor">
+      <div class="page-card-header" onclick="togglePage(76)">
+        <span class="page-id">#76</span>
+        <span class="page-title">Create An Online Home Decor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">17 clicks</span>
+          <span class="metric-imp">5.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-76">▾</span>
+      </div>
+      <div class="url-row">/blog/build-home-decor-marketplace</div>
+      <div class="page-detail" id="detail-76">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Home Decor</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Canonical home decor page. 17 clicks. Absorb #77.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Home Decor Marketplace on Shopify [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#82</td><td class="anchor">home improvement marketplace</td><td>Related</td></tr><tr><td>#83</td><td class="anchor">gardening marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Home Decor Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Furniture vs accessories vs art vs textiles. Interior design marketplace model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Home Decor Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Room visualization/AR, style filters (modern, vintage, boho), interior designer profiles, custom sizing, material/finish specs, room planner integration.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Home Decor Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Seller onboarding (artisans, brands, designers) → Catalog (dimensions, materials, room type) → Shipping (oversized, white glove) → Returns → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Furniture &amp; Oversized Item Logistics<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Freight shipping, white glove delivery, assembly services, damage protection, return logistics for large items.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Home decor marketplace questions: shipping large items, returns, custom orders, designer partnerships.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="the marketplace model redefining home inspiration ecommerce blog/build-a-home-decor-marketplace-platform home decor">
+      <div class="page-card-header" onclick="togglePage(77)">
+        <span class="page-id">#77</span>
+        <span class="page-title">The Marketplace Model Redefining Home Inspiration Ecommerce</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-77">▾</span>
+      </div>
+      <div class="url-row">/blog/build-a-home-decor-marketplace-platform</div>
+      <div class="page-detail" id="detail-77">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Home Decor</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #76</p>
+            <p style="margin-top:8px">CANNIBALIZES #76. Zero traffic. Merge into #76.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #76</div>
+              <div class="section-content">Extract &#x27;home inspiration&#x27; angle as section in #76. 301 redirect to #76.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="sell eco-friendly & sustainable products: build a marketplace blog/build-sustainable-products-marketplace sustainable / eco">
+      <div class="page-card-header" onclick="togglePage(80)">
+        <span class="page-id">#80</span>
+        <span class="page-title">Sell Eco-Friendly & Sustainable Products: Build A Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">212 clicks</span>
+          <span class="metric-imp">41.1K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-80">▾</span>
+      </div>
+      <div class="url-row">/blog/build-sustainable-products-marketplace</div>
+      <div class="page-detail" id="detail-80">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Sustainable / Eco</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STAR PAGE — 212 clicks, 41K impressions. Absorb #78. Add eco-certification, carbon tracking.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Sustainable Products Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#74</td><td class="anchor">fashion marketplace</td><td>Sustainable fashion</td></tr><tr><td>#71</td><td class="anchor">wellness marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Sustainable Products Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Eco-friendly vs sustainable vs ethical. Green commerce market size and growth data.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Sustainable Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Eco-certification badges (B-Corp, Fair Trade, GOTS), carbon footprint calculator per product, sustainable material filters, ethical sourcing verification, packaging sustainability score, lifecycle analysis display.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define sustainability criteria → Vendor vetting → Certification verification → Product catalog → Carbon tracking integration → Payment → Green logistics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Sustainable Fashion Integration (from #78)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Absorb #78. Eco-certified fashion brands, sustainable material guides, circular fashion features (resale, repair, recycle).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models &amp; Grant Opportunities<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission, green premium pricing, impact investing, sustainability grants, B-Corp advantages.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Certification requirements, greenwashing prevention, carbon tracking, sustainable packaging, vendor vetting, consumer trust building.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="building a marketplace for personalized gifts and custom products blog/build-personalized-gifts-marketplace gifts & custom">
+      <div class="page-card-header" onclick="togglePage(81)">
+        <span class="page-id">#81</span>
+        <span class="page-title">Building A Marketplace For Personalized Gifts And Custom Products</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">24 clicks</span>
+          <span class="metric-imp">4.6K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-81">▾</span>
+      </div>
+      <div class="url-row">/blog/build-personalized-gifts-marketplace</div>
+      <div class="page-detail" id="detail-81">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Gifts & Custom</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Unique niche. 24 clicks. Add customization workflow features.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Personalized Gifts Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#69</td><td class="anchor">handmade crafts</td><td>Related</td></tr><tr><td>#85</td><td class="anchor">digital products</td><td>Digital gifts</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Personalized Gifts Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Custom products vs personalized gifts vs print-on-demand. Market opportunity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Gift Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Customization tool (text, images, design), preview before purchase, design upload, gift wrapping options, gift messaging, occasion filters, delivery scheduling.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Personalized Gifts Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor onboarding (artisans, POD suppliers) → Customization workflow setup → Preview tool → Payment → Fulfillment (custom production timelines).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Customization Workflow Architecture<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Design tool integration, production queue management, proof approval process, vendor production tracking.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Custom order timelines, returns on personalized items, design ownership, production quality control.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="build diy and home improvement marketplace blog/build-diy-home-improvement-marketplace diy & home improvement">
+      <div class="page-card-header" onclick="togglePage(82)">
+        <span class="page-id">#82</span>
+        <span class="page-title">Build DIY And Home Improvement Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">39 clicks</span>
+          <span class="metric-imp">8.6K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-82">▾</span>
+      </div>
+      <div class="url-row">/blog/build-diy-home-improvement-marketplace</div>
+      <div class="page-detail" id="detail-82">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> DIY & Home Improvement</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid niche. 39 clicks. Add project-based purchasing, contractor verification.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a DIY & Home Improvement Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#76</td><td class="anchor">home decor marketplace</td><td>Related</td></tr><tr><td>#83</td><td class="anchor">gardening marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a DIY &amp; Home Improvement Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Tools vs materials vs project kits vs contractor services. Market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for DIY Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Project-based purchasing (bundle kits), contractor verification, how-to content integration, tool rental/buy options, material calculators, skill-level filters.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a DIY Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor onboarding (brands, contractors, indie makers) → Project catalog → Tutorial integration → Payment → Delivery logistics (heavy materials).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Content-Commerce Integration<span class="word-count">200–250 words</span></div>
+              <div class="section-content">How-to videos linked to product bundles, project cost calculators, step-by-step guides with buy links.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">DIY marketplace questions: heavy item shipping, contractor vetting, project bundles, returns on materials.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="creating a marketplace for gardening and outdoor supplies blog/build-gardening-and-outdoor-supplies-marketplace garden & outdoor">
+      <div class="page-card-header" onclick="togglePage(83)">
+        <span class="page-id">#83</span>
+        <span class="page-title">Creating A Marketplace For Gardening And Outdoor Supplies</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">51 clicks</span>
+          <span class="metric-imp">6.7K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-83">▾</span>
+      </div>
+      <div class="url-row">/blog/build-gardening-and-outdoor-supplies-marketplace</div>
+      <div class="page-detail" id="detail-83">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Garden & Outdoor</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid — 51 clicks. Seasonal demand. Add seasonal planning, plant shipping logistics.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Gardening & Outdoor Supplies Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#82</td><td class="anchor">home improvement marketplace</td><td>Related</td></tr><tr><td>#94</td><td class="anchor">outdoor gear marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Gardening &amp; Outdoor Supplies Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Plants vs tools vs seeds vs landscaping services. Seasonal demand patterns.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Gardening Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Climate zone filters, seasonal planting calendars, plant care guides, live plant shipping logistics, landscape service booking, garden planning tool, growing zone compatibility.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Gardening Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor onboarding (nurseries, tool brands, landscapers) → Seasonal catalog management → Shipping (live plant logistics) → Reviews → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Live Plant Shipping &amp; Logistics<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Temperature control, packaging requirements, delivery windows, DOA guarantees, seasonal shipping restrictions.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Plant shipping survival, seasonal inventory, climate zone matching, landscaper vetting, returns on live plants.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="repillar" data-search="how to create a b2b marketplace: for office supplies and services blog/build-b2b-marketplace-for-office-supplies-services b2b office">
+      <div class="page-card-header" onclick="togglePage(84)">
+        <span class="page-id">#84</span>
+        <span class="page-title">How To Create A B2B Marketplace: For Office Supplies And Services</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">9 clicks</span>
+          <span class="metric-imp">7.1K imp</span>
+          
+        </span>
+        <span class="action-badge repillar">repillar</span>
+        <span class="chevron" id="chev-84">▾</span>
+      </div>
+      <div class="url-row">/blog/build-b2b-marketplace-for-office-supplies-services</div>
+      <div class="page-detail" id="detail-84">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> B2B Office</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Move to How to Build pillar</p>
+            <p style="margin-top:8px">MISPLACED — How to Build guide, not industry vertical. Re-pillar to How to Build.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a B2B Office Supplies Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Procurement marketplace model. Recurring orders vs one-time. Market opportunity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for B2B Office Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Bulk ordering, approval workflows, recurring subscriptions, procurement integration, budget controls, vendor catalogs, contract pricing, PO management.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a B2B Office Supplies Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor onboarding → Catalog (bulk pricing, MOQ) → Approval workflows → Payment (Net 30/60) → Delivery → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Procurement Integration<span class="word-count">200–250 words</span></div>
+              <div class="section-content">ERP integration, purchase order automation, budget tracking, spend analytics, vendor scorecards.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">B2B procurement marketplace questions: payment terms, bulk pricing, approval workflows, vendor management.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="building a marketplace to sell digital products with digital downloads blog/build-digital-products-marketplace digital products">
+      <div class="page-card-header" onclick="togglePage(85)">
+        <span class="page-id">#85</span>
+        <span class="page-title">Building A Marketplace To Sell Digital Products With Digital Downloads</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">102 clicks</span>
+          <span class="metric-imp">22.0K imp</span>
+          <span class="metric-conv">4 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-85">▾</span>
+      </div>
+      <div class="url-row">/blog/build-digital-products-marketplace</div>
+      <div class="page-detail" id="detail-85">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Digital Products</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STRONG PERFORMER — 102 clicks, 22K imp, 4 conv. Add digital delivery automation, DRM/licensing.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Digital Products Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#87</td><td class="anchor">freelance marketplace</td><td>Related service</td></tr><tr><td>#68</td><td class="anchor">art marketplace</td><td>Digital art</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Digital Products Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Templates, courses, software, ebooks, music, stock assets. Digital delivery vs physical. Market size and growth.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Digital Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Instant delivery/download, DRM/license management, preview/demo access, version updates, subscription access, digital rights, refund policies for digital goods, usage analytics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define niche → Vendor onboarding → Digital catalog setup → Preview system → Payment (instant delivery trigger) → License management → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: DRM &amp; License Management<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Single-use vs multi-use licenses, commercial vs personal use, watermarking, download limits, subscription access controls.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission (30-50%), subscription bundles, freemium, exclusive launches. Comparison table of Gumroad/Envato/Creative Market models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Digital marketplace questions: refunds, piracy prevention, file hosting, licensing, vendor payouts, tax on digital goods.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="scaling a print on demand store into a pod marketplace on shopify blog/scaling-shopify-store-into-pod-marketplace print on demand">
+      <div class="page-card-header" onclick="togglePage(86)">
+        <span class="page-id">#86</span>
+        <span class="page-title">Scaling A Print On Demand Store Into A POD Marketplace On Shopify</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">1 clicks</span>
+          <span class="metric-imp">0.3K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-86">▾</span>
+      </div>
+      <div class="url-row">/blog/scaling-shopify-store-into-pod-marketplace</div>
+      <div class="page-detail" id="detail-86">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Print on Demand</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent — POD marketplace growing. Rewrite as 'How to Build a POD Marketplace on Shopify'.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Print-on-Demand Marketplace on Shopify [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#85</td><td class="anchor">digital products marketplace</td><td>Related</td></tr><tr><td>#81</td><td class="anchor">personalized gifts</td><td>Customization</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Print-on-Demand Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Store vs marketplace POD. Vendor-managed vs platform-managed printing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for POD Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Design upload tool, mockup generator, print partner integration, product customization, quality sampling, production tracking, multi-vendor print routing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Scale a Shopify POD Store into a Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Single store → Add vendors → Design management → Print partner network → Order routing → Quality control.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Print Partner Integration<span class="word-count">200–250 words</span></div>
+              <div class="section-content">API connections, production SLAs, quality standards, shipping from multiple print facilities.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">POD marketplace questions: quality control, vendor design ownership, production timelines, returns, profit margins.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to create a freelance marketplace like upwork or fiverr blog/how-to-create-a-freelance-marketplace freelance / services">
+      <div class="page-card-header" onclick="togglePage(87)">
+        <span class="page-id">#87</span>
+        <span class="page-title">How to Create a Freelance Marketplace Like Upwork or Fiverr</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">67 clicks</span>
+          <span class="metric-imp">27.7K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-87">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-create-a-freelance-marketplace</div>
+      <div class="page-detail" id="detail-87">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Freelance / Services</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STRONG PERFORMER — 67 clicks, 28K imp, 1 conv. Add vetting workflows, escrow, milestones.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Freelance Marketplace Like Upwork [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#85</td><td class="anchor">digital products marketplace</td><td>Related</td></tr><tr><td>#91</td><td class="anchor">event planning marketplace</td><td>Service vertical</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Freelance Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Freelance marketplace vs job board. Gig-based vs project-based. Market size (Upwork, Fiverr, Toptal).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Freelance Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Skill-based search, freelancer profiles/portfolios, project milestones, escrow payments, real-time messaging, file sharing, reviews/ratings, dispute resolution, time tracking.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Freelance Marketplace Like Upwork<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define skill categories → Freelancer onboarding → Client posting → Matching algorithm → Milestone payments → Delivery → Reviews.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Upwork vs Fiverr Model Comparison<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: proposal-based (Upwork) vs gig-based (Fiverr). Pricing models, take rates, client experience.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models for Freelance Platforms<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Service fee (10–20%), premium membership, featured gigs, skills certification.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Freelance marketplace questions: dispute resolution, escrow, international payments, skill verification, freelancer retention.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to create an online marketplace like etsy blog/create-marketplace-like-etsy etsy-like">
+      <div class="page-card-header" onclick="togglePage(88)">
+        <span class="page-id">#88</span>
+        <span class="page-title">How To Create An Online Marketplace Like Etsy</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">118 clicks</span>
+          <span class="metric-imp">39.9K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-88">▾</span>
+      </div>
+      <div class="url-row">/blog/create-marketplace-like-etsy</div>
+      <div class="page-detail" id="detail-88">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Etsy-Like</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STAR PAGE — 118 clicks, 40K imp. 'Marketplace like Etsy' is top clone keyword. Absorb #89. Link to clone/etsy.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Create a Marketplace Like Etsy [Complete 2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (3)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#69</td><td class="anchor">handmade crafts marketplace</td><td>Vertical context</td></tr><tr><td>#85</td><td class="anchor">digital products</td><td>Digital crafts</td></tr><tr><td>#67</td><td class="anchor">vintage marketplace</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Makes Etsy&#x27;s Marketplace Model Successful?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Handmade + vintage + craft supplies. Community-driven. Etsy&#x27;s revenue model and market position.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Etsy Features to Replicate<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Shop customization, handmade badges, craft category taxonomy, reviews with photos, favorites/wishlists, conversation messaging, Etsy Ads model, seller tools dashboard, star seller program.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step: Build Your Etsy Alternative<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define niche → Seller onboarding → Shop setup → Category structure → Payment (vendor splits) → Shipping → Community building.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Etsy vs Your Marketplace Comparison<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Comparison table: Etsy fees, lock-in, branding limitations vs your own platform. Why sellers want alternatives.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue &amp; Growth Strategy<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission (10–15%), listing fees, premium placement, advertising, subscription tiers.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Etsy alternative questions: seller migration, fee comparison, handmade verification, SEO, community building, scaling.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="merge" data-search="vertical market: entrepreneurs building vertical marketplaces like etsy blog/building-vertical-marketplaces-like-etsy vertical market">
+      <div class="page-card-header" onclick="togglePage(89)">
+        <span class="page-id">#89</span>
+        <span class="page-title">Vertical Market: Entrepreneurs Building Vertical Marketplaces Like Etsy</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.1K imp</span>
+          
+        </span>
+        <span class="action-badge merge">merge</span>
+        <span class="chevron" id="chev-89">▾</span>
+      </div>
+      <div class="url-row">/blog/building-vertical-marketplaces-like-etsy</div>
+      <div class="page-detail" id="detail-89">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Vertical Market</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Merge into #88</p>
+            <p style="margin-top:8px">CANNIBALIZES #88. Merge vertical market concept into #88.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — Merge into #88 or pillar</div>
+              <div class="section-content">Vertical marketplace concept absorbed into pillar page. 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="the smarter way to run a multi country home and lifestyle marketplace blog/global-multivendor-home-and-lifestyle-marketplace home & lifestyle">
+      <div class="page-card-header" onclick="togglePage(90)">
+        <span class="page-id">#90</span>
+        <span class="page-title">The Smarter Way to Run a Multi Country Home and Lifestyle Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-90">▾</span>
+      </div>
+      <div class="url-row">/blog/global-multivendor-home-and-lifestyle-marketplace</div>
+      <div class="page-detail" id="detail-90">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Home & Lifestyle</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent — cross-border lifestyle marketplace. Editorial title kills SEO.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Cross-Border Home & Lifestyle Marketplace</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#76</td><td class="anchor">home decor marketplace</td><td>Related</td></tr><tr><td>#74</td><td class="anchor">fashion marketplace</td><td>Lifestyle</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">N/A — 301 Redirect to #76</div>
+              <div class="section-content">Multi-country home marketplace concept absorbed into #76 (home decor). 301 redirect.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="creating a marketplace for event planning services blog/build-event-planning-services-marketplace event planning">
+      <div class="page-card-header" onclick="togglePage(91)">
+        <span class="page-id">#91</span>
+        <span class="page-title">Creating A Marketplace For Event Planning Services</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">184 clicks</span>
+          <span class="metric-imp">65.7K imp</span>
+          <span class="metric-conv">4 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-91">▾</span>
+      </div>
+      <div class="url-row">/blog/build-event-planning-services-marketplace</div>
+      <div class="page-detail" id="detail-91">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Event Planning</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STAR PAGE — 184 clicks, 65.7K imp, 4 conv. Refresh with vendor coordination, calendar integration.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an Event Planning Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#87</td><td class="anchor">freelance marketplace</td><td>Service model</td></tr><tr><td>#93</td><td class="anchor">travel marketplace</td><td>Experience crossover</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Event Planning Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Connecting event planners, venues, vendors, caterers. Market size. Event types (weddings, corporate, festivals).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Event Planning Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Vendor directory (photographers, florists, caterers, DJs), venue search with capacity, availability calendar, quote request system, portfolio galleries, package builder, real-time messaging, review system.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define event categories → Vendor onboarding → Venue listings → Booking/quote system → Payment (deposits, milestones) → Reviews → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Event Marketplace Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission on bookings (10–20%), premium vendor listings, featured placement, lead generation fees, subscription tiers.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Real-World Examples<span class="word-count">200–250 words</span></div>
+              <div class="section-content">The Knot, WeddingWire, Bark, Peerspace. Analyze each model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Event marketplace questions: vendor vetting, deposit handling, cancellation policies, seasonal demand, insurance requirements.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to build a real estate marketplace like zillow blog/build-real-estate-marketplace real estate">
+      <div class="page-card-header" onclick="togglePage(92)">
+        <span class="page-id">#92</span>
+        <span class="page-title">How To Build A Real Estate Marketplace Like Zillow</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">136 clicks</span>
+          <span class="metric-imp">21.4K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-92">▾</span>
+      </div>
+      <div class="url-row">/blog/build-real-estate-marketplace</div>
+      <div class="page-detail" id="detail-92">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Real Estate</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STRONG — 136 clicks. Add property features: virtual tours, map search, mortgage calc.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Real Estate Marketplace Like Zillow [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#93</td><td class="anchor">travel marketplace</td><td>Location-based</td></tr><tr><td>#91</td><td class="anchor">event planning</td><td>Service vertical</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Real Estate Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Property listing vs agent marketplace vs rental. Zillow/Redfin model. Market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Real Estate Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Property search with map, filters (price, beds, area), virtual tours/3D walkthroughs, mortgage calculators, agent profiles, neighborhood data, price history, comparable sales, lead capture.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step: Build a Marketplace Like Zillow<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define model (listing vs transaction) → MLS/data integration → Property catalog → Search/filter → Agent onboarding → Lead management → Revenue.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: MLS Integration &amp; Data Challenges<span class="word-count">250–300 words</span></div>
+              <div class="section-content">MLS feed integration, IDX compliance, data accuracy, API considerations, syndication rules.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Agent advertising, premium listings, lead generation fees, mortgage referrals, subscription tiers. Zillow Premier Agent model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Real estate marketplace questions: MLS integration, licensing requirements, fair housing compliance, data accuracy, lead distribution.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="your guide to launching an online travel marketplace platform blog/build-travel-experiences-marketplace travel & experiences">
+      <div class="page-card-header" onclick="togglePage(93)">
+        <span class="page-id">#93</span>
+        <span class="page-title">Your Guide to Launching an Online Travel Marketplace Platform</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">206 clicks</span>
+          <span class="metric-imp">37.5K imp</span>
+          <span class="metric-conv">3 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-93">▾</span>
+      </div>
+      <div class="url-row">/blog/build-travel-experiences-marketplace</div>
+      <div class="page-detail" id="detail-93">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Travel & Experiences</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">STAR PAGE — 206 clicks, 37.5K imp, 3 conv. Add booking system, multi-destination, cancellation policies.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Travel Marketplace Platform [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,500–4,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#91</td><td class="anchor">event planning marketplace</td><td>Experience crossover</td></tr><tr><td>#92</td><td class="anchor">real estate marketplace</td><td>Location-based</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Online Travel Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Experiences vs accommodations vs tours. OTA vs P2P travel. Market size. Airbnb Experiences model.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Travel Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Experience search with location/date, availability calendar, instant booking, host profiles, photo/video galleries, reviews, travel insurance integration, multi-currency, multi-language, trip planning tools.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define niche (tours, stays, experiences) → Host onboarding → Listing creation → Booking engine → Payment (deposits, cancellation) → Reviews → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Travel Marketplace Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Commission (15–25%), service fees (guest + host), featured listings, travel insurance referrals, premium host tools.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Trust &amp; Safety for Travel<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Identity verification, host background checks, trip insurance, cancellation policies, emergency support, fraud prevention.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (6 questions)<span class="word-count">300–360 words</span></div>
+              <div class="section-content">Travel marketplace questions: liability insurance, cancellation handling, international hosts, seasonal demand, payment timing, safety verification.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="start an online outdoor gear store: build a multivendor marketplace blog/build-adventure-outdoor-gear-marketplace outdoor gear">
+      <div class="page-card-header" onclick="togglePage(94)">
+        <span class="page-id">#94</span>
+        <span class="page-title">Start An Online Outdoor Gear Store: Build A Multivendor Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">11 clicks</span>
+          <span class="metric-imp">5.5K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-94">▾</span>
+      </div>
+      <div class="url-row">/blog/build-adventure-outdoor-gear-marketplace</div>
+      <div class="page-detail" id="detail-94">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Outdoor Gear</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Decent niche. 11 clicks. Add gear-specific features.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an Outdoor Gear Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#83</td><td class="anchor">gardening marketplace</td><td>Related</td></tr><tr><td>#95</td><td class="anchor">golf marketplace</td><td>Sports sub-vertical</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Outdoor Gear Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). New vs used vs rental gear. Adventure sports equipment. Market opportunity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Outdoor Gear Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Condition grading, activity-based search, gear specs (weight, waterproof rating), rental options, size guides, adventure trip pairing, seasonal inventory.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Outdoor Gear Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor onboarding → Catalog (specs, condition, activity) → Payment → Shipping (oversized) → Reviews.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Rental vs Purchase Model<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Gear rental marketplace model, deposit handling, damage policies, availability management.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Outdoor gear questions: condition guarantees, rental deposits, oversized shipping, seasonal demand, returns.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="starting an online golf marketplace blog/start-online-golf-marketplace golf">
+      <div class="page-card-header" onclick="togglePage(95)">
+        <span class="page-id">#95</span>
+        <span class="page-title">Starting an Online Golf Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">6 clicks</span>
+          <span class="metric-imp">0.4K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-95">▾</span>
+      </div>
+      <div class="url-row">/blog/start-online-golf-marketplace</div>
+      <div class="page-detail" id="detail-95">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Golf</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Ultra-niche but golf ecommerce is $7B+ market. Needs depth expansion.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Golf Equipment Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,000–2,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#94</td><td class="anchor">outdoor gear marketplace</td><td>Parent category</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Online Golf Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Equipment, apparel, accessories, tee time booking. Golf retail market data.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Golf Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Club fitting tools, handicap-based recommendations, condition grading, brand authentication, tee time booking, course reviews, trade-in programs.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Golf Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define scope → Vendor onboarding (pro shops, brands, resellers) → Catalog → Payment → Shipping → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Golf marketplace questions: club authentication, trade-ins, fitting services, seasonal promotions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to build a marketplace for kitchen and home appliances blog/build-kitchen-and-home-appliances-marketplace home appliances">
+      <div class="page-card-header" onclick="togglePage(96)">
+        <span class="page-id">#96</span>
+        <span class="page-title">How To Build A Marketplace For Kitchen and Home Appliances</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">8 clicks</span>
+          <span class="metric-imp">1.2K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-96">▾</span>
+      </div>
+      <div class="url-row">/blog/build-kitchen-and-home-appliances-marketplace</div>
+      <div class="page-detail" id="detail-96">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Home Appliances</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Small but valid. Expand with warranty management, installation services.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Home Appliance Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#97</td><td class="anchor">electronics marketplace</td><td>Related</td></tr><tr><td>#82</td><td class="anchor">home improvement</td><td>Related</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Kitchen &amp; Home Appliances Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Small vs large appliances. Direct-to-consumer vs authorized reseller. Market opportunity.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Appliance Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Specification comparison, energy ratings, installation services, warranty management, bundle deals, delivery scheduling, appliance recycling/trade-in.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Appliance Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define scope → Vendor onboarding (brands, authorized dealers) → Catalog (specs, ratings) → Delivery (white glove, installation) → Warranty → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Appliance marketplace questions: warranty handling, installation, returns on large items, energy rating accuracy.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="developing a marketplace for electronics and gadgets blog/build-electronics-and-gadgets-marketplace electronics">
+      <div class="page-card-header" onclick="togglePage(97)">
+        <span class="page-id">#97</span>
+        <span class="page-title">Developing A Marketplace For Electronics And Gadgets</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">46 clicks</span>
+          <span class="metric-imp">27.6K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-97">▾</span>
+      </div>
+      <div class="url-row">/blog/build-electronics-and-gadgets-marketplace</div>
+      <div class="page-detail" id="detail-97">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Electronics</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Solid — 46 clicks, 27.6K impressions. Add spec databases, compatibility checking.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an Electronics & Gadgets Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (2)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#96</td><td class="anchor">appliance marketplace</td><td>Related</td></tr><tr><td>#98</td><td class="anchor">auto parts marketplace</td><td>Technical products</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Electronics &amp; Gadgets Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). New vs refurbished. Consumer electronics market size. Comparison with Amazon/Newegg.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Electronics Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Specification comparison tables, compatibility checker, warranty tracking, price alerts, refurbished grading system, trade-in program, expert reviews, video demos, return policy enforcement.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Electronics Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor onboarding (brands, authorized resellers, refurbishers) → Catalog (detailed specs) → Payment → Shipping (fragile/insured) → Returns/warranty.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Refurbished &amp; Trade-In Programs<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Grading system (A/B/C), warranty requirements, quality inspection process, trade-in value calculators.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Electronics marketplace questions: warranty, counterfeits, refurbished quality, returns, price matching.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="establishing auto parts marketplace blog/build-auto-parts-marketplace auto parts">
+      <div class="page-card-header" onclick="togglePage(98)">
+        <span class="page-id">#98</span>
+        <span class="page-title">Establishing Auto Parts Marketplace</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">22 clicks</span>
+          <span class="metric-imp">5.1K imp</span>
+          <span class="metric-conv">1 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-98">▾</span>
+      </div>
+      <div class="url-row">/blog/build-auto-parts-marketplace</div>
+      <div class="page-detail" id="detail-98">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Auto Parts</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valuable niche with 1 conv. Add VIN-based lookup, vehicle compatibility.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build an Auto Parts Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#97</td><td class="anchor">electronics marketplace</td><td>Technical products</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is an Auto Parts Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). OEM vs aftermarket vs used. VIN/year/make/model lookup. Market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Auto Parts Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">VIN lookup / year-make-model fitment, OEM vs aftermarket filter, interchange numbers, core charge handling, installation guide links, seller ratings, compatibility verification.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build an Auto Parts Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define scope → Vendor onboarding (salvage yards, distributors, aftermarket) → Catalog (fitment data) → Payment (core charges) → Shipping (heavy/oversized) → Returns.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Fitment Data &amp; Compatibility<span class="word-count">200–250 words</span></div>
+              <div class="section-content">ACES/PIES data standards, fitment database integration, cross-reference systems, compatibility guarantees.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Auto parts questions: fitment guarantees, core returns, warranty on used parts, oversized shipping, international compatibility.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="setting up a marketplace for baby and kids products blog/build-baby-and-kids-products-marketplace baby & kids">
+      <div class="page-card-header" onclick="togglePage(99)">
+        <span class="page-id">#99</span>
+        <span class="page-title">Setting Up A Marketplace For Baby and Kids Products</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">49 clicks</span>
+          <span class="metric-imp">17.3K imp</span>
+          <span class="metric-conv">4 conv</span>
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-99">▾</span>
+      </div>
+      <div class="url-row">/blog/build-baby-and-kids-products-marketplace</div>
+      <div class="page-detail" id="detail-99">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Baby & Kids</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">CONVERSION LEADER — 49 clicks, 4 conv. Add child safety compliance.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Baby & Kids Products Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#100</td><td class="anchor">pet supplies marketplace</td><td>Family products</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Baby &amp; Kids Products Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). New vs secondhand. Safety-first marketplace. Growing millennial parent market. Second-hand sustainability trend.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Baby &amp; Kids Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Safety certification display (CPSC, CE), age-range filters, allergen/material transparency, product recall alerts, condition grading for secondhand, parent reviews, bundle deals, registry integration.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step Build Guide<span class="word-count">600–700 words</span></div>
+              <div class="section-content">7 steps as H3s. How-to schema. Define niche (new, secondhand, or both) → Safety compliance → Vendor onboarding → Catalog (age, safety, material) → Payment → Shipping → Marketing to parent communities.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Safety Compliance &amp; Trust<span class="word-count">200–250 words</span></div>
+              <div class="section-content">CPSC regulations, product recall monitoring, material safety, vendor vetting for safety standards, trust badges.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Baby marketplace questions: safety certifications, secondhand quality, recalls, age-appropriate filtering, returns.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="keep" data-search="how to build an online marketplace for pet supplies blog/build-marketplace-for-pet-supplies-products pet supplies">
+      <div class="page-card-header" onclick="togglePage(100)">
+        <span class="page-id">#100</span>
+        <span class="page-title">How To Build an Online Marketplace For Pet Supplies</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">84 clicks</span>
+          <span class="metric-imp">19.8K imp</span>
+          
+        </span>
+        <span class="action-badge keep">keep</span>
+        <span class="chevron" id="chev-100">▾</span>
+      </div>
+      <div class="url-row">/blog/build-marketplace-for-pet-supplies-products</div>
+      <div class="page-detail" id="detail-100">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Pet Supplies</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Strong — 84 clicks, 20K imp. Add breed-specific matching, autoship.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Pet Supplies Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>3,000–3,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#99</td><td class="anchor">baby products marketplace</td><td>Family vertical</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span><span class="schema-badge">How-To Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Pet Supplies Marketplace?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Definition (AEO). Pet food, accessories, health, grooming, pet services. Pet industry market size ($300B+ globally).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Pet Marketplaces<span class="word-count">400–500 words</span></div>
+              <div class="section-content">Pet-type filters (dog, cat, bird, etc.), breed-specific recommendations, auto-replenishment subscriptions, vet-approved badges, ingredient transparency, pet health resources, pet service booking.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Pet Supplies Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define scope → Vendor onboarding (brands, artisan makers, pet services) → Catalog (species, breed, size) → Subscription engine → Payment → Fulfillment.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Subscription &amp; Recurring Revenue<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Auto-replenishment for food/treats, subscription box model, membership perks, loyalty programs.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Pet marketplace questions: food safety, subscription management, live animal policies, vet product regulations, returns.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="starting a merchandise business: step-by-step guide blog/starting-a-merchandise-marketplace-business-2025 merchandise">
+      <div class="page-card-header" onclick="togglePage(101)">
+        <span class="page-id">#101</span>
+        <span class="page-title">Starting A Merchandise Business: Step-By-Step Guide</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">2 clicks</span>
+          <span class="metric-imp">1.7K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-101">▾</span>
+      </div>
+      <div class="url-row">/blog/starting-a-merchandise-marketplace-business-2025</div>
+      <div class="page-detail" id="detail-101">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Merchandise</p>
+            <p><strong>Intent:</strong> weak</p>
+            
+            <p style="margin-top:8px">Too generic. Rewrite to target specific merch niche (branded, band, sports).</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Branded Merchandise Marketplace [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,000–2,500 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#74</td><td class="anchor">fashion marketplace</td><td>Apparel angle</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Merchandise Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Branded merchandise, fan merchandise, corporate swag. POD vs inventory models.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Merch Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Design upload, mockup previews, bulk ordering, brand licensing, size charts, POD integration, corporate accounts, event-based merchandise.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Merchandise Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define niche → Vendor/designer onboarding → Catalog → POD/fulfillment → Payment → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Merch marketplace questions: licensing, POD vs inventory, bulk pricing, design ownership.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="repillar" data-search="marketplace building guide: how to sell in europe successfully blog/marketplace-building-guide-how-to-sell-in-europe-successfully geo: europe">
+      <div class="page-card-header" onclick="togglePage(102)">
+        <span class="page-id">#102</span>
+        <span class="page-title">Marketplace Building Guide: How To Sell In Europe Successfully</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">21 clicks</span>
+          <span class="metric-imp">8.3K imp</span>
+          
+        </span>
+        <span class="action-badge repillar">repillar</span>
+        <span class="chevron" id="chev-102">▾</span>
+      </div>
+      <div class="url-row">/blog/marketplace-building-guide-how-to-sell-in-europe-successfully</div>
+      <div class="page-detail" id="detail-102">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Europe</p>
+            <p><strong>Intent:</strong> valid</p>
+            <p><strong>Action:</strong> → Move to Marketplace Ops pillar</p>
+            <p style="margin-top:8px">MISPLACED — geo/operations guide, not industry vertical. Move to Marketplace Ops.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Why Build a Marketplace for Europe?<span class="word-count">200–250 words</span></div>
+              <div class="section-content">EU ecommerce market size, cross-border trade, Digital Single Market advantages, consumer protection standards.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: EU-Specific Requirements<span class="word-count">400–500 words</span></div>
+              <div class="section-content">VAT/OSS compliance, GDPR, consumer rights (14-day returns), PSD2 payment regulations, cross-border shipping logistics, multi-language/multi-currency, EU Product Safety regulations.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Step-by-Step: Launch in Europe<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Market research → Legal compliance → Payment gateway (Stripe EU, Adyen) → Logistics (DHL, DPD, local) → Localization → Marketing.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Country-Specific Considerations<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Key markets: Germany, France, Netherlands, Spain. Local payment preferences, logistics providers, regulatory differences.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">European marketplace questions: VAT, GDPR, returns, cross-border shipping, language localization.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="home business marketplaces are rising fast in the uae blog/how-to-build-uae-home-business-marketplace geo: uae">
+      <div class="page-card-header" onclick="togglePage(103)">
+        <span class="page-id">#103</span>
+        <span class="page-title">Home Business Marketplaces Are Rising Fast in the UAE</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-103">▾</span>
+      </div>
+      <div class="url-row">/blog/how-to-build-uae-home-business-marketplace</div>
+      <div class="page-detail" id="detail-103">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: UAE</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent. UAE ecommerce growing 23% CAGR. Title failure.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Home Business Marketplace in the UAE [2026]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: UAE Home Business Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">UAE home business licensing, DED/Tajer permit, market size, consumer demographics.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for UAE Marketplaces<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Arabic/English bilingual, AED/multi-currency, UAE delivery (Fetchr, Aramex), trade license verification, home business category filters.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a UAE Home Business Marketplace<span class="word-count">400–500 words</span></div>
+              <div class="section-content">6 steps as H3s. Market research → License compliance → Platform setup → Vendor onboarding → Payment (Tabby, Tamara BNPL) → Local delivery.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">UAE marketplace questions: licensing, payment gateways, delivery logistics, home business regulations.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="how singapore's new female-led marketplaces build through storytelling commerce blog/build-an-instagram-creator-marketplace-singapore geo: singapore">
+      <div class="page-card-header" onclick="togglePage(104)">
+        <span class="page-id">#104</span>
+        <span class="page-title">How Singapore's New Female-Led Marketplaces Build Through Storytelling Commerce</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-104">▾</span>
+      </div>
+      <div class="url-row">/blog/build-an-instagram-creator-marketplace-singapore</div>
+      <div class="page-detail" id="detail-104">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: Singapore</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid intent (creator marketplace). Editorial title hides keyword.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Creator & Influencer Marketplace in Singapore</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#87</td><td class="anchor">freelance marketplace</td><td>Service model</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: Singapore Creator Marketplace Opportunity<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Singapore creator economy, social commerce growth, female entrepreneurship trends, market size.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Singapore Creator Marketplaces<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Instagram integration, creator profiles, SGD payments (PayNow, GrabPay), local logistics (Ninja Van), community features.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Creator Marketplace in Singapore<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps as H3s. Define niche → Creator onboarding → Social integration → Payment → Local fulfillment.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Singapore marketplace questions: payment methods, social integration, shipping, creator acquisition.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="redirect" data-search="where seasonal brand collaborations become a scalable marketplace strategy blog/uae-fashion-collaboration-playbook geo: uae">
+      <div class="page-card-header" onclick="togglePage(105)">
+        <span class="page-id">#105</span>
+        <span class="page-title">Where Seasonal Brand Collaborations Become a Scalable Marketplace Strategy</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge redirect">redirect</span>
+        <span class="chevron" id="chev-105">▾</span>
+      </div>
+      <div class="url-row">/blog/uae-fashion-collaboration-playbook</div>
+      <div class="page-detail" id="detail-105">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Geo: UAE</p>
+            <p><strong>Intent:</strong> weak</p>
+            <p><strong>Action:</strong> → 301 to #74</p>
+            <p style="margin-top:8px">Weak fit — marketing strategy, not industry vertical. Redirect to #74.</p>
+            
+            
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <p style="color:var(--text3)">N/A — page being redirected/merged/excluded</p>
+            
+            
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: UAE Fashion Collaboration Marketplace Model<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Seasonal collaborations, trunk show digital model, brand partnership marketplace.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features<span class="word-count">300–350 words</span></div>
+              <div class="section-content">Limited edition drops, collaboration calendar, brand matching, exclusive access tiers.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Build Guide<span class="word-count">400–500 words</span></div>
+              <div class="section-content">5 steps as H3s. Define model → Brand onboarding → Collection management → Marketing → Launch.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (4 questions)<span class="word-count">200–240 words</span></div>
+              <div class="section-content">Fashion collaboration marketplace questions: brand partnerships, seasonal timing, exclusivity, revenue sharing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-card" data-action="rewrite" data-search="building modern membership marketplaces with community at the core blog/scaling-membership-marketplaces-architecture membership">
+      <div class="page-card-header" onclick="togglePage(106)">
+        <span class="page-id">#106</span>
+        <span class="page-title">Building Modern Membership Marketplaces With Community at the Core</span>
+        <span class="page-metrics">
+          <span class="metric-clicks">0 clicks</span>
+          <span class="metric-imp">0.0K imp</span>
+          
+        </span>
+        <span class="action-badge rewrite">rewrite</span>
+        <span class="chevron" id="chev-106">▾</span>
+      </div>
+      <div class="url-row">/blog/scaling-membership-marketplaces-architecture</div>
+      <div class="page-detail" id="detail-106">
+        <div class="detail-grid">
+          <div class="detail-section">
+            <h3>Audit Brief</h3>
+            <p><strong>Sub-Category:</strong> Membership</p>
+            <p><strong>Intent:</strong> valid</p>
+            
+            <p style="margin-top:8px">Valid concept — membership marketplace is a real model. Editorial title + URL mismatch.</p>
+            <h4>Recommended Title Tag</h4><p><code>How to Build a Membership-Based Marketplace [2026 Guide]</code></p>
+            <h4>Target Word Count</h4><p>2,500–3,000 words</p>
+          </div>
+          <div class="detail-section">
+            <h3>Internal Linking</h3>
+            <h4>Links TO Pillar (2x)</h4><p>Link to <code>/blog/industry-specific-marketplaces</code> in 2 places with varied anchors.</p>
+            <h4>Links TO Siblings (1)</h4>
+            <table class="link-table"><tr><th>Target</th><th>Anchor</th><th>Placement</th></tr>
+            <tr><td>#85</td><td class="anchor">digital products</td><td>Subscription model</td></tr>
+            </table>
+            <h4>Schema Markup</h4><div class="schema-badges"><span class="schema-badge">FAQ Schema</span></div>
+          </div>
+          <div class="detail-section full-width">
+            <h3>Content Template</h3>
+            <div class="template-section">
+              <div class="section-label">H2: What Is a Membership Marketplace?<span class="word-count">150–200 words</span></div>
+              <div class="section-content">Definition (AEO). Access-based vs subscription vs community marketplace. Examples (Costco online, members-only).</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Key Features for Membership Marketplaces<span class="word-count">350–400 words</span></div>
+              <div class="section-content">Tiered membership levels, exclusive access controls, community features, member rewards, referral programs, recurring billing, member directory.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: How to Build a Membership Marketplace<span class="word-count">500–600 words</span></div>
+              <div class="section-content">6 steps as H3s. Define membership model → Tier structure → Community setup → Exclusive content → Payment (recurring billing) → Member retention.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: Revenue Models<span class="word-count">200–250 words</span></div>
+              <div class="section-content">Monthly/annual membership fees, tiered pricing, exclusive product access, community engagement monetization.</div>
+            </div>
+            <div class="template-section">
+              <div class="section-label">H2: FAQ (5 questions)<span class="word-count">250–300 words</span></div>
+              <div class="section-content">Membership marketplace questions: churn reduction, tier management, community building, exclusive access, billing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePage(id){const d=document.getElementById('detail-'+id);const c=document.getElementById('chev-'+id);d.classList.toggle('open');c.classList.toggle('open')}
+let currentFilter='all';
+document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterPages()})});
+document.getElementById('searchBox').addEventListener('input',filterPages);
+function filterPages(){const s=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.page-card').forEach(c=>{const matchFilter=currentFilter==='all'||c.dataset.action===currentFilter;const matchSearch=!s||c.dataset.search.includes(s);c.style.display=matchFilter&&matchSearch?'block':'none'})}
+</script>
+</body>
+</html>
