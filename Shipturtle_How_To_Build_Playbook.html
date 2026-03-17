@@ -88,6 +88,17 @@
 .ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:#6c9fff;margin:2px 4px 2px 0}
 .ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 
+
+.intent-tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.intent-tag.informational{background:rgba(56,189,248,.1);color:#38bdf8}
+.intent-tag.commercial{background:rgba(251,191,36,.1);color:#fbbf24}
+.intent-tag.comparison{background:rgba(168,139,250,.1);color:#a78bfa}
+.intent-tag.transactional{background:rgba(248,113,113,.1);color:#f87171}
+.overlap-box{border-radius:8px;padding:10px 14px;margin-top:6px;font-size:12px;line-height:1.7}
+.overlap-box.safe{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15)}
+.overlap-box.warn{background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.12)}
+.overlap-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.overlap-label.safe{color:#34d399}.overlap-label.warn{color:#f87171}
 </style>
 </head>
 <body>
@@ -1102,195 +1113,217 @@
   <div class="new-topics-header">
     <h2>New Topic Recommendations</h2>
     <span class="new-topics-count">11 new topics</span>
-    <span style="font-size:12px;color:var(--text3);margin-left:8px">5 P1 · 5 P2 · 1 P3</span>
+    <span style="font-size:12px;color:var(--text3);margin-left:8px">4 P1 · 3 P2 · 4 P3</span>
   </div>
-  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Research-backed topic recommendations with full internal linking architecture. Each card shows which existing pages should link TO this new page and which pages it should link FROM. Click to expand.</p>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Each topic includes search intent classification, overlap analysis against existing pages, differentiation rationale, and full internal linking architecture. Click any card to expand.</p>
   
     <div class="new-topic-card" id="new-0">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1 ⭐</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Marketplace on Shopify: Definitive Guide</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">THE single most important missing page. #1 commercial keyword. Currently NO page targets it.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">THE #1 commercial keyword for Shipturtle. User ready to build, searching for Shopify-specific path.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a marketplace on shopify</span><span class="ntd-kw">shopify marketplace setup</span><span class="ntd-kw">shopify multi vendor marketplace tutorial</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #62 (Cost to Build, 341 clicks ⭐), #155 in Platform (Themes, 560 clicks), #179 in Platform (Seller Sync, 182 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (Step 3), Platform pillar, #166 (Create Marketplace on Shopify, 392 clicks, 9 conv)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#62 → 'marketplace cost breakdown', #155 → 'Shopify marketplace themes', #179 → 'seller sync for Shopify', #114 in Ops → 'vendor onboarding'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ RELATED — #166 in Platform is product tutorial, not build guide</div>#166 (Create Marketplace on Shopify, 392 clicks, 9 conv) = Shipturtle product tutorial ('install app, configure vendors'). This new page = comprehensive BUILD GUIDE ('choose model → evaluate tech → set up → onboard → launch'). Captures users BEFORE they've decided on Shipturtle. Different funnel stage.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #62 (Cost, 341 clicks ⭐), #155 (Themes, 560 clicks), #179 (Seller Sync, 182 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (Step 3), Platform pillar, #166 (392 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#62 → 'cost breakdown', #155 → 'Shopify themes', #179 → 'seller sync', #114 → 'vendor onboarding'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-1">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Marketplace App (Mobile-First Guide)</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">No mobile marketplace content. Mobile drives 73% of ecommerce. High-volume keyword.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Mobile app marketplace development — completely different build path than web. 73% of ecommerce is mobile.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a marketplace app</span><span class="ntd-kw">marketplace app development</span><span class="ntd-kw">mobile marketplace platform</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #62 (Cost to Build), #173 in Platform (Tech Stack)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (H2#5), Platform pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#62 → 'marketplace development costs', #173 → 'marketplace tech stack', #51 → 'marketplace MVP'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP — Complete whitespace</div>Zero mobile/app content exists across all 192 pages. No page mentions mobile app development, React Native, Flutter, or app store considerations.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #62 (Cost), #173 in Platform (Tech Stack)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (H2#5), Platform pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#62 → 'marketplace costs', #173 → 'tech stack', #51 → 'marketplace MVP'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-2">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Rental Marketplace: Complete Guide</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">P2P rental gets 400 clicks in Types but no build guide exists. Clear gap between pillars.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">User wants to build Airbnb/Turo-style platform. Build-focused, not definitional.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a rental marketplace</span><span class="ntd-kw">rental marketplace platform</span><span class="ntd-kw">p2p rental marketplace</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #6 in Types (P2P Rental, 400 clicks, 4 conv), #49 in Types (Airbnb clone)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (H2#5), #6 (P2P Rental), Types pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#6 → 'P2P rental marketplace guide', #49 → 'Airbnb clone template', #62 → 'rental marketplace costs'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #6 in Types = definitional, this = build guide</div>#6 (P2P Rental, 400 clicks, 4 conv) = 'what is a rental marketplace' (types, examples, overview). This = 'how do I BUILD one?' (booking calendars, deposits, insurance, Shopify setup). Together they form learn → build funnel.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #6 in Types (400 clicks, 4 conv), #49 (Airbnb clone)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (H2#5), #6, Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#6 → 'rental marketplace guide', #49 → 'Airbnb clone', #62 → 'rental marketplace costs'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-3">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
-        <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">How to Build a C2C Marketplace: Step-by-Step Guide</span>
+        <span class="priority-badge p3">P3 ⚠️</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Build a C2C Marketplace: Step-by-Step</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">C2C guide (#7) gets 412 clicks but is definitional. This pillar needs the hands-on build version.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Hands-on build guide for Vinted/Poshmark-style C2C platforms.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a c2c marketplace</span><span class="ntd-kw">c2c marketplace development</span><span class="ntd-kw">peer to peer marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a c2c marketplace</span><span class="ntd-kw">c2c marketplace development</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #7 in Types (C2C Guide, 412 clicks, 7 conv), #48 (Vinted clone), #43 (Poshmark clone)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (H2#5), #7 (C2C Guide), Types pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#7 → 'C2C marketplace guide', #48 → 'Vinted clone', #43 → 'Poshmark clone', #58 → 'build like eBay'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ SIGNIFICANT OVERLAP with #7 (412 clicks, 7 conv)</div>#7 (C2C Guide) already mixes definition + building and gets 412 clicks. This is the ONE topic where overlap is significant. RECOMMENDATION: Downgrade to P3. Strengthen #7 instead of creating a new page. Only create if #7 stays purely definitional after rewrite.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #7 (412 clicks, 7 conv), #48 (Vinted clone)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar, #7, Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#7 → 'C2C guide', #48 → 'Vinted clone', #58 → 'build like eBay'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-4">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">How to Build a Marketplace from Scratch vs Using a Platform</span>
+        <span class="intent-tag comparison">COMPARISON</span>
+        <span class="new-topic-title">Build from Scratch vs Using a Platform</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">#1 decision question founders ask. Definitive build vs buy comparison.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">The #1 decision question: custom development vs SaaS. Users actively evaluating approach.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">build marketplace from scratch</span><span class="ntd-kw">custom vs saas marketplace</span><span class="ntd-kw">marketplace build or buy</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #62 (Cost to Build, 341 clicks), #171 in Platform (Custom vs Off-the-Shelf)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (H2#2), #62 (Cost page), Platform pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#62 → 'full cost breakdown', #171 → 'custom vs off-the-shelf comparison', #173 → 'marketplace tech stack'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ RELATED — #63 being redirected, #171 in Platform is software-focused</div>#63 (Marketplace Dev Solution, 7 clicks) = cross-pillar duplicate, flagged for redirect. #171 in Platform (Custom vs Off-the-Shelf, 43 clicks) compares software products. This compares BUILD APPROACHES (dev team vs open source vs SaaS). Different frame.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #62 (Cost, 341 clicks), #171 in Platform</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (H2#2), #62, Platform pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#62 → 'full cost breakdown', #171 → 'custom vs off-the-shelf', #173 → 'tech stack'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-5">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">How to Build a Hyperlocal Marketplace: Step-by-Step</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Build a Hyperlocal Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Hyperlocal gets 64 clicks in Types but no build guide. 18% CAGR.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Build guide for near-me delivery/pickup marketplaces. Hyperlocal software growing 18% CAGR.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a hyperlocal marketplace</span><span class="ntd-kw">hyperlocal marketplace development</span><span class="ntd-kw">near me delivery</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #10 in Types (Hyperlocal, 64 clicks), #14 in Types (Hyperlocal Software)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (H2#5), #10 (Hyperlocal), Types pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#10 → 'hyperlocal marketplace guide', #55 → 'service marketplace build', #62 → 'cost to build'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #10 in Types mixes definition + build</div>#10 (Hyperlocal, 64 clicks) primarily about 'what IS hyperlocal' with some build content. This focuses purely on build: geo-fencing, delivery zones, last-mile integration, local vendor onboarding. Only create if #10 stays definitional.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #10 in Types (64 clicks), #14 in Types</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (H2#5), #10, Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#10 → 'hyperlocal guide', #55 → 'service marketplace build', #62 → 'cost'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-6">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">How to Build a Multi-Vendor Marketplace on WooCommerce</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Build on WooCommerce</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">WooCommerce = #2 ecommerce platform. Shipturtle supports it. No build guide here.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Step-by-step WooCommerce marketplace build. WooCommerce = #2 ecommerce platform.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">woocommerce marketplace</span><span class="ntd-kw">woocommerce multi vendor</span><span class="ntd-kw">dokan vs shipturtle</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #170 in Platform (WooCommerce Multi-Vendor), #160 in Platform (WooCommerce Migration)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (H2#5), Platform pillar, #170 (WooCommerce)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#170 → 'WooCommerce marketplace plugins', #160 → 'WooCommerce to Shopify migration', #62 → 'cost comparison'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #170 in Platform = plugin comparison, not build guide</div>#170 (WooCommerce Multi-Vendor) compares plugins (Dokan vs WCFM vs Shipturtle). This = 'how to BUILD from zero' (WordPress → WooCommerce → plugin → vendors → launch). Build journey, not tool comparison.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #170 in Platform, #160 in Platform (Migration)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (H2#5), Platform pillar, #170</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#170 → 'WooCommerce plugins', #160 → 'migration guide', #62 → 'cost comparison'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-7">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
-        <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Marketplace Tech Stack Guide: Frontend, Backend, APIs</span>
+        <span class="priority-badge p3">P3 ⚠️</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Marketplace Tech Stack Guide</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">No technical architecture guide. Developers/CTOs find nothing on Shipturtle.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Technical architecture guide for developers/CTOs evaluating marketplace infrastructure.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace tech stack</span><span class="ntd-kw">marketplace architecture</span><span class="ntd-kw">marketplace api integrations</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #173 in Platform (Tech Stack), #171 in Platform (Custom vs Off-the-Shelf)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (Step 3), Platform pillar, #173 (Tech Stack)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#173 → 'marketplace technology overview', #171 → 'build vs buy', #161 in Platform → 'hybrid architecture'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ STRENGTHEN #173 in Platform instead</div>#173 in Platform (Tech Stack, 54 clicks) covers this topic but needs rewrite. RECOMMENDATION: Downgrade to P3. Invest in strengthening #173 rather than creating a duplicate in Build pillar.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #173 in Platform, #171 in Platform</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (Step 3), Platform pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#173 → 'technology overview', #171 → 'build vs buy', #161 → 'hybrid architecture'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-8">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
-        <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">How to Build a B2B Wholesale Marketplace for Micro-Manufacturers</span>
+        <span class="priority-badge p3">P3 ⚠️</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">B2B Wholesale for Micro-Manufacturers</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Emerging 2026 trend. Digitizing fragmented supply chains. Strong in developing economies.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Niche within B2B — digitizing fragmented supply chains in developing economies. 2026 trend.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">b2b wholesale marketplace</span><span class="ntd-kw">micro manufacturer marketplace</span><span class="ntd-kw">digitize supply chain</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #53 (B2B Build, 88 clicks), #20 in Types (B2B Food, 296 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">#53 (B2B Build), Types pillar (B2B section)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#53 → 'B2B marketplace platform guide', #20 → 'B2B food marketplace', #62 → 'B2B marketplace costs'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ ADD AS SECTION IN #53 instead</div>#53 (B2B Build, 88 clicks, 86K imp) covers B2B broadly. This is a niche within B2B. RECOMMENDATION: Add as an H2 section within #53 during its rewrite rather than standalone page.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #53 (88 clicks), #20 in Types (296 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">#53, Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#53 → 'B2B platform guide', #20 → 'B2B food marketplace', #62 → 'B2B costs'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-9">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">How to Launch a Marketplace in 30 Days: Fast-Track Guide</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Launch a Marketplace in 30 Days</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Speed-to-market content gap. Founders searching for quick launch paths. Strong Shipturtle alignment (no-code = fast launch).</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Speed-to-market content. Strong Shipturtle alignment (no-code = fast launch). Can serve as merge target for #60+#61.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">launch marketplace fast</span><span class="ntd-kw">marketplace launch checklist</span><span class="ntd-kw">marketplace in 30 days</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, #51 (MVP Guide, 18 clicks), #60/#61 (Launch pages), #62 (Cost to Build)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page (Step 9), #51 (MVP Guide)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#51 → 'marketplace MVP guide', #62 → 'cost breakdown', #155 → 'Shopify themes for quick launch'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ REPLACES #60 + #61 (both flagged for merge)</div>#60 (Launch Quickly, 2 clicks) and #61 (Launch Tips, 2 clicks) are both flagged for merge with 4 combined clicks. This new page can BE the merge target — absorb both into a stronger '30-day launch plan.' RECOMMENDATION: Create as the merged replacement.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, #51 (MVP, 18 clicks), #60/#61 (merge sources), #62 (Cost)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar (Step 9), #51</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#51 → 'MVP guide', #62 → 'cost breakdown', #155 → 'Shopify themes'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-10">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p3">P3</span>
-        <span class="new-topic-title">Marketplace Founder's Checklist: Everything You Need Before Launch</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Marketplace Founder's Checklist</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Practical utility content. High save/share potential. Links to every child page as checklist items.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Practical utility content. High save/share potential. Internal linking hub — each item links to a child page.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace launch checklist</span><span class="ntd-kw">marketplace planning checklist</span><span class="ntd-kw">marketplace startup guide</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar page, ALL child pages (each checklist item links to relevant guide)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar page, All keep pages</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">Every child page gets a link via its checklist item — acts as internal linking hub</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>No checklist/utility content exists. Acts as internal linking hub — each checklist item links to relevant child page.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Build pillar, ALL child pages via checklist items</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Build pillar, All keep pages</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">Every child page gets a link via its checklist item</div></div>
       </div>
     </div>
 </div>

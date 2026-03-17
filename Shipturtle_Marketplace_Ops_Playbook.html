@@ -88,6 +88,17 @@
 .ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:#6c9fff;margin:2px 4px 2px 0}
 .ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 
+
+.intent-tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.intent-tag.informational{background:rgba(56,189,248,.1);color:#38bdf8}
+.intent-tag.commercial{background:rgba(251,191,36,.1);color:#fbbf24}
+.intent-tag.comparison{background:rgba(168,139,250,.1);color:#a78bfa}
+.intent-tag.transactional{background:rgba(248,113,113,.1);color:#f87171}
+.overlap-box{border-radius:8px;padding:10px 14px;margin-top:6px;font-size:12px;line-height:1.7}
+.overlap-box.safe{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15)}
+.overlap-box.warn{background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.12)}
+.overlap-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.overlap-label.safe{color:#34d399}.overlap-label.warn{color:#f87171}
 </style>
 </head>
 <body>
@@ -3034,159 +3045,177 @@
     <span class="new-topics-count">9 new topics</span>
     <span style="font-size:12px;color:var(--text3);margin-left:8px">3 P1 · 5 P2 · 1 P3</span>
   </div>
-  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Research-backed topic recommendations with full internal linking architecture. Each card shows which existing pages should link TO this new page and which pages it should link FROM. Click to expand.</p>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Each topic includes search intent classification, overlap analysis against existing pages, differentiation rationale, and full internal linking architecture. Click any card to expand.</p>
   
     <div class="new-topic-card" id="new-0">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">Marketplace Commission Structures: The Complete Guide</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Marketplace Commission Structures: Complete Guide</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Despite 4 payment pages, no definitive commission guide. Top-5 query for operators.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">'What commission % should I charge?' — active operators deciding revenue model. Top-5 query.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace commission structure</span><span class="ntd-kw">marketplace pricing model</span><span class="ntd-kw">how to price commissions</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #117 (Vendor Payouts), #107 (Make Money, 64 clicks), #24 in Types (Business Model)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#3), #117 (Payouts), All pillar pages</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#117 → 'vendor payout automation', #107 → 'marketplace monetization', #24 → 'marketplace business models'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ RELATED PAGES — But fragmented, none answer the core question</div>#117 (Vendor Payouts) = payout execution, not strategy. #24 in Types (Business Model) = commission as ONE of 6 models. #107 (Make Money, 64 clicks) = general monetization. NONE answer 'what % should I charge?' This = definitive guide with benchmarks by industry.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #117 (Payouts), #107 (Make Money, 64 clicks), #24 in Types</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#3), #117, All pillars</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#117 → 'payout automation', #107 → 'monetization', #24 → 'business models'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-1">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">Marketplace Analytics: KPIs, Dashboards & Metrics That Matter</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Marketplace Analytics: KPIs, Dashboards & Metrics</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Zero analytics content. High-intent from operators. Data-rich = AI citation magnet.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">'What metrics should I track?' — operators measuring marketplace health. Data-rich = AI citation magnet.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace KPIs</span><span class="ntd-kw">marketplace analytics dashboard</span><span class="ntd-kw">marketplace metrics to track</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #129 (Growth Hacks), #115 (Attract Sellers, 18 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#5), All pillar pages</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#129 → 'marketplace growth strategies', #115 → 'seller acquisition metrics', #126 → 'vendor retention metrics'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP — Complete whitespace</div>Zero analytics content across all 192 pages. No GMV tracking, take rate, vendor health scores, or any marketplace KPI. Operators can't run what they can't measure.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #129 (Growth Hacks), #115 (Attract Sellers, 18 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#5), All pillars</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#129 → 'growth strategies', #115 → 'seller acquisition metrics', #126 → 'vendor retention metrics'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-2">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">How to Handle Returns & Refunds in a Multi-Vendor Marketplace</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">How to Handle Returns & Refunds in Multi-Vendor Marketplaces</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">#1 operational headache. No content. Top FAQ.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">#1 operational headache — who processes return, platform or vendor? Every operator searches for this.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace returns policy</span><span class="ntd-kw">multi-vendor refund process</span><span class="ntd-kw">marketplace dispute resolution</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #111 (Shipping FAQ), #122 (Multi-Warehouse Fulfillment), #125 (Trust & Transparency)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#4), #111 (Shipping), #125 (Trust)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#111 → 'marketplace shipping guide', #122 → 'multi-warehouse fulfillment', #125 → 'marketplace trust'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>Zero returns/refunds content across all 192 pages. Complete gap despite being the most common operational question.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #111 (Shipping), #122 (Fulfillment), #125 (Trust)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#4), #111, #125</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#111 → 'shipping guide', #122 → 'multi-warehouse', #125 → 'marketplace trust'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-3">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Marketplace Dispute Resolution: Policies, Tools & Best Practices</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Marketplace Dispute Resolution</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Buyer-vendor disputes inevitable. No guide. Builds operational credibility.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Operational playbook for when buyer-vendor disputes happen. Escalation, mediation, resolution rules.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace dispute resolution</span><span class="ntd-kw">buyer seller dispute</span><span class="ntd-kw">marketplace arbitration</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #125 (Trust), #124 (Security), #114 (Seller Onboarding, 38 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#6), #125 (Trust), #124 (Security)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#125 → 'marketplace trust', #124 → 'marketplace security', #114 → 'seller onboarding (prevention starts here)'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #125 = building trust proactively, this = resolving disputes reactively</div>#125 (Trust & Transparency) = reviews, transparent pricing, policies. #124 (Security) = fraud prevention. This = WHEN disputes happen: escalation tiers, mediation, refund policies, seller penalties. Reactive ops vs proactive trust.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #125 (Trust), #124 (Security), #114 (Onboarding, 38 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#6), #125, #124</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#125 → 'trust', #124 → 'security', #114 → 'onboarding (prevention)'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-4">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
         <span class="new-topic-title">Marketplace Legal Compliance: Terms of Service, Tax & Liability</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Top-3 barrier for new operators. Zero content. High authority potential.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Legal questions = top-3 barrier for new marketplace operators. Zero content. High authority potential.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace legal requirements</span><span class="ntd-kw">marketplace terms of service</span><span class="ntd-kw">marketplace tax</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #124 (Security), #102 in Industry (EU Marketplace — VAT/GDPR)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#6), Build pillar, #124 (Security)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#124 → 'marketplace security', #102 → 'selling in Europe (VAT)', #125 → 'transparency & trust'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>Zero legal content across all 192 pages. No ToS templates, no liability guidance, no tax obligations, no GDPR, no consumer protection. Complete whitespace.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #124 (Security), #102 in Industry (EU — VAT/GDPR)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#6), Build pillar, #124</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#124 → 'security', #102 → 'Europe (VAT)', #125 → 'transparency'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-5">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Multi-Currency & Cross-Border Marketplace Payments Guide</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Multi-Currency & Cross-Border Payments</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">International operators need this. Stripe Connect, PayPal, multi-currency critical.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">International operators need this — currency conversion, cross-border fees, tax withholding.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">cross-border marketplace payments</span><span class="ntd-kw">multi-currency marketplace</span><span class="ntd-kw">international payments</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #117 (Vendor Payouts), #102 in Industry (EU Marketplace)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#3), #117 (Payouts), Platform pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#117 → 'vendor payouts', #102 → 'European marketplace guide', #111 → 'international shipping'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #117 = domestic payouts, this = international complexity</div>#117 (Vendor Payouts) covers payout automation but not multi-currency. This = international specifics: currency conversion, cross-border fees, tax by country, Stripe Connect multi-currency.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #117 (Payouts), #102 in Industry (EU)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#3), #117, Platform pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#117 → 'vendor payouts', #102 → 'European marketplace', #111 → 'international shipping'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-6">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Marketplace Customer Support: Scaling Support for Multi-Vendor Ops</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Marketplace Customer Support: Scaling Multi-Vendor Support</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Who handles support — platform or vendor? Framework needed.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">'Who handles support — platform or vendor?' No answer exists. Support ops framework needed.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace customer support</span><span class="ntd-kw">multi-vendor support</span><span class="ntd-kw">marketplace helpdesk</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #123 (WISMO, 1 conv), #126 (Vendor Retention), #125 (Trust)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#5), #123 (WISMO), #126 (Retention)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#123 → 'WISMO reduction', #126 → 'vendor retention', #125 → 'trust & transparency'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>No customer support ops content. The fundamental routing question (platform vs vendor responsibility) has no Shipturtle answer.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #123 (WISMO, 1 conv), #126 (Vendor Retention), #125 (Trust)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#5), #123, #126</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#123 → 'WISMO reduction', #126 → 'vendor retention', #125 → 'trust'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-7">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p3">P3</span>
-        <span class="new-topic-title">Voice Commerce & AI-Powered Marketplace Personalization (2026)</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Voice Commerce & AI Marketplace Personalization (2026)</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">55% of households expected to use voice commerce. Forward-looking thought leadership.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Forward-looking thought leadership. 55% of households expected to use voice commerce.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">voice commerce marketplace</span><span class="ntd-kw">AI marketplace personalization</span><span class="ntd-kw">AI recommendations</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #127 (AI Vendor Management), #28 in Types (Trends)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#7), #127 (AI), #28 (Trends)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#127 → 'AI in vendor management', #28 → 'marketplace trends 2026', #129 → 'growth hacks'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ TANGENTIAL — #127 is AI for vendor ops, this is AI for buyer UX</div>#127 (AI Vendor Management) = AI for vendor operations (onboarding, categorization). This = AI for BUYER experience (personalization, voice, recommendations). Different audience.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #127 (AI Vendor Mgmt), #28 in Types (Trends)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#7), #127, #28</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#127 → 'AI vendor management', #28 → 'trends 2026', #129 → 'growth hacks'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-8">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Marketplace Onboarding Automation: Vendor & Buyer First 30 Days</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Marketplace Onboarding Automation</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Onboarding = highest-leverage ops improvement. #114 covers manual process. This covers automation.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Automate vendor & buyer first 30 days. #114 covers manual process, this covers automation layer.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace onboarding automation</span><span class="ntd-kw">vendor onboarding workflow</span><span class="ntd-kw">buyer activation</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar page, #114 (Seller Onboarding, 38 clicks), #115 (Attract Sellers), #133 (UX)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar page (H2#2), #114 (Onboarding), #115 (Attract Sellers)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#114 → 'seller onboarding guide', #115 → 'attract quality sellers', #133 → 'marketplace UX'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ ADJACENT — Could merge into #114 during rewrite</div>#114 (Seller Onboarding, 38 clicks) covers manual steps/checklist. This = automation: auto-approval, document verification APIs, progressive onboarding, email sequences. Can be standalone OR merged as H2 in #114.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Ops pillar, #114 (Onboarding, 38 clicks), #115 (Attract Sellers), #133 (UX)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Ops pillar (H2#2), #114, #115</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#114 → 'seller onboarding', #115 → 'attract sellers', #133 → 'marketplace UX'</div></div>
       </div>
     </div>
 </div>

@@ -88,6 +88,17 @@
 .ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:#6c9fff;margin:2px 4px 2px 0}
 .ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 
+
+.intent-tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.intent-tag.informational{background:rgba(56,189,248,.1);color:#38bdf8}
+.intent-tag.commercial{background:rgba(251,191,36,.1);color:#fbbf24}
+.intent-tag.comparison{background:rgba(168,139,250,.1);color:#a78bfa}
+.intent-tag.transactional{background:rgba(248,113,113,.1);color:#f87171}
+.overlap-box{border-radius:8px;padding:10px 14px;margin-top:6px;font-size:12px;line-height:1.7}
+.overlap-box.safe{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15)}
+.overlap-box.warn{background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.12)}
+.overlap-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.overlap-label.safe{color:#34d399}.overlap-label.warn{color:#f87171}
 </style>
 </head>
 <body>
@@ -3362,107 +3373,119 @@
     <span class="new-topics-count">10 new topics</span>
     <span style="font-size:12px;color:var(--text3);margin-left:8px">3 P1 · 5 P2 · 2 P3</span>
   </div>
-  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Research-backed topic recommendations with full internal linking architecture. Each card shows which existing pages should link TO this new page and which pages it should link FROM. Click to expand.</p>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Each topic includes search intent classification, overlap analysis against existing pages, differentiation rationale, and full internal linking architecture. Click any card to expand.</p>
   
     <div class="new-topic-card" id="new-0">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Grocery & FMCG Delivery Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Massive vertical (Instacart, BigBasket). Zero coverage despite obvious fit.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Build guide for Instacart/BigBasket model. Massive vertical with zero coverage.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">grocery marketplace</span><span class="ntd-kw">fmcg marketplace</span><span class="ntd-kw">instacart clone</span><span class="ntd-kw">online grocery marketplace</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #10 in Types (Hyperlocal, 64 clicks), Build pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#2), Types pillar (Hyperlocal section)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#10 → 'hyperlocal marketplace', #91 → 'event planning marketplace', Build pillar → 'build guide'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP — Complete whitespace</div>Zero grocery content across all 192 pages. Arguably the largest marketplace vertical globally. Identified as P1 gap in Industry audit.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #10 in Types (Hyperlocal, 64 clicks), Build pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#2), Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#10 → 'hyperlocal marketplace', #91 → 'event planning', Build pillar → 'build guide'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-1">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">How to Build a Food & Restaurant Marketplace (Like DoorDash)</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Build a Food & Restaurant Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Food delivery = one of the largest verticals globally. Complete gap.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Food delivery marketplace (DoorDash/UberEats model). One of the most-searched build queries globally.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">food delivery marketplace</span><span class="ntd-kw">restaurant marketplace</span><span class="ntd-kw">doordash clone</span><span class="ntd-kw">uber eats clone</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #11 in Types (Service Marketplace, 124 clicks), Build pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#3), Types pillar (Service section)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#11 → 'service marketplace guide', #91 → 'event planning marketplace (similar ops)', Build pillar → 'service build guide'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>Zero food delivery content. Distinct from grocery (restaurant-prepared food vs retail items). Identified as P1 gap in Industry audit.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #11 in Types (Service, 124 clicks), Build pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#3), Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#11 → 'service marketplace', #91 → 'event planning (similar ops)', Build pillar → 'service build'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-2">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">How to Build an Online Education & Course Marketplace</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Build an Education & Course Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">EdTech marketplace booming. No content. Strong search volume.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">EdTech marketplace (Udemy/Skillshare model). Strong search volume. No coverage.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">education marketplace</span><span class="ntd-kw">online course marketplace</span><span class="ntd-kw">udemy clone</span><span class="ntd-kw">course selling platform</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #85 (Digital Products, 102 clicks, 4 conv), Build pillar</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#3), #85 (Digital Products)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#85 → 'digital products marketplace', #87 → 'freelance marketplace', Build pillar → 'build guide'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #85 covers digital downloads broadly, not education specifically</div>#85 (Digital Products, 102 clicks, 4 conv) covers templates, ebooks, software — courses are ONE item. Education marketplace = instructor-led content with enrollment, progress tracking, certifications. Udemy ≠ Gumroad. Completely different ops.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #85 (Digital Products, 102 clicks, 4 conv), Build pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#3), #85</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#85 → 'digital products marketplace', #87 → 'freelance marketplace', Build → 'build guide'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-3">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Healthcare & Telemedicine Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Post-COVID permanent demand. High-intent, underserved niche.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Post-COVID permanent demand. Regulatory-heavy, high-value vertical.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">healthcare marketplace</span><span class="ntd-kw">telemedicine marketplace</span><span class="ntd-kw">doctor appointment marketplace</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #71 (Health & Wellness, 251 clicks, 2 conv), #11 in Types (Service Marketplace)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#3), #71 (Health & Wellness)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#71 → 'health and wellness marketplace', #11 → 'service marketplace', #91 → 'event planning (similar booking model)'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #71 = consumer wellness, not medical/healthcare</div>#71 (Health & Wellness, 251 clicks) = supplements, fitness, wellness. This = doctor appointments, telemedicine, pharmacy, medical supplies. Regulatory-heavy (HIPAA). Completely different compliance requirements.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #71 (Wellness, 251 clicks, 2 conv), #11 in Types (Service)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#3), #71</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#71 → 'wellness marketplace', #11 → 'service marketplace', #91 → 'event planning (booking model)'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-4">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Construction & Building Materials Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">B2B vertical with fragmented supply chain. High order values, repeat purchasing.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">B2B vertical with fragmented supply chain. High order values, repeat purchasing.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">construction marketplace</span><span class="ntd-kw">building materials marketplace</span><span class="ntd-kw">b2b construction</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #53 in Build (B2B Build), #84 (B2B Office Supplies)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#4), #53 in Build (B2B section)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#53 → 'B2B marketplace guide', #84 → 'B2B office supplies', #20 → 'B2B food marketplace'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>No construction content. Different industry, buyers, and logistics from #84 (B2B Office Supplies).</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #53 in Build (B2B), #84 (B2B Office)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#4), #53 in Build</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#53 → 'B2B marketplace guide', #84 → 'B2B office', #20 → 'B2B food'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-5">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Secondhand / Resale Fashion Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Circular economy booming. Aligns with #80 (Sustainable Products, 212 clicks).</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Circular economy & resale fashion (ThredUp, Depop). $77B market by 2026.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">resale fashion marketplace</span><span class="ntd-kw">secondhand marketplace</span><span class="ntd-kw">thredUp clone</span><span class="ntd-kw">circular fashion</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #80 (Sustainable Products, 212 clicks), #74 (Fashion, 143 clicks), #43 (Poshmark clone)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#2), #80 (Sustainable), #74 (Fashion)</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ ADJACENT — #74 is new fashion, #80 is broad sustainability</div>#74 (Fashion, 143 clicks) = new fashion/multi-brand. #80 (Sustainable, 212 clicks) = eco-friendly broadly. This = secondhand clothing specifically. Different ops: authentication, condition grading, pre-owned pricing.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #80 (Sustainable, 212 clicks), #74 (Fashion, 143 clicks), #43 (Poshmark clone)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#2), #80, #74</div></div>
         <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#80 → 'sustainable marketplace', #74 → 'fashion marketplace', #43 → 'Poshmark clone', #48 → 'Vinted clone'</div></div>
       </div>
     </div>
@@ -3470,68 +3493,76 @@
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">How to Build a Local Services Marketplace (Like TaskRabbit)</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">How to Build a Local Services Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">High search volume, strong conversion intent. Complements #91 (Event Planning, 184 clicks).</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">In-person, location-based services (plumbing, cleaning, tutoring). High search volume.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">local services marketplace</span><span class="ntd-kw">home services marketplace</span><span class="ntd-kw">taskrabbit clone</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #91 (Event Planning, 184 clicks, 4 conv), #44 in Types (TaskRabbit clone, 85 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#3), #91 (Event Planning), #44 (TaskRabbit clone)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#91 → 'event planning marketplace', #44 → 'TaskRabbit clone', #87 → 'freelance marketplace'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ ADJACENT — #87 is remote freelance, #91 is events, #44 is clone template</div>#87 (Freelance, 67 clicks) = online/remote services. #91 (Events, 184 clicks) = event-specific. #44 (TaskRabbit clone, 85 clicks) = landing page only. This = in-person local services with geo-matching and background checks. Different from all three.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #91 (Events, 184 clicks, 4 conv), #44 (TaskRabbit, 85 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#3), #91, #44</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#91 → 'event planning', #44 → 'TaskRabbit clone', #87 → 'freelance marketplace'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-7">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p3">P3</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Subscription Box Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Subscription commerce growing 20%+ annually. Unique model not covered.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Subscription commerce model. Growing 20%+ annually. Unique marketplace model.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">subscription box marketplace</span><span class="ntd-kw">subscription commerce</span><span class="ntd-kw">curated box platform</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #85 (Digital Products), #100 (Pet Supplies, 84 clicks — subscription potential)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#4), Types pillar (subscription model)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#85 → 'digital products marketplace', #100 → 'pet supplies marketplace', #75 → 'beauty marketplace (box model)'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>No subscription commerce content in any pillar. Different from standard product marketplace.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #85 (Digital Products), #100 (Pet Supplies, 84 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#4), Types pillar</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#85 → 'digital products', #100 → 'pet supplies (subscription potential)', #75 → 'beauty (box model)'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-8">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build an Agricultural & Farm Products Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Huge untapped vertical. Farm-to-table movement. Aligns with #66 (Livestock). B2B + B2C hybrid.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Farm-to-consumer/business marketplace. Huge untapped vertical.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">agriculture marketplace</span><span class="ntd-kw">farm products marketplace</span><span class="ntd-kw">farm to consumer marketplace</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #66 (Livestock & Poultry), #20 in Types (B2B Food, 296 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#4), #66 (Livestock)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#66 → 'livestock marketplace', #20 → 'B2B food marketplace', #83 → 'gardening marketplace'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ ADJACENT — #66 covers livestock only, #20 is examples</div>#66 (Livestock) = one subcategory. #20 in Types (B2B Food, 296 clicks) = examples list. This = full build guide for produce, grains, dairy, equipment. Covers seasonal inventory, farm certification, cold chain.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #66 (Livestock), #20 in Types (296 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#4), #66</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#66 → 'livestock marketplace', #20 → 'B2B food', #83 → 'gardening marketplace'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-9">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p3">P3</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
         <span class="new-topic-title">How to Build a Luxury Goods & Designer Marketplace</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">High-value niche (The RealReal, Vestiaire Collective). Authentication + high AOV. Premium positioning.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">High-value niche (The RealReal, Vestiaire Collective). Authentication + high AOV.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">luxury marketplace</span><span class="ntd-kw">designer marketplace</span><span class="ntd-kw">authenticated luxury platform</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar page, #73 (Jewelry, clicks), #74 (Fashion, 143 clicks), #67 (Antiques)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar page (H2#4), #73 (Jewelry), #74 (Fashion)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#73 → 'jewelry marketplace', #74 → 'fashion marketplace', #67 → 'antique marketplace', #79 → 'sneaker marketplace'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ TANGENTIAL — Could be section in #74</div>#73 (Jewelry), #74 (Fashion, 143 clicks), #67 (Antiques) each touch luxury within their vertical. Luxury marketplace = cross-category premium with authentication as core. RECOMMENDATION: P3 — create only after strengthening #73, #74, #67.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Industry pillar, #73, #74 (143 clicks), #67</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Industry pillar (H2#4), #73, #74</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#73 → 'jewelry', #74 → 'fashion', #67 → 'antiques', #79 → 'sneakers'</div></div>
       </div>
     </div>
 </div>

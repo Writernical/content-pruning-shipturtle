@@ -88,6 +88,17 @@
 .ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:#6c9fff;margin:2px 4px 2px 0}
 .ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 
+
+.intent-tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.intent-tag.informational{background:rgba(56,189,248,.1);color:#38bdf8}
+.intent-tag.commercial{background:rgba(251,191,36,.1);color:#fbbf24}
+.intent-tag.comparison{background:rgba(168,139,250,.1);color:#a78bfa}
+.intent-tag.transactional{background:rgba(248,113,113,.1);color:#f87171}
+.overlap-box{border-radius:8px;padding:10px 14px;margin-top:6px;font-size:12px;line-height:1.7}
+.overlap-box.safe{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15)}
+.overlap-box.warn{background:rgba(248,113,113,.04);border:1px solid rgba(248,113,113,.12)}
+.overlap-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.overlap-label.safe{color:#34d399}.overlap-label.warn{color:#f87171}
 </style>
 </head>
 <body>
@@ -2702,162 +2713,161 @@
 <div class="new-topics-section">
   <div class="new-topics-header">
     <h2>New Topic Recommendations</h2>
-    <span class="new-topics-count">9 new topics</span>
-    <span style="font-size:12px;color:var(--text3);margin-left:8px">3 P1 · 5 P2 · 1 P3</span>
+    <span class="new-topics-count">8 new topics</span>
+    <span style="font-size:12px;color:var(--text3);margin-left:8px">2 P1 · 5 P2 · 1 P3</span>
   </div>
-  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Research-backed topic recommendations with full internal linking architecture. Each card shows which existing pages should link TO this new page and which pages it should link FROM. Click to expand.</p>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">Each topic includes search intent classification, overlap analysis against existing pages, differentiation rationale, and full internal linking architecture. Click any card to expand.</p>
   
     <div class="new-topic-card" id="new-0">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1 ⭐</span>
-        <span class="new-topic-title">Best Shopify Multi-Vendor Marketplace Apps: Complete Guide</span>
+        <span class="intent-tag transactional">TRANSACTIONAL</span>
+        <span class="new-topic-title">Best Shopify Multi-Vendor Marketplace Apps</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">No roundup page. 'Shopify marketplace app' = #1 missing commercial page.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">'Best Shopify marketplace app' — user ready to install. Highest conversion potential of any missing page.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">shopify marketplace app</span><span class="ntd-kw">best shopify multi vendor app</span><span class="ntd-kw">shopify multivendor marketplace app</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">Software Application Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #166 (Create Marketplace on Shopify, 392 clicks, 9 conv), #155 (Themes, 560 clicks), #179 (Seller Sync, 182 clicks)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#3), Build pillar, #166 (Create Marketplace), #155 (Themes)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#166 → 'create marketplace on Shopify', #155 → 'Shopify marketplace themes', #179 → 'seller sync solution'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ NO ROUNDUP EXISTS — #174 is cross-platform, not Shopify-specific</div>#174 (Best Software, 18 clicks) compares all platforms (Sharetribe, CS-Cart, etc.). This = SHOPIFY APP STORE-specific roundup (Shipturtle, Webkul, Multi Vendor Marketplace). Users who've chosen Shopify, now picking an app. Bottom-of-funnel.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #166 (Create on Shopify, 392 clicks, 9 conv), #155 (Themes, 560 clicks), #179 (Sync, 182 clicks)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#3), Build pillar, #166, #155</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#166 → 'create marketplace on Shopify', #155 → 'Shopify themes', #179 → 'seller sync'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-1">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">How to Build a Marketplace on Shopify: Definitive Guide</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Marketplace Platform Pricing Comparison (2026)</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Cross-pillar with Build. Platform needs Shopify-specific canonical.</div></div>
-        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a marketplace on shopify</span><span class="ntd-kw">shopify marketplace setup</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #166 (Create Marketplace, 392 clicks), #155 (Themes), #162 (Shopify Collective)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#3), Build pillar, All Shopify child pages</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#166 → 'step-by-step Shopify marketplace', #155 → 'marketplace themes', #162 → 'Shopify Collective', #179 → 'seller sync'</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">'How much does marketplace software cost?' — budget-constrained buyers comparing platforms. High commercial intent.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace platform pricing</span><span class="ntd-kw">marketplace software cost</span><span class="ntd-kw">cheapest marketplace platform</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #174 has brief pricing, #62 has overall costs — neither is pricing-specific</div>#174 (Best Software) compares features, pricing is brief. #62 (Cost to Build, 341 clicks) covers overall costs, not platform-specific pricing. This = pure PRICING page: monthly cost, transaction fees, TCO at different GMV levels.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #174 (Best Software), #171 (Custom vs Off-the-Shelf), #62 in Build (Cost)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#2), #174, #62</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#174 → 'best software', #171 → 'build vs buy', #62 → 'marketplace cost guide'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-2">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
-        <span class="priority-badge p1">P1</span>
-        <span class="new-topic-title">Marketplace Platform Pricing Comparison (2026)</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Headless Marketplace Architecture</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Price = #1 decision factor. No TCO comparison exists.</div></div>
-        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace platform pricing</span><span class="ntd-kw">marketplace software cost</span><span class="ntd-kw">cheapest marketplace platform</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #174 (Best Software), #171 (Custom vs Off-the-Shelf), #62 in Build (Cost to Build)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#2), #174 (Software), #62 (Cost)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#174 → 'best marketplace software', #171 → 'custom vs off-the-shelf', #62 → 'marketplace cost guide'</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">2026 trend — API-first, composable commerce. Developer audience. Positions Shipturtle open API.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">headless marketplace</span><span class="ntd-kw">headless commerce marketplace</span><span class="ntd-kw">api-first marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #161 is Shopify-specific hybrid, this is broader architecture concept</div>#161 (Hybrid Architecture) = Shopify frontend + custom backend. This = any frontend + any backend via API. Broader concept covering composable commerce, Shopify Hydrogen. #161 is one implementation; this is the philosophy. Standalone is better for 'headless marketplace' keyword.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #161 (Hybrid Architecture), #173 (Tech Stack), #157 (Dev Services)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#5), #161, #173</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#161 → 'hybrid architecture', #173 → 'tech stack', #157 → 'Shopify dev services'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-3">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Headless Marketplace Architecture: When & How to Go Headless</span>
+        <span class="intent-tag comparison">COMPARISON</span>
+        <span class="new-topic-title">Open Source Marketplace Platforms Compared</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">2026 trend. Composable commerce. Developer audience. Positions Shipturtle open API.</div></div>
-        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">headless marketplace</span><span class="ntd-kw">headless commerce marketplace</span><span class="ntd-kw">api-first marketplace</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #161 (Hybrid Architecture), #173 (Tech Stack), #157 (Shopify Dev Services)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#5), #161 (Hybrid), #173 (Tech Stack)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#161 → 'hybrid marketplace architecture', #173 → 'marketplace tech stack', #157 → 'Shopify development services'</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Evaluation-stage traffic from users considering open source options (Medusa, Mercur, Saleor).</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">open source marketplace</span><span class="ntd-kw">open source multi vendor</span><span class="ntd-kw">medusa marketplace</span><span class="ntd-kw">mercur</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #174 includes CS-Cart (open source) but not newer platforms</div>#174 (Best Software) and #171 (Custom vs Off-the-Shelf) touch open source briefly. This = open-source ONLY: Medusa, Mercur, Saleor, Bagisto, Aimeos. None of these newer platforms appear in existing pages. Focused comparison.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #174 (Best Software), #171, #170 (WooCommerce)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#5), #174, #171</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#174 → 'best software', #171 → 'build vs buy', #170 → 'WooCommerce'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-4">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Open Source Marketplace Platforms Compared (2026)</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Shopify Plus for Marketplaces: Is It Worth It?</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Growing interest in open-source (Medusa, Mercur, Saleor). Captures evaluation-stage traffic.</div></div>
-        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">open source marketplace</span><span class="ntd-kw">open source multi vendor</span><span class="ntd-kw">medusa marketplace</span><span class="ntd-kw">mercur</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #174 (Best Software), #171 (Custom vs Off-the-Shelf), #170 (WooCommerce)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#5), #174 (Software Comparison), #171 (Build vs Buy)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#174 → 'best marketplace software', #171 → 'build vs buy comparison', #170 → 'WooCommerce marketplace'</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Shopify Plus-specific ($2K+/mo). Premium prospects with different needs. Decision-stage content.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">shopify plus marketplace</span><span class="ntd-kw">shopify plus multi vendor</span><span class="ntd-kw">shopify plus worth it</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>No Shopify Plus-specific content anywhere. All Shopify content treats Basic/Shopify/Plus as same. Plus users need: checkout extensibility, Shopify Functions, higher API limits, dedicated support.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #166 (Create on Shopify, 392 clicks), #155 (Themes), #157 (Dev Services)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#3), #166, #157</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#166 → 'create marketplace', #155 → 'themes', #157 → 'dev services'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-5">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Shopify Plus for Marketplaces: Is It Worth It?</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Marketplace API Integration Guide</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Shopify Plus-specific gap. High commercial intent (Plus = $2K+/mo).</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Developer documentation-style content. Showcases Shipturtle's open API capabilities.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">shopify plus marketplace</span><span class="ntd-kw">shopify plus multi vendor</span><span class="ntd-kw">shopify plus worth it</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #166 (Create Marketplace on Shopify, 392 clicks), #155 (Themes), #157 (Dev Services)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#3), #166 (Create Marketplace), #157 (Dev Services)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#166 → 'create marketplace on Shopify', #155 → 'marketplace themes', #157 → 'Shopify dev services'</div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace api integration</span><span class="ntd-kw">connect vendor store api</span><span class="ntd-kw">marketplace api</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #179 is Shipturtle's sync feature, this is broader API guide</div>#179 (Seller Sync, 182 clicks, 4 conv) = Shipturtle-specific sync feature page. #169 (Integration) = software integration overview. This = developer guide for connecting ANY vendor store via API. Broader scope, technical audience.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #179 (Sync, 182 clicks, 4 conv), #169 (Integration), #161 (Hybrid)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#3), #179, #169</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#179 → 'seller sync', #169 → 'integration', #161 → 'hybrid architecture'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-6">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
-        <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Marketplace API Integration Guide: Connect Any Vendor Store</span>
+        <span class="priority-badge p3">P3</span>
+        <span class="intent-tag informational">INFORMATIONAL</span>
+        <span class="new-topic-title">Embedded Commerce: Adding Marketplace to SaaS</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Technical content for developers. Showcases Shipturtle open API.</div></div>
-        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace api integration</span><span class="ntd-kw">connect vendor store api</span><span class="ntd-kw">marketplace api</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #179 (Seller Sync, 182 clicks, 4 conv), #169 (Management Software Integration), #161 (Hybrid Architecture)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#3), #179 (Seller Sync), #169 (Integration)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#179 → 'seller sync solution', #169 → 'management software integration', #161 → 'hybrid architecture'</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Emerging 2026 concept. SaaS platforms embedding marketplace. Shipturtle API play.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">embedded marketplace</span><span class="ntd-kw">saas marketplace</span><span class="ntd-kw">add marketplace to platform</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#34d399">Overlap Check</div><div class="ntd-value"><div class="overlap-box safe"><div class="overlap-label safe">✅ NO OVERLAP</div>No SaaS platform content. Positions Shipturtle API as embedded commerce enabler. P3 because early/niche.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #161 (Hybrid), #157 (Dev Services), #181 (Marketplace Kit)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#5), #161, #181</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#161 → 'hybrid architecture', #157 → 'dev services', #181 → 'Marketplace Kit'</div></div>
       </div>
     </div>
     <div class="new-topic-card" id="new-7">
       <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
         <span class="new-badge">NEW</span>
-        <span class="priority-badge p3">P3</span>
-        <span class="new-topic-title">Embedded Commerce: Adding Marketplace to Your Existing SaaS</span>
-        <span style="color:var(--text3);font-size:12px">▾</span>
-      </div>
-      <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Emerging 2026 trend. SaaS platforms embedding marketplace. Shipturtle API play.</div></div>
-        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
-        <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">embedded marketplace</span><span class="ntd-kw">saas marketplace</span><span class="ntd-kw">add marketplace to platform</span></div></div>
-        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #161 (Hybrid Architecture), #157 (Dev Services), #181 (Marketplace Kit)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#5), #161 (Hybrid), #181 (Marketplace Kit)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#161 → 'hybrid architecture', #157 → 'Shopify dev services', #181 → 'Shopify Marketplace Kit'</div></div>
-      </div>
-    </div>
-    <div class="new-topic-card" id="new-8">
-      <div class="new-topic-header" onclick="this.closest('.new-topic-card').classList.toggle('open')">
-        <span class="new-badge">NEW</span>
         <span class="priority-badge p2">P2</span>
-        <span class="new-topic-title">Marketplace Migration Guide: Switch Platforms Without Losing SEO</span>
+        <span class="intent-tag commercial">COMMERCIAL</span>
+        <span class="new-topic-title">Marketplace Migration Guide: Switch Without Losing SEO</span>
         <span style="color:var(--text3);font-size:12px">▾</span>
       </div>
       <div class="new-topic-detail">
-        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Operators on Sharetribe/CS-Cart wanting to move to Shopify. High conversion intent. No guide exists.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Search Intent</div><div class="ntd-value" style="color:var(--text)">Operators on Sharetribe/CS-Cart wanting to move to Shopify. High conversion intent.</div></div>
         <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
         <div class="ntd-row"><div class="ntd-label">Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace migration</span><span class="ntd-kw">switch marketplace platform</span><span class="ntd-kw">marketplace platform migration</span></div></div>
         <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
-        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar page, #160 (WooCommerce Migration), #174 (Best Software), #155 (Themes)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar page (H2#4), #160 (Migration), #174 (Software Comparison)</div></div>
-        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#160 → 'WooCommerce migration', #174 → 'platform comparison', #155 → 'Shopify themes for new platform'</div></div>
+        <div class="ntd-row" style="border-top:2px solid var(--border);padding-top:12px;margin-top:4px"><div class="ntd-label" style="color:#f87171">Overlap Check</div><div class="ntd-value"><div class="overlap-box warn"><div class="overlap-label warn">⚠️ #160 covers WooCommerce migration only — this is universal</div>#160 (WooCommerce Migration) = one migration path. This = universal guide: Sharetribe → Shopify, CS-Cart → Shopify, custom → Shopify. URL redirects, data migration, SEO preservation, vendor notification. #160 becomes child page.</div></div></div>
+        <div class="ntd-row" style="border-top:1px solid var(--border);padding-top:12px"><div class="ntd-label" style="color:#34d399">Links TO ↗</div><div class="ntd-value" style="color:#34d399">Platform pillar, #160 (WooCommerce Migration), #174 (Best Software), #155 (Themes)</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#6c9fff">Links FROM ↙</div><div class="ntd-value" style="color:#6c9fff">Platform pillar (H2#4), #160, #174</div></div>
+        <div class="ntd-row"><div class="ntd-label" style="color:#fbbf24">Anchor Texts</div><div class="ntd-value" style="color:#fbbf24">#160 → 'WooCommerce migration', #174 → 'platform comparison', #155 → 'Shopify themes'</div></div>
       </div>
     </div>
 </div>
