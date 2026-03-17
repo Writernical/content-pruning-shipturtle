@@ -50,6 +50,34 @@
 .template-section .word-count{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);padding:1px 6px;border-radius:3px;margin-left:8px}
 .schema-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.schema-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--surface3);color:var(--text2);border:1px solid var(--border)}
 .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none}.back-link:hover{color:var(--accent)}
+
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;padding:0;overflow-x:auto}
+.tab-btn{font-family:var(--font);font-size:14px;font-weight:600;padding:12px 20px;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+.new-topics-section{margin-top:32px;padding-top:24px;border-top:2px dashed rgba(251,191,36,.3)}
+.new-topics-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.new-topics-header h2{font-size:20px;font-weight:700;color:#fbbf24}
+.new-topics-count{background:rgba(251,191,36,.12);color:#fbbf24;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px}
+.new-topic-card{background:var(--surface);border:1px solid rgba(251,191,36,.25);border-left:3px solid #fbbf24;border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.new-topic-card:hover{border-color:#fbbf24}
+.new-topic-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.new-badge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;font-size:10px;font-weight:700;padding:3px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.8px}
+.priority-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+.priority-badge.p1{background:rgba(248,113,113,.12);color:#f87171}
+.priority-badge.p2{background:rgba(96,165,250,.12);color:#60a5fa}
+.priority-badge.p3{background:rgba(139,147,176,.12);color:#8b93b0}
+.new-topic-title{font-size:15px;font-weight:700;color:var(--text);flex:1}
+.new-topic-detail{display:none;padding:0 20px 16px;border-top:1px solid var(--border)}
+.new-topic-card.open .new-topic-detail{display:block}
+.ntd-row{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:8px 0;font-size:13px;border-bottom:1px solid rgba(42,48,80,.3)}
+.ntd-row:last-child{border-bottom:none}
+.ntd-label{color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.ntd-value{color:var(--text2);line-height:1.6}
+.ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:var(--accent);margin:2px 4px 2px 0}
+.ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 </style>
 </head>
 <body>
@@ -72,6 +100,14 @@
   
 </div>
 
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('pages')">All Pages</button>
+  <button class="tab-btn" onclick="showTab('clusters')">Sub-Category Clusters</button>
+  <button class="tab-btn" onclick="showTab('linkmap')">Pillar Link Map</button>
+  <button class="tab-btn" onclick="showTab('checklist')">Master Checklist</button>
+</div>
+
+<div class="tab-content active" id="tab-pages">
 <div class="controls">
   <span class="label">Filter:</span>
   <button class="filter-btn active" data-filter="all">All (13)</button>
@@ -761,12 +797,441 @@
   </div>
 </div>
 
+
+<div class="new-topics-section">
+  <div class="new-topics-header">
+    <h2>New Topic Recommendations</h2>
+    <span class="new-topics-count">9 new topics</span>
+    <span style="font-size:12px;color:var(--text3);margin-left:8px">5 P1 · 4 P2 · 0 P3</span>
+  </div>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">These topics were identified through competitive research, content gap analysis, and 2026 marketplace trend data. They don't exist on Shipturtle yet and represent high-traffic opportunities. Click any card to expand.</p>
+  
+    <div class="new-topic-card" id="new-topic-0">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1 ⭐</span>
+        <span class="new-topic-title">How to Build a Marketplace on Shopify: Definitive Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">THE single most important missing page for Shipturtle's entire SEO strategy. #1 commercial keyword. Currently NO page in any pillar directly targets it.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a marketplace on shopify</span><span class="ntd-kw">shopify marketplace setup</span><span class="ntd-kw">shopify multi vendor marketplace tutorial</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-1">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">How to Build a Marketplace App (Mobile-First Guide)</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">No content covers mobile marketplace development. Mobile drives 73% of ecommerce sales globally. High-volume keyword with zero coverage.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a marketplace app</span><span class="ntd-kw">marketplace app development</span><span class="ntd-kw">mobile marketplace platform</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-2">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">How to Build a Rental Marketplace: Complete Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">P2P rental gets 400 clicks in Types pillar but no 'how to build' guide exists. Clear gap between two pillars.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a rental marketplace</span><span class="ntd-kw">rental marketplace platform</span><span class="ntd-kw">p2p rental marketplace development</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-3">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">How to Build a C2C Marketplace: Step-by-Step Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">C2C guide (#7) gets 412 clicks but is definitional. This pillar needs the hands-on build guide covering seller onboarding, trust systems, payment escrow.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a c2c marketplace</span><span class="ntd-kw">c2c marketplace development</span><span class="ntd-kw">peer to peer marketplace setup</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-4">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">How to Build a Marketplace from Scratch vs Using a Platform</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">The #1 decision question founders ask. #63 touches this but is a duplicate. Create definitive comparison: custom dev vs open source vs SaaS.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">build marketplace from scratch</span><span class="ntd-kw">custom vs saas marketplace</span><span class="ntd-kw">marketplace build or buy decision</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-5">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">How to Build a Hyperlocal Marketplace: Step-by-Step</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Hyperlocal gets 64 clicks in Types but no build guide exists. Hyperlocal marketplace software market growing at 18% CAGR.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a hyperlocal marketplace</span><span class="ntd-kw">hyperlocal marketplace development</span><span class="ntd-kw">near me delivery marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-6">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">How to Build a Multi-Vendor Marketplace on WooCommerce</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">WooCommerce = #2 ecommerce platform. Shipturtle supports it but has no dedicated build guide in this pillar.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">woocommerce marketplace</span><span class="ntd-kw">woocommerce multi vendor</span><span class="ntd-kw">dokan vs shipturtle</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-7">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Marketplace Tech Stack Guide: Frontend, Backend, APIs & Integrations</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">No technical architecture guide exists. Developers and CTOs searching for this find nothing on Shipturtle.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace tech stack</span><span class="ntd-kw">marketplace architecture</span><span class="ntd-kw">marketplace api integrations</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-8">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">How to Build a B2B Wholesale Marketplace for Micro-Manufacturers</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Emerging 2026 trend — digitizing fragmented supply chains. Strong opportunity in developing economies.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">b2b wholesale marketplace</span><span class="ntd-kw">micro manufacturer marketplace</span><span class="ntd-kw">digitize supply chain</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+</div></div>
+
+<div class="tab-content" id="tab-clusters">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#6c9fff;margin-bottom:4px">Cost / Budget <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 341 clicks · 5 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#62</span>
+              <span style="color:var(--text);flex:1">7 Examples: How Much Does it Cost to Build an Online Ma…</span>
+              <span style="color:var(--text3)">341c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#34d399;margin-bottom:4px">Build: Clone <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 180 clicks · 2 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#58</span>
+              <span style="color:var(--text);flex:1">Build a Website like eBay: Create a Used Goods Marketpl…</span>
+              <span style="color:var(--text3)">180c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f59e0b;margin-bottom:4px">Build: B2B <span style="color:var(--text3);font-size:13px;font-weight:400">(2 pages · 90 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#53</span>
+              <span style="color:var(--text);flex:1">B2B Marketplace Platform: How to Build Wholesale Market…</span>
+              <span style="color:var(--text3)">88c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#52</span>
+              <span style="color:var(--text);flex:1">How to Build a Successful B2B Marketplace: Ultimate Gui…</span>
+              <span style="color:var(--text3)">2c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#ec4899;margin-bottom:4px">Build: Service <span style="color:var(--text3);font-size:13px;font-weight:400">(2 pages · 43 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#55</span>
+              <span style="color:var(--text);flex:1">How to Build a Successful Service Marketplace in 2025</span>
+              <span style="color:var(--text3)">23c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#56</span>
+              <span style="color:var(--text);flex:1">How to Build a Service Marketplace Without Writing a Si…</span>
+              <span style="color:var(--text3)">20c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#818cf8;margin-bottom:4px">Build: B2C <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 29 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#54</span>
+              <span style="color:var(--text);flex:1">Building A B2C Marketplace Platform That Can Scale Auto…</span>
+              <span style="color:var(--text3)">29c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f87171;margin-bottom:4px">MVP / Validation <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 18 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#51</span>
+              <span style="color:var(--text);flex:1">How to Build an MVP for Marketplace Apps</span>
+              <span style="color:var(--text3)">18c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#fbbf24;margin-bottom:4px">No-Code Launch <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 15 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#60</span>
+              <span style="color:var(--text);flex:1">How to Launch a No Code Marketplace from Scratch Using …</span>
+              <span style="color:var(--text3)">15c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#a78bfa;margin-bottom:4px">General Guide <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 11 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#59</span>
+              <span style="color:var(--text);flex:1">Multi-Vendor Ecommerce Development: A Complete Guide fo…</span>
+              <span style="color:var(--text3)">11c</span>
+              <span class="action-badge rewrite" style="font-size:10px;padding:2px 8px">rewrite</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#38bdf8;margin-bottom:4px">Quick Launch <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 8 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#61</span>
+              <span style="color:var(--text);flex:1">How to Launch a Multi-Vendor Online Marketplace Platfor…</span>
+              <span style="color:var(--text3)">8c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#fb923c;margin-bottom:4px">Geo Story <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#57</span>
+              <span style="color:var(--text);flex:1">The Multi Vendor Ecommerce Marketplace Singapore Has Be…</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge rewrite" style="font-size:10px;padding:2px 8px">rewrite</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#4ade80;margin-bottom:4px">Build vs Buy <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#63</span>
+              <span style="color:var(--text);flex:1">What Is a Marketplace Development Solution?</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge redirect" style="font-size:10px;padding:2px 8px">redirect</span>
+            </div></div>
+        </div>
+</div>
+
+<div class="tab-content" id="tab-linkmap">
+<div style="margin-bottom:24px">
+      <h2 style="font-size:20px;margin-bottom:8px">Pillar Link Architecture</h2>
+      <p style="color:var(--text2);font-size:14px">Every <span style="color:var(--keep)">KEEP</span> page links to the pillar 2–3 times and to 3–5 sibling pages.</p>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px">
+      <h3 style="color:var(--accent);margin-bottom:16px;font-size:14px">PILLAR: /blog/how-to-build-a-marketplace</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px"><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#62</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">7 Examples: How Much Does it Cost to Build…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">341 clicks · 5 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 3x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #51, #53, #55, #58, #61</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#58</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Build a Website like eBay: Create a Used G…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">180 clicks · 2 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #51, #61</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#53</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">B2B Marketplace Platform: How to Build Who…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">88 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 3x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #51, #54, #55</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#54</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Building A B2C Marketplace Platform That C…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">29 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #53, #58, #62, #53, #58</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#55</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How to Build a Successful Service Marketpl…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">23 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #53, #58</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#51</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How to Build an MVP for Marketplace Apps</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">18 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #61, #53</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#59</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Multi-Vendor Ecommerce Development: A Comp…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">11 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #53, #61</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#61</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How to Launch a Multi-Vendor Online Market…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">8 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #51, #58</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#57</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">The Multi Vendor Ecommerce Marketplace Sin…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">0 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #62, #54, #62, #51, #61</div>
+        </div></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px">
+      <h3 style="color:var(--merge);margin-bottom:16px;font-size:14px">TOP LINKING HUBS (Most Connected Pages)</h3>
+      <table class="link-table" style="font-size:13px">
+        <tr><th>Page</th><th>Inbound</th><th>Outbound</th><th>Role</th></tr>
+        <tr>
+          <td><strong>#62</strong> 7 Examples: How Much Does it Cost to Build an…</td>
+          <td style="color:var(--keep)">13 incoming</td>
+          <td style="color:var(--accent)">5 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#51</strong> How to Build an MVP for Marketplace Apps…</td>
+          <td style="color:var(--keep)">7 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#53</strong> B2B Marketplace Platform: How to Build Wholes…</td>
+          <td style="color:var(--keep)">6 incoming</td>
+          <td style="color:var(--accent)">4 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#54</strong> Building A B2C Marketplace Platform That Can …</td>
+          <td style="color:var(--keep)">4 incoming</td>
+          <td style="color:var(--accent)">6 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#58</strong> Build a Website like eBay: Create a Used Good…</td>
+          <td style="color:var(--keep)">6 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#61</strong> How to Launch a Multi-Vendor Online Marketpla…</td>
+          <td style="color:var(--keep)">5 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#55</strong> How to Build a Successful Service Marketplace…</td>
+          <td style="color:var(--keep)">3 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Standard</td>
+        </tr><tr>
+          <td><strong>#57</strong> The Multi Vendor Ecommerce Marketplace Singap…</td>
+          <td style="color:var(--keep)">0 incoming</td>
+          <td style="color:var(--accent)">5 outgoing</td>
+          <td>Link Distributor</td>
+        </tr>
+      </table>
+    </div>
+</div>
+
+<div class="tab-content" id="tab-checklist">
+<div style="margin-bottom:24px">
+      <h2 style="font-size:20px;margin-bottom:8px">Execution Checklist</h2>
+      <p style="color:var(--text2);font-size:14px">Complete in this order: Redirects → Merges → Rewrites → Keep Refreshes.</p>
+    </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--redirect);margin-bottom:4px">Phase 1: Implement Redirects (1 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Quick wins. Implement 301 redirects to consolidate link equity.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>From</th><th>To</th><th>Done</th></tr><tr><td>#63</td><td style="color:var(--text)">What Is a Marketplace Development Solution?…</td><td style="color:var(--keep)">→ 301 to canonical in Marketplace Types</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--merge);margin-bottom:4px">Phase 2: Execute Merges (3 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Extract unique content before redirecting. Preserve valuable angles as sections within winner pages.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Source</th><th>Target</th><th>Extracted</th><th>301 Set</th></tr><tr><td>#52</td><td style="color:var(--text)">How to Build a Successful B2B Marketplace: Ul…</td><td style="color:var(--keep)">→ Merge into #53</td><td>☐</td><td>☐</td></tr><tr><td>#56</td><td style="color:var(--text)">How to Build a Service Marketplace Without Wr…</td><td style="color:var(--keep)">→ Merge into #55</td><td>☐</td><td>☐</td></tr><tr><td>#60</td><td style="color:var(--text)">How to Launch a No Code Marketplace from Scra…</td><td style="color:var(--keep)">→ Merge into #61</td><td>☐</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--rewrite);margin-bottom:4px">Phase 3: Content Rewrites (2 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Full rewrites using content templates. Highest effort, highest impact.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Page</th><th>New Title</th><th>Words</th><th>Draft</th><th>Live</th></tr><tr><td>#57</td><td style="color:var(--text)">The Multi Vendor Ecommerce Marketpl…</td><td style="color:var(--accent);font-size:11px">How to Build a Multi-Vendor Marketplace …</td><td>2,500–3,000</td><td>☐</td><td>☐</td></tr><tr><td>#59</td><td style="color:var(--text)">Multi-Vendor Ecommerce Development:…</td><td style="color:var(--accent);font-size:11px">Multi-Vendor Ecommerce Development: Tech…</td><td>3,000–3,500</td><td>☐</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--keep);margin-bottom:4px">Phase 4: Refresh Existing Winners (7 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Update titles, add schemas, strengthen internal links. Protects existing rankings.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Page</th><th>Clicks</th><th>Conv</th><th>Title</th><th>Links</th><th>Schema</th></tr><tr><td>#62</td><td style="color:var(--text)">7 Examples: How Much Does it Cost to Bui…</td><td>341</td><td>5</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#58</td><td style="color:var(--text)">Build a Website like eBay: Create a Used…</td><td>180</td><td>2</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#53</td><td style="color:var(--text)">B2B Marketplace Platform: How to Build W…</td><td>88</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#54</td><td style="color:var(--text)">Building A B2C Marketplace Platform That…</td><td>29</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#55</td><td style="color:var(--text)">How to Build a Successful Service Market…</td><td>23</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#51</td><td style="color:var(--text)">How to Build an MVP for Marketplace Apps…</td><td>18</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#61</td><td style="color:var(--text)">How to Launch a Multi-Vendor Online Mark…</td><td>8</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+      <div style="font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px">Universal Quality Checklist (Apply to Every Keep/Rewrite Page)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;color:var(--text2)">
+        <div>
+          <h4 style="color:var(--text);font-size:13px;margin-bottom:8px">Content Structure</h4>
+          <div>☐ H1 contains primary keyword</div>
+          <div>☐ Title tag under 60 characters</div>
+          <div>☐ Meta description 140–160 characters</div>
+          <div>☐ Every H2 has direct-answer block (40–60 words)</div>
+          <div>☐ Paragraphs max 4 lines</div>
+          <div>☐ No filler content or vague claims</div>
+          <div>☐ Real examples included</div>
+          <div>☐ Comparison table present (where applicable)</div>
+        </div>
+        <div>
+          <h4 style="color:var(--text);font-size:13px;margin-bottom:8px">Linking & Schema</h4>
+          <div>☐ Links to pillar page 2–3 times</div>
+          <div>☐ Links to 3–5 sibling cluster pages</div>
+          <div>☐ Anchor text is varied (not repetitive)</div>
+          <div>☐ FAQ section has 5–8 questions</div>
+          <div>☐ FAQ schema markup implemented</div>
+          <div>☐ Article schema with dateModified</div>
+          <div>☐ Soft CTA present (not aggressive)</div>
+          <div>☐ Passes writing style rules (simple, no jargon)</div>
+        </div>
+      </div>
+    </div>
+</div>
+
 <script>
 function togglePage(id){const d=document.getElementById('detail-'+id);const c=document.getElementById('chev-'+id);d.classList.toggle('open');c.classList.toggle('open')}
 let currentFilter='all';
 document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterPages()})});
 document.getElementById('searchBox').addEventListener('input',filterPages);
 function filterPages(){const s=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.page-card').forEach(c=>{const matchFilter=currentFilter==='all'||c.dataset.action===currentFilter;const matchSearch=!s||c.dataset.search.includes(s);c.style.display=matchFilter&&matchSearch?'block':'none'})}
+
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleNewTopic(el) {
+  el.closest('.new-topic-card').classList.toggle('open');
+}
 </script>
 </body>
 </html>

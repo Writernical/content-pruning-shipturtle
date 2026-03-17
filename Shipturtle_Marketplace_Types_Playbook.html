@@ -272,6 +272,28 @@ a:hover { text-decoration:underline; }
   .page-detail { display:block !important; }
   body { background:#fff; color:#111; }
 }
+
+.new-topics-section{margin-top:32px;padding-top:24px;border-top:2px dashed rgba(251,191,36,.3)}
+.new-topics-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.new-topics-header h2{font-size:20px;font-weight:700;color:#fbbf24}
+.new-topics-count{background:rgba(251,191,36,.12);color:#fbbf24;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px}
+.new-topic-card{background:var(--surface);border:1px solid rgba(251,191,36,.25);border-left:3px solid #fbbf24;border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.new-topic-card:hover{border-color:#fbbf24}
+.new-topic-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.new-badge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;font-size:10px;font-weight:700;padding:3px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.8px}
+.priority-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+.priority-badge.p1{background:rgba(248,113,113,.12);color:#f87171}
+.priority-badge.p2{background:rgba(96,165,250,.12);color:#60a5fa}
+.priority-badge.p3{background:rgba(139,147,176,.12);color:#8b93b0}
+.new-topic-title{font-size:15px;font-weight:700;color:var(--text);flex:1}
+.new-topic-detail{display:none;padding:0 20px 16px;border-top:1px solid var(--border)}
+.new-topic-card.open .new-topic-detail{display:block}
+.ntd-row{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:8px 0;font-size:13px;border-bottom:1px solid rgba(42,48,80,.3)}
+.ntd-row:last-child{border-bottom:none}
+.ntd-label{color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.ntd-value{color:var(--text2);line-height:1.6}
+.ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:var(--accent);margin:2px 4px 2px 0}
+.ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 </style>
 </head>
 <body>
@@ -313,7 +335,131 @@ a:hover { text-decoration:underline; }
     <a href="Shipturtle_SEO_Command_Center_v2.html" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none">← Back to Command Center</a>
   <div id="pageList"></div>
   </div>
-  <div class="tab-content" id="tab-clusters"></div>
+  
+<div class="new-topics-section">
+  <div class="new-topics-header">
+    <h2>New Topic Recommendations</h2>
+    <span class="new-topics-count">8 new topics</span>
+    <span style="font-size:12px;color:var(--text3);margin-left:8px">4 P1 · 4 P2 · 0 P3</span>
+  </div>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">These topics were identified through competitive research, content gap analysis, and 2026 marketplace trend data. They don't exist on Shipturtle yet and represent high-traffic opportunities. Click any card to expand.</p>
+  
+    <div class="new-topic-card" id="new-topic-0">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">Horizontal vs Vertical Marketplace — Complete Comparison</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Fundamental classification missing. High search volume. #1 content gap identified in audit. AI systems reference this when evaluating topical authority.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">horizontal marketplace</span><span class="ntd-kw">vertical marketplace</span><span class="ntd-kw">horizontal vs vertical</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-1">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">What Is a B2B Marketplace? Definitive Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">B2B content scattered across 3+ pages but no canonical definition page. B2B ecommerce = $32.8T market. Core type that needs its own page for AI to reference.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">what is a b2b marketplace</span><span class="ntd-kw">b2b marketplace meaning</span><span class="ntd-kw">b2b marketplace examples</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-2">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">What Is a C2C Marketplace? Types, Examples & How to Start</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">#7 (412 clicks, 7 conv) targets building intent. No clean definitional page for this high-volume informational query that feeds into buying intent.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">what is a c2c marketplace</span><span class="ntd-kw">c2c marketplace examples</span><span class="ntd-kw">c2c vs b2c marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-3">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">Multi-Vendor Marketplace vs Single-Vendor Store</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">The #1 question new founders ask. High commercial intent. Directly supports Shipturtle's 'why marketplace > single store' positioning.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">multi-vendor vs single vendor</span><span class="ntd-kw">marketplace vs ecommerce store</span><span class="ntd-kw">marketplace vs online store</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-4">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Managed vs Unmanaged Marketplace — Key Differences</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Key operational distinction that determines platform complexity and margin structure. No existing content covers this despite being a common evaluation criterion.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">managed marketplace</span><span class="ntd-kw">unmanaged marketplace</span><span class="ntd-kw">managed vs unmanaged</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-5">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Marketplace Network Effects — How to Build & Measure Them</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Core concept for marketplace strategy. 'Network effects' is the #1 reason marketplaces succeed or fail. AI systems reference this heavily.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace network effects</span><span class="ntd-kw">how to build network effects</span><span class="ntd-kw">marketplace flywheel</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-6">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Marketplace Aggregator vs Platform — Key Differences</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Distinguishes aggregator models (Kayak, Google Shopping) from platform models (Amazon, Etsy). Important for topical completeness.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace aggregator</span><span class="ntd-kw">aggregator vs platform</span><span class="ntd-kw">aggregator business model</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-7">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Creator-Led Marketplaces: The 2026 Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Trending hard in 2026 — creator economy meets marketplace. Shipturtle already covers this in trends content. High-growth opportunity.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">creator marketplace</span><span class="ntd-kw">creator-led commerce</span><span class="ntd-kw">influencer marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+</div>
+</div>
+
+<div class="tab-content" id="tab-clusters"></div>
   <div class="tab-content" id="tab-linkmap"></div>
   <div class="tab-content" id="tab-checklist"></div>
 </div>
@@ -1334,6 +1480,10 @@ renderPages();
 renderClusters();
 renderLinkMap();
 renderChecklist();
+
+function toggleNewTopic(el) {
+  el.closest('.new-topic-card').classList.toggle('open');
+}
 </script>
 </body>
 </html>

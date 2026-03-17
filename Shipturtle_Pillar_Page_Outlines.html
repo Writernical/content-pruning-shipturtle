@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipturtle — Pillar Page Content Outlines</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0e14;--surface:#141722;--surface2:#1a1f2e;--surface3:#1e2438;--border:#2a3050;--accent:#6c9fff;--text:#e0e4f0;--text2:#8b93b0;--text3:#5a6380;--keep:#34d399;--rewrite:#60a5fa;--merge:#fbbf24;--redirect:#f87171;--font:'DM Sans',sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* Header */
+.header{background:linear-gradient(135deg,#141722 0%,#1a1040 50%,#141722 100%);border-bottom:1px solid var(--border);padding:48px 40px 40px;text-align:center}
+.header h1{font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.5px;background:linear-gradient(135deg,#fff,#6c9fff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px}
+.header-sub{color:var(--text2);font-size:15px;max-width:700px;margin:0 auto 20px;line-height:1.7}
+.header-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.header-badge{font-size:11px;font-weight:600;padding:5px 14px;border-radius:6px;text-transform:uppercase;letter-spacing:.8px}
+
+/* Navigation */
+.pillar-nav{display:flex;gap:8px;max-width:1200px;margin:0 auto;padding:20px 40px;flex-wrap:wrap;justify-content:center}
+.pillar-tab{font-family:var(--font);font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .2s}
+.pillar-tab:hover{border-color:var(--accent);color:var(--text)}
+.pillar-tab.active{background:var(--accent);color:#0c0e14;border-color:var(--accent)}
+
+/* Pillar sections */
+.pillar-section{display:none;max-width:1200px;margin:0 auto;padding:20px 40px 60px}
+.pillar-section.active{display:block}
+
+/* Meta card */
+.meta-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.meta-item{font-size:13px;color:var(--text2);line-height:1.7}
+.meta-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px}
+.meta-value{color:var(--text);font-weight:500}
+.meta-kw{display:inline-block;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-size:11px;font-family:var(--mono);color:var(--accent);margin:2px 4px 2px 0}
+.meta-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;color:var(--keep);margin:2px 4px 2px 0}
+
+/* H2 outline cards */
+.h2-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:16px;overflow:hidden;transition:border-color .2s}
+.h2-card:hover{border-color:var(--accent)}
+.h2-header{display:flex;align-items:flex-start;gap:14px;padding:20px 24px;cursor:pointer;user-select:none}
+.h2-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.h2-info{flex:1}
+.h2-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.h2-meta{font-size:12px;color:var(--text3);display:flex;gap:12px;flex-wrap:wrap}
+.h2-meta span{display:inline-flex;align-items:center;gap:4px}
+.h2-body{display:none;padding:0 24px 20px 74px;border-top:1px solid var(--border)}
+.h2-card.open .h2-body{display:block}
+.h2-body h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);margin:16px 0 8px}
+.h2-body p,.h2-body li{font-size:13px;color:var(--text2);line-height:1.7}
+.h2-body ul{padding-left:18px}
+.h2-body li{margin-bottom:4px}
+
+/* Link map */
+.link-map{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:24px}
+.link-map h3{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--accent)}
+.link-row{display:grid;grid-template-columns:1fr 200px 120px;gap:12px;padding:8px 0;border-bottom:1px solid rgba(42,48,80,.4);font-size:12px;align-items:center}
+.link-row:last-child{border-bottom:none}
+.link-row .target{color:var(--text);font-weight:500}
+.link-row .anchor{color:var(--accent);font-family:var(--mono);font-size:11px}
+.link-row .section{color:var(--text3)}
+.link-header{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text3)}
+
+/* Style notes */
+.style-card{background:rgba(108,159,255,.05);border:1px solid rgba(108,159,255,.2);border-radius:14px;padding:24px;margin-bottom:24px}
+.style-card h3{font-size:14px;font-weight:700;margin-bottom:10px;color:var(--accent)}
+.style-card p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:8px}
+
+/* Summary stats */
+.outline-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:24px}
+.os{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+.os .v{font-size:24px;font-weight:700;font-family:var(--mono)}
+.os .l{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-top:2px}
+
+/* Pillar color coding */
+.types{--pillar:#6c9fff} .build{--pillar:#f59e0b} .industry{--pillar:#10b981} .ops{--pillar:#ec4899} .platform{--pillar:#818cf8}
+
+/* Publishing steps */
+.steps-section{max-width:1200px;margin:0 auto;padding:0 40px 60px}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;counter-increment:step}
+.step-card::before{content:counter(step);display:inline-flex;width:28px;height:28px;border-radius:8px;background:var(--accent);color:#0c0e14;font-weight:700;font-size:13px;align-items:center;justify-content:center;margin-bottom:10px}
+.step-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.step-card p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:6px}
+.step-card code{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-family:var(--mono);font-size:12px;color:var(--accent)}
+
+.footer{text-align:center;padding:40px;color:var(--text3);font-size:12px;border-top:1px solid var(--border)}
+
+@media(max-width:768px){
+  .meta-grid{grid-template-columns:1fr}
+  .pillar-nav,.pillar-section,.steps-section{padding-left:20px;padding-right:20px}
+  .link-row{grid-template-columns:1fr;gap:4px}
+  .h2-body{padding-left:24px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badges">
+    <span class="header-badge" style="background:rgba(108,159,255,.15);color:#6c9fff">Pillar Content Strategy</span>
+    <span class="header-badge" style="background:rgba(52,211,153,.12);color:#34d399">5 Pillars × 4,000+ Words Each</span>
+  </div>
+  <h1>Pillar Page Content Outlines</h1>
+  <p class="header-sub">Detailed H2-by-H2 content blueprints for all 5 pillar pages. Each outline includes word targets, AEO formatting, internal linking maps, schema placements, and writing style notes.</p>
+</div>
+
+<div class="pillar-nav" id="pillarNav">
+  <button class="pillar-tab active" onclick="showPillar('types')" style="border-color:rgba(108,159,255,.4)">Marketplace Types</button>
+  <button class="pillar-tab" onclick="showPillar('build')" style="border-color:rgba(245,158,11,.4)">How to Build</button>
+  <button class="pillar-tab" onclick="showPillar('industry')" style="border-color:rgba(16,185,129,.4)">Industry Marketplaces</button>
+  <button class="pillar-tab" onclick="showPillar('ops')" style="border-color:rgba(236,72,153,.4)">Ops & Features</button>
+  <button class="pillar-tab" onclick="showPillar('platform')" style="border-color:rgba(129,140,248,.4)">Marketplace Platform</button>
+  <button class="pillar-tab" onclick="showPillar('publish')" style="border-color:rgba(251,191,36,.4)">📦 Publishing Steps</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 1: MARKETPLACE TYPES                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="pillar-section types active" id="sec-types">
+<div class="outline-stats">
+  <div class="os"><div class="v" style="color:#6c9fff">4,500</div><div class="l">Target Words</div></div>
+  <div class="os"><div class="v" style="color:#34d399">7</div><div class="l">H2 Sections</div></div>
+  <div class="os"><div class="v" style="color:#fbbf24">50</div><div class="l">Child Pages</div></div>
+  <div class="os"><div class="v" style="color:#f87171">3,289</div><div class="l">Pillar Clicks</div></div>
+  <div class="os"><div class="v" style="color:#818cf8">28</div><div class="l">Conversions</div></div>
+</div>
+
+<div class="meta-card">
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Page Title (H1)</div>
+      <div class="meta-value">Types of Online Marketplaces: The Complete Guide [2026]</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Target URL</div>
+      <div class="meta-value" style="font-family:var(--mono);font-size:12px;color:var(--accent)">/blog/types-of-online-marketplaces</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Primary Keywords</div>
+      <div><span class="meta-kw">types of online marketplaces</span><span class="meta-kw">marketplace types</span><span class="meta-kw">online marketplace models</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Schemas</div>
+      <div><span class="meta-schema">FAQ Schema</span><span class="meta-schema">Article Schema</span><span class="meta-schema">Comparison Schema</span></div>
+    </div>
+    <div class="meta-item" style="grid-column:1/-1">
+      <div class="meta-label">Page Purpose</div>
+      <div class="meta-value" style="font-weight:400;color:var(--text2)">The definitive classification page for all marketplace types. This is the hub that every child page links back to. It must define each type clearly enough for AI extraction while linking deep into 50 child pages. Currently exists at /blog/what-is-a-marketplace (page #4, 32 clicks, 36.6K impressions) — needs full rewrite to become the canonical types pillar.</div>
+    </div>
+  </div>
+</div>
+
+<div class="h2-card open" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">1</div><div class="h2-info"><div class="h2-title">What Is an Online Marketplace?</div><div class="h2-meta"><span>📝 300–350 words</span><span>🎯 AEO definition block</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Direct definition paragraph (50 words, standalone-extractable for AI snippets)</li>
+      <li>Marketplace vs ecommerce store — the key distinction in 2–3 sentences</li>
+      <li>Three-sided model: marketplace operator + vendors + buyers</li>
+      <li>Why marketplaces win: asset-light, network effects, scalability</li>
+      <li>Global marketplace GMV data point ($8.1T in 2026)</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #19 (30+ Marketplace Examples) — "see 30+ real marketplace examples"</li>
+      <li>→ How to Build pillar — "how to build your own marketplace"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">2</div><div class="h2-info"><div class="h2-title">Marketplace Types by Transaction Model (B2B, B2C, C2C)</div><div class="h2-meta"><span>📝 600–700 words</span><span>🎯 Comparison table</span><span>📊 3 H3 subsections</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li><strong>H3: B2B Marketplaces</strong> — Definition, wholesale workflows (RFQ, bulk pricing, net terms), examples (Alibaba, Faire). 150–200 words.</li>
+      <li><strong>H3: B2C Marketplaces</strong> — Definition, consumer product models, examples (Amazon, Etsy). 150–200 words.</li>
+      <li><strong>H3: C2C Marketplaces</strong> — Definition, peer-to-peer selling, trust systems, examples (eBay, Vinted, Depop). 150–200 words.</li>
+      <li>Comparison table (B2B vs B2C vs C2C): buyer type, avg order value, payment model, trust mechanism, commission range</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #7 (C2C Guide, 412 clicks, 7 conv) — "complete C2C marketplace guide"</li>
+      <li>→ #53 in Build pillar (B2B Build) — "how to build a B2B marketplace"</li>
+      <li>→ #20 (B2B Food Marketplace, 296 clicks) — "B2B food marketplace examples"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">3</div><div class="h2-info"><div class="h2-title">Marketplace Types by Product Category</div><div class="h2-meta"><span>📝 500–600 words</span><span>🎯 Hub section → Industry pillar</span><span>📊 5 H3 subsections</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li><strong>H3: Product Marketplaces</strong> — Physical goods, handmade, fashion, electronics. 80–100 words + links to Industry pillar verticals.</li>
+      <li><strong>H3: Service Marketplaces</strong> — Booking, gig economy, professional services. Link to #11 (124 clicks).</li>
+      <li><strong>H3: Rental Marketplaces</strong> — P2P rentals, booking calendars, deposits. Link to #6 (400 clicks, 4 conv).</li>
+      <li><strong>H3: Digital Product Marketplaces</strong> — Courses, templates, software. Link to #85 in Industry (102 clicks, 4 conv).</li>
+      <li><strong>H3: Hybrid Marketplaces</strong> — Products + services combined. Amazon model.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">4</div><div class="h2-info"><div class="h2-title">Horizontal vs Vertical Marketplaces</div><div class="h2-meta"><span>📝 400–450 words</span><span>🎯 AEO comparison block</span><span>⚠️ Content Gap — NEW</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Horizontal definition (Amazon — sells everything) vs Vertical definition (StockX — sneakers only)</li>
+      <li>Comparison table: reach vs depth, CAC, vendor acquisition, brand positioning</li>
+      <li>Why vertical marketplaces are winning in 2026 (35% of consumers shop niche)</li>
+      <li>This fills the #1 content gap identified in the Types audit</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ Industry Marketplaces pillar — "explore 30+ vertical marketplace niches"</li>
+      <li>→ #8 (Hyperlocal, 64 clicks) — "hyperlocal marketplace example"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">5</div><div class="h2-info"><div class="h2-title">Marketplace Revenue Models</div><div class="h2-meta"><span>📝 450–500 words</span><span>🎯 Numbered list (AEO)</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>6 revenue models as numbered list (AEO snippet target): Commission, Subscription, Listing fee, Freemium, Lead generation, Transaction fee</li>
+      <li>Each model: 50–70 word definition + real example + typical %</li>
+      <li>Quick comparison table: model × best-for marketplace type</li>
+      <li>Teaser paragraph driving to the full deep-dive</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #24 (Marketplace Business Model, 65 clicks) — "complete revenue model guide"</li>
+      <li>→ #107 in Ops pillar (7 Ways to Make Money, 64 clicks) — "marketplace monetization strategies"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">6</div><div class="h2-info"><div class="h2-title">How to Choose the Right Marketplace Type</div><div class="h2-meta"><span>📝 400–450 words</span><span>🎯 Decision framework</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Decision tree / framework: 4 questions to find your marketplace type</li>
+      <li>Q1: Who are your vendors? (businesses → B2B, individuals → C2C)</li>
+      <li>Q2: What are they selling? (products, services, rentals, digital)</li>
+      <li>Q3: Wide catalog or niche focus? (horizontal vs vertical)</li>
+      <li>Q4: Local or global? (hyperlocal vs cross-border)</li>
+      <li>Each answer maps to specific marketplace type + link to child page</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ How to Build pillar — "ready to build? Start with our complete build guide"</li>
+      <li>→ #62 in Build pillar (Cost to Build, 341 clicks) — "see how much it costs"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#6c9fff,#a78bfa)">7</div><div class="h2-info"><div class="h2-title">FAQ — Types of Online Marketplaces (8 Questions)</div><div class="h2-meta"><span>📝 400–480 words</span><span>🎯 FAQ Schema</span></div></div></div>
+  <div class="h2-body">
+    <h4>Questions (40–60 word standalone answers each)</h4>
+    <ul>
+      <li>What are the main types of online marketplaces?</li>
+      <li>What is the difference between B2B and B2C marketplaces?</li>
+      <li>What is a vertical marketplace?</li>
+      <li>What is the most profitable marketplace model?</li>
+      <li>What is a multi-vendor marketplace?</li>
+      <li>Can I build a marketplace on Shopify?</li>
+      <li>What is the difference between a marketplace and an ecommerce store?</li>
+      <li>What are the best examples of online marketplaces?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="style-card">
+  <h3>Writing & Tone Notes</h3>
+  <p><strong>Audience:</strong> Entrepreneur or brand owner who's heard about marketplaces but doesn't yet know which type fits their business.</p>
+  <p><strong>Tone:</strong> Educational, neutral, structured. This is a reference page — clarity over persuasion.</p>
+  <p><strong>Shipturtle mentions:</strong> Only in "How to Choose" section and FAQ ("Can I build on Shopify?"). Rest is purely educational.</p>
+  <p><strong>AEO rule:</strong> Every H2 opens with a standalone definition paragraph (40–70 words) that AI can extract without context.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 2: HOW TO BUILD                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="pillar-section build" id="sec-build">
+<div class="outline-stats">
+  <div class="os"><div class="v" style="color:#f59e0b">4,500</div><div class="l">Target Words</div></div>
+  <div class="os"><div class="v" style="color:#34d399">7</div><div class="l">H2 Sections</div></div>
+  <div class="os"><div class="v" style="color:#fbbf24">13</div><div class="l">Child Pages</div></div>
+  <div class="os"><div class="v" style="color:#f87171">742</div><div class="l">Pillar Clicks</div></div>
+  <div class="os"><div class="v" style="color:#818cf8">7</div><div class="l">Conversions</div></div>
+</div>
+
+<div class="meta-card">
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Page Title (H1)</div>
+      <div class="meta-value">How to Build an Online Marketplace: The Complete Guide [2026]</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Target URL</div>
+      <div class="meta-value" style="font-family:var(--mono);font-size:12px;color:var(--accent)">/blog/how-to-build-a-marketplace</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Primary Keywords</div>
+      <div><span class="meta-kw">how to build a marketplace</span><span class="meta-kw">build an online marketplace</span><span class="meta-kw">create a marketplace website</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Schemas</div>
+      <div><span class="meta-schema">How-To Schema</span><span class="meta-schema">FAQ Schema</span><span class="meta-schema">Article Schema</span></div>
+    </div>
+    <div class="meta-item" style="grid-column:1/-1">
+      <div class="meta-label">Page Purpose</div>
+      <div class="meta-value" style="font-weight:400;color:var(--text2)">Currently DOES NOT EXIST — this is the biggest content gap in Shipturtle's SEO. This pillar page guides first-time founders through the complete build journey: idea → tech stack → launch → growth. Every child page (B2B build, B2C build, service build, cost guide) links back here.</div>
+    </div>
+  </div>
+</div>
+
+<div class="h2-card open" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">1</div><div class="h2-info"><div class="h2-title">What Is an Online Marketplace and Why Build One?</div><div class="h2-meta"><span>📝 300–350 words</span><span>🎯 AEO definition block</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Direct definition paragraph (50 words, AEO-extractable)</li>
+      <li>Marketplace vs single-vendor store — key distinction in 2 sentences</li>
+      <li>Why marketplaces win: inventory-light model, network effects, scalability</li>
+      <li>Market size data point (global marketplace GMV)</li>
+      <li>Quick mention of types: B2B, B2C, C2C, service, rental — each links to Types pillar</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul><li>→ Marketplace Types pillar — "explore all marketplace types"</li></ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">2</div><div class="h2-info"><div class="h2-title">3 Ways to Build a Marketplace (Build vs Buy Framework)</div><div class="h2-meta"><span>📝 500–600 words</span><span>🎯 Comparison table</span><span>📊 3 H3 subsections</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li><strong>H3: Custom Development</strong> — $50K–$500K+, 6–12 months, full control. Pros/cons (3 each).</li>
+      <li><strong>H3: Open Source</strong> — CS-Cart, Sharetribe, WooCommerce. Middle ground. Pros/cons.</li>
+      <li><strong>H3: SaaS Platform (Shopify + Shipturtle)</strong> — Live in days, no-code, built-in vendor sync. Pros/cons.</li>
+      <li>Comparison table: Custom vs Open Source vs SaaS on cost, time, flexibility, maintenance, scalability</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #62 (Cost to Build, 341 clicks, 5 conv) — "full cost breakdown"</li>
+      <li>→ #171 in Platform pillar (Custom vs Off-the-Shelf) — "detailed comparison"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">3</div><div class="h2-info"><div class="h2-title">How to Build a Marketplace in 10 Steps</div><div class="h2-meta"><span>📝 1,200–1,400 words</span><span>🎯 How-To Schema (core section)</span><span>📊 10 H3 subsections</span></div></div></div>
+  <div class="h2-body">
+    <h4>Step-by-Step (each H3 = 100–140 words)</h4>
+    <ul>
+      <li><strong>Step 1: Validate Your Marketplace Idea</strong> — Problem-solution fit, MVP approach. → #51 (MVP Guide)</li>
+      <li><strong>Step 2: Choose Your Marketplace Model</strong> — B2B/B2C/C2C/service/rental. → Types pillar</li>
+      <li><strong>Step 3: Pick Your Tech Stack</strong> — Platform decision. → #173 (Tech Stack)</li>
+      <li><strong>Step 4: Set Up Your Storefront</strong> — Theme, navigation, branding. → #155 (Shopify Themes, 560 clicks)</li>
+      <li><strong>Step 5: Build Vendor Onboarding</strong> — Registration, approval, dashboard. → #114 (Seller Onboarding)</li>
+      <li><strong>Step 6: Configure Product Sync</strong> — Manual vs automated vendor sync. → #179 (Seller Sync, 182 clicks, 4 conv)</li>
+      <li><strong>Step 7: Set Up Payments & Commissions</strong> — Gateway, commission structure, automated payouts. → #117 (Vendor Payouts)</li>
+      <li><strong>Step 8: Configure Shipping</strong> — Multi-vendor shipping, split orders, carriers. → #111 (Shipping FAQ)</li>
+      <li><strong>Step 9: Launch Your MVP</strong> — Pre-launch checklist, soft launch strategy.</li>
+      <li><strong>Step 10: Grow</strong> — Vendor + buyer acquisition, chicken-and-egg solution. → #115 (Attract Sellers), #109 (Marketing)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">4</div><div class="h2-info"><div class="h2-title">How Much Does It Cost to Build a Marketplace?</div><div class="h2-meta"><span>📝 400–450 words</span><span>🎯 Cost table (AEO snippet)</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>3-tier cost summary table: SaaS ($100–$500/mo) / Open source ($5K–$30K) / Custom ($50K–$500K+)</li>
+      <li>Hidden costs: maintenance, payment processing, marketing, customer support</li>
+      <li>ROI framing: "10 vendors at 15% commission can cover platform costs"</li>
+      <li><strong>This is a teaser section</strong> — drives traffic to the full deep-dive child page</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul><li>→ <strong>#62 (Cost to Build — star performer, 341 clicks, 5 conv)</strong> — "see the complete cost breakdown"</li></ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">5</div><div class="h2-info"><div class="h2-title">Building for Specific Marketplace Types</div><div class="h2-meta"><span>📝 500–600 words</span><span>🎯 Hub section → child pages</span><span>📊 5 H3 subsections</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li><strong>H3: B2B Marketplaces</strong> — Wholesale, RFQ, bulk pricing. → #53 (88 clicks, 86K imp)</li>
+      <li><strong>H3: B2C Marketplaces</strong> — Consumer product marketplace. → #54 (29 clicks)</li>
+      <li><strong>H3: Service Marketplaces</strong> — Booking, milestone payments. → #55 (23 clicks)</li>
+      <li><strong>H3: Clone Marketplaces</strong> — eBay, Amazon, Etsy templates. → #58 (180 clicks)</li>
+      <li><strong>H3: Geo-Specific Builds</strong> — Singapore, EU, India considerations. → #57 + geo pages</li>
+      <li>Each H3 is 80–100 words: enough to explain the angle and send the reader deeper</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">6</div><div class="h2-info"><div class="h2-title">5 Common Marketplace Building Mistakes</div><div class="h2-meta"><span>📝 350–400 words</span><span>🎯 Numbered list (AEO snippet)</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>1. Building too many features before launch (build MVP first)</li>
+      <li>2. Ignoring the vendor side of the experience</li>
+      <li>3. Manual operations that don't scale (no commission automation, no order routing)</li>
+      <li>4. Choosing the wrong tech stack for your stage</li>
+      <li>5. Spending $100K+ on custom dev when SaaS can launch you in days</li>
+      <li>Each: 2–3 lines problem + 1 line solution</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#f59e0b,#f97316)">7</div><div class="h2-info"><div class="h2-title">FAQ — How to Build a Marketplace (8 Questions)</div><div class="h2-meta"><span>📝 400–480 words</span><span>🎯 FAQ Schema</span></div></div></div>
+  <div class="h2-body">
+    <h4>Questions (40–60 word standalone answers each)</h4>
+    <ul>
+      <li>How long does it take to build a marketplace?</li>
+      <li>Can I build a marketplace without coding?</li>
+      <li>How many vendors do I need to launch?</li>
+      <li>What's the cheapest way to build a marketplace?</li>
+      <li>Should I build on Shopify or from scratch?</li>
+      <li>How do marketplace commissions work?</li>
+      <li>What's the difference between a marketplace and an ecommerce store?</li>
+      <li>How do I attract my first vendors?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="style-card">
+  <h3>Writing & Tone Notes</h3>
+  <p><strong>Audience:</strong> First-time marketplace founder — done some research, hasn't built yet.</p>
+  <p><strong>Tone:</strong> Practical, simple, step-by-step. This is a how-to guide — action over theory.</p>
+  <p><strong>Shipturtle mentions:</strong> Natural integration in Steps 3, 5, 6, 7, 8 — as the tool that handles these, not a sales pitch.</p>
+  <p><strong>Real examples:</strong> Airbnb started on Craigslist, Etsy started with 10 sellers. Show that big platforms started small.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 3: INDUSTRY MARKETPLACES                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="pillar-section industry" id="sec-industry">
+<div class="outline-stats">
+  <div class="os"><div class="v" style="color:#10b981">4,000</div><div class="l">Target Words</div></div>
+  <div class="os"><div class="v" style="color:#34d399">7</div><div class="l">H2 Sections</div></div>
+  <div class="os"><div class="v" style="color:#fbbf24">43</div><div class="l">Child Pages</div></div>
+  <div class="os"><div class="v" style="color:#f87171">2,022</div><div class="l">Pillar Clicks</div></div>
+  <div class="os"><div class="v" style="color:#818cf8">20</div><div class="l">Conversions</div></div>
+</div>
+
+<div class="meta-card">
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Page Title (H1)</div>
+      <div class="meta-value">Industry-Specific Marketplaces: 30+ Verticals You Can Build [2026]</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Target URL</div>
+      <div class="meta-value" style="font-family:var(--mono);font-size:12px;color:var(--accent)">/blog/industry-marketplaces</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Primary Keywords</div>
+      <div><span class="meta-kw">niche marketplace ideas</span><span class="meta-kw">industry marketplace examples</span><span class="meta-kw">vertical marketplace niches</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Schemas</div>
+      <div><span class="meta-schema">FAQ Schema</span><span class="meta-schema">Article Schema</span></div>
+    </div>
+    <div class="meta-item" style="grid-column:1/-1">
+      <div class="meta-label">Page Purpose</div>
+      <div class="meta-value" style="font-weight:400;color:var(--text2)">The directory page for all industry vertical marketplace guides. Currently NO pillar page exists — child pages have no hub to link back to. This page acts as both an inspirational "what can I build?" browser and a strategic SEO hub linking to 30+ vertical guides. It groups industries into categories and ranks them by market opportunity.</div>
+    </div>
+  </div>
+</div>
+
+<div class="h2-card open" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">1</div><div class="h2-info"><div class="h2-title">Why Industry-Specific Marketplaces Win</div><div class="h2-meta"><span>📝 300–350 words</span><span>🎯 AEO definition</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Definition: What is a vertical/niche marketplace? (50 words, AEO-extractable)</li>
+      <li>Why niche beats horizontal: deeper vendor relationships, specialized features, higher conversion</li>
+      <li>Market data: 35% of consumers now shop at niche marketplaces</li>
+      <li>The long-tail opportunity: 30+ verticals, each with unique operational needs</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">2</div><div class="h2-info"><div class="h2-title">Product Marketplaces by Industry (12 Verticals)</div><div class="h2-meta"><span>📝 700–800 words</span><span>🎯 Hub directory → child pages</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <p>Each vertical: 50–60 word summary + market opportunity + link to full guide.</p>
+    <ul>
+      <li>Fashion & Apparel → #74 (143 clicks)</li>
+      <li>Beauty & Cosmetics → #75 (8 clicks — high growth potential)</li>
+      <li>Electronics & Gadgets → #97</li>
+      <li>Jewelry & Accessories → #73</li>
+      <li>Home Decor & Furniture → #76 (48 clicks)</li>
+      <li>Pet Supplies → #100 (84 clicks)</li>
+      <li>Baby & Kids → #99 (32 clicks)</li>
+      <li>Sustainable Products → #80 (212 clicks)</li>
+      <li>Auto Parts → #98</li>
+      <li>Shoes & Sneakers → #79 (30 clicks)</li>
+      <li>Digital Products → #85 (102 clicks, 4 conv)</li>
+      <li>Print on Demand → #86</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">3</div><div class="h2-info"><div class="h2-title">Service & Experience Marketplaces (6 Verticals)</div><div class="h2-meta"><span>📝 400–500 words</span><span>🎯 Hub directory</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Event Planning → #91 (184 clicks, 4 conv — star performer)</li>
+      <li>Freelance Services → #87 (67 clicks, 1 conv)</li>
+      <li>Travel & Experiences → #93</li>
+      <li>Real Estate → #92</li>
+      <li>Fitness & Wellness → #72</li>
+      <li>Health & Wellness → #71 (251 clicks, 2 conv)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">4</div><div class="h2-info"><div class="h2-title">Specialty & Niche Marketplaces (8 Verticals)</div><div class="h2-meta"><span>📝 400–500 words</span><span>🎯 Hub directory</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Handmade & Crafts (Etsy-like) → #88 (23 clicks)</li>
+      <li>Antiques & Vintage → #67</li>
+      <li>Art → #68</li>
+      <li>Livestock & Poultry → #66</li>
+      <li>Gardening & Outdoor → #83 (51 clicks)</li>
+      <li>DIY & Home Improvement → #82</li>
+      <li>Outdoor Gear → #94</li>
+      <li>Golf Equipment → #95</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">5</div><div class="h2-info"><div class="h2-title">How to Choose Your Marketplace Niche</div><div class="h2-meta"><span>📝 350–400 words</span><span>🎯 Decision framework</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>5 evaluation criteria: market size, vendor availability, operational complexity, competition, Shipturtle feature fit</li>
+      <li>Quick scoring matrix: rate any niche on these 5 factors</li>
+      <li>Start small → expand: launch with 1 niche, add adjacent verticals</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ How to Build pillar — "how to build your marketplace"</li>
+      <li>→ #62 (Cost to Build) — "see cost estimates by vertical"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">6</div><div class="h2-info"><div class="h2-title">Geo-Specific Marketplace Opportunities</div><div class="h2-meta"><span>📝 300–350 words</span><span>🎯 Regional hub</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Europe — VAT/GDPR considerations, top verticals → #102</li>
+      <li>UAE — Home business licensing, halal compliance → #103, #105</li>
+      <li>Singapore — Creator economy, social commerce → #104</li>
+      <li>India — Handmade, B2B procurement → #106, geo pages</li>
+      <li>Each region: 60–80 words + link to dedicated guide</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#10b981,#059669)">7</div><div class="h2-info"><div class="h2-title">FAQ — Industry Marketplaces (6 Questions)</div><div class="h2-meta"><span>📝 300–360 words</span><span>🎯 FAQ Schema</span></div></div></div>
+  <div class="h2-body">
+    <h4>Questions</h4>
+    <ul>
+      <li>What is the most profitable marketplace niche?</li>
+      <li>How do I find vendors for a niche marketplace?</li>
+      <li>Can I build a marketplace for services, not just products?</li>
+      <li>What features does a fashion marketplace need that a B2B marketplace doesn't?</li>
+      <li>How many verticals should I start with?</li>
+      <li>What marketplace niches are growing fastest in 2026?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="style-card">
+  <h3>Writing & Tone Notes</h3>
+  <p><strong>Audience:</strong> Entrepreneur browsing for marketplace niche ideas — hasn't decided what to build.</p>
+  <p><strong>Tone:</strong> Inspirational + data-driven. This is a "what can I build?" page. Make each vertical sound like a real opportunity.</p>
+  <p><strong>Structure:</strong> This is a directory page — brevity is key. Each vertical gets 50–60 words MAX. The child pages go deep.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 4: OPS & FEATURES                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="pillar-section ops" id="sec-ops">
+<div class="outline-stats">
+  <div class="os"><div class="v" style="color:#ec4899">4,500</div><div class="l">Target Words</div></div>
+  <div class="os"><div class="v" style="color:#34d399">8</div><div class="l">H2 Sections</div></div>
+  <div class="os"><div class="v" style="color:#fbbf24">48</div><div class="l">Child Pages</div></div>
+  <div class="os"><div class="v" style="color:#f87171">10,803</div><div class="l">Pillar Clicks</div></div>
+  <div class="os"><div class="v" style="color:#818cf8">2</div><div class="l">Conversions</div></div>
+</div>
+
+<div class="meta-card">
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Page Title (H1)</div>
+      <div class="meta-value">Marketplace Operations & Features: The Complete Guide to Running a Multi-Vendor Marketplace [2026]</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Target URL</div>
+      <div class="meta-value" style="font-family:var(--mono);font-size:12px;color:var(--accent)">/blog/marketplace-operations-guide</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Primary Keywords</div>
+      <div><span class="meta-kw">marketplace operations</span><span class="meta-kw">multi-vendor marketplace features</span><span class="meta-kw">marketplace management</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Schemas</div>
+      <div><span class="meta-schema">FAQ Schema</span><span class="meta-schema">Article Schema</span><span class="meta-schema">How-To Schema</span></div>
+    </div>
+    <div class="meta-item" style="grid-column:1/-1">
+      <div class="meta-label">Page Purpose</div>
+      <div class="meta-value" style="font-weight:400;color:var(--text2)">The operational handbook for marketplace operators. Covers the 6 operational pillars: vendor management, payments, shipping, marketing, security, and growth. This pillar has the highest click count (10,803) but the lowest conversion rate — indicating strong informational traffic that needs better conversion pathways. The pillar page must bridge "how operations work" with "how Shipturtle automates them."</div>
+    </div>
+  </div>
+</div>
+
+<div class="h2-card open" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">1</div><div class="h2-info"><div class="h2-title">What Are Marketplace Operations?</div><div class="h2-meta"><span>📝 250–300 words</span><span>🎯 AEO definition</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Definition (AEO, 50 words): Marketplace operations = all processes that keep a multi-vendor platform running day-to-day</li>
+      <li>The 6 operational pillars: vendor management, payments, shipping, marketing, security, growth</li>
+      <li>Why ops make or break marketplaces — 60% of marketplace failures are operational, not technical</li>
+      <li>Manual vs automated operations — the scaling inflection point</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">2</div><div class="h2-info"><div class="h2-title">Vendor Management: Onboard, Monitor, Retain</div><div class="h2-meta"><span>📝 500–600 words</span><span>🎯 Vendor lifecycle framework</span><span>📊 3 H3 subsections</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li><strong>H3: Vendor Onboarding</strong> — Registration, approval, document verification. → #114 (38 clicks)</li>
+      <li><strong>H3: Vendor Performance</strong> — Monitoring, quality scoring, SLA management. → #112 (VMS), #115 (Attract Sellers)</li>
+      <li><strong>H3: Vendor Retention</strong> — Loyalty programs, analytics access, community. → #126 (Vendor Retention)</li>
+      <li>Full vendor lifecycle: Attract → Onboard → Monitor → Support → Retain</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">3</div><div class="h2-info"><div class="h2-title">Payments & Commissions</div><div class="h2-meta"><span>📝 450–500 words</span><span>🎯 Commission models table</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>How marketplace payments work: buyer pays → platform takes commission → vendor receives payout</li>
+      <li>Commission models: flat %, tiered, per-order, hybrid. Comparison table with typical ranges.</li>
+      <li>Automated payouts: schedule, reconciliation, multi-currency</li>
+      <li>Payment gateways: Stripe Connect, PayPal for Marketplaces</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #117 (Vendor Payouts) — "full payout automation guide"</li>
+      <li>→ #175 in Platform (Commission Tools) — "commission tool comparison"</li>
+      <li>→ #107 (Make Money on Marketplace, 64 clicks) — "revenue strategies"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">4</div><div class="h2-info"><div class="h2-title">Shipping & Fulfillment</div><div class="h2-meta"><span>📝 400–450 words</span><span>🎯 Multi-vendor shipping flow</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>The multi-vendor shipping challenge: one order, multiple vendors, split shipments</li>
+      <li>3 fulfillment models: vendor-direct, marketplace-fulfilled, hybrid</li>
+      <li>Shipping automation: carrier assignment, label generation, tracking consolidation</li>
+      <li>WISMO reduction: proactive notifications, branded tracking</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #111 (Shipping FAQ) — "marketplace shipping FAQ"</li>
+      <li>→ #122 (Multi-Warehouse Fulfillment) — "warehouse automation"</li>
+      <li>→ #123 (WISMO Reduction, 1 conv) — "reduce WISMO queries"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">5</div><div class="h2-info"><div class="h2-title">Marketplace Marketing & Growth</div><div class="h2-meta"><span>📝 400–450 words</span><span>🎯 Strategy framework</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>The chicken-and-egg problem: vendors need buyers, buyers need vendors</li>
+      <li>Two-sided marketing strategy overview</li>
+      <li>Top 5 growth levers: SEO, vendor referrals, buyer incentives, community, partnerships</li>
+      <li>Platform thinking: from brand owner to marketplace operator</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #109 (Marketing Strategies) — "10 marketplace marketing strategies"</li>
+      <li>→ #110 (Platform Thinking) — "brand to marketplace transition"</li>
+      <li>→ #129 (Growth Hacks) — "marketplace growth hacks"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">6</div><div class="h2-info"><div class="h2-title">Security, Trust & Compliance</div><div class="h2-meta"><span>📝 350–400 words</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Trust as competitive advantage: verified reviews, transparent pricing, buyer protection</li>
+      <li>Security essentials: PCI compliance, fraud detection, vendor KYC</li>
+      <li>Building two-sided trust: buyer trusts vendor, vendor trusts platform</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #124 (Security Best Practices) — "marketplace security guide"</li>
+      <li>→ #125 (Trust & Transparency) — "build marketplace trust"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">7</div><div class="h2-info"><div class="h2-title">AI & Automation in Marketplace Operations</div><div class="h2-meta"><span>📝 300–350 words</span><span>🎯 Forward-looking section</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>AI use cases: vendor matching, dynamic pricing, fraud detection, demand forecasting</li>
+      <li>Automation maturity: Manual → Rule-based → ML-powered → Autonomous</li>
+      <li>What's automatable today with Shipturtle vs what's coming next</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul><li>→ #127 (AI Vendor Management) — "AI in vendor management"</li></ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#ec4899,#f43f5e)">8</div><div class="h2-info"><div class="h2-title">FAQ — Marketplace Operations (8 Questions)</div><div class="h2-meta"><span>📝 400–480 words</span><span>🎯 FAQ Schema</span></div></div></div>
+  <div class="h2-body">
+    <h4>Questions</h4>
+    <ul>
+      <li>What are the key features a multi-vendor marketplace needs?</li>
+      <li>How do vendor payouts work in a marketplace?</li>
+      <li>How do I handle shipping when I have multiple vendors?</li>
+      <li>What commission structure should I use?</li>
+      <li>How do I onboard vendors to my marketplace?</li>
+      <li>What is WISMO and how do I reduce it?</li>
+      <li>How do I handle returns in a multi-vendor marketplace?</li>
+      <li>What marketplace metrics should I track?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="style-card">
+  <h3>Writing & Tone Notes</h3>
+  <p><strong>Audience:</strong> Active marketplace operator — already launched or about to launch, needs operational guidance.</p>
+  <p><strong>Tone:</strong> Practical, operational, process-driven. This is a handbook, not a pitch.</p>
+  <p><strong>Conversion note:</strong> This pillar has the highest traffic (10,803 clicks) but lowest conversions (2). Every section must bridge to Shipturtle's automation — "here's the problem, here's how to solve it manually, here's how Shipturtle automates it."</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 5: MARKETPLACE PLATFORM                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="pillar-section platform" id="sec-platform">
+<div class="outline-stats">
+  <div class="os"><div class="v" style="color:#818cf8">4,000</div><div class="l">Target Words</div></div>
+  <div class="os"><div class="v" style="color:#34d399">7</div><div class="l">H2 Sections</div></div>
+  <div class="os"><div class="v" style="color:#fbbf24">38</div><div class="l">Child Pages</div></div>
+  <div class="os"><div class="v" style="color:#f87171">2,311</div><div class="l">Pillar Clicks</div></div>
+  <div class="os"><div class="v" style="color:#818cf8">34</div><div class="l">Conversions</div></div>
+</div>
+
+<div class="meta-card">
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Page Title (H1)</div>
+      <div class="meta-value">Best Marketplace Platform Software: Shopify, WooCommerce & More Compared [2026]</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Target URL</div>
+      <div class="meta-value" style="font-family:var(--mono);font-size:12px;color:var(--accent)">/blog/marketplace-platform-comparison</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Primary Keywords</div>
+      <div><span class="meta-kw">marketplace platform</span><span class="meta-kw">best marketplace software</span><span class="meta-kw">multi-vendor marketplace platform</span></div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Schemas</div>
+      <div><span class="meta-schema">FAQ Schema</span><span class="meta-schema">Comparison Schema</span><span class="meta-schema">Software Application Schema</span></div>
+    </div>
+    <div class="meta-item" style="grid-column:1/-1">
+      <div class="meta-label">Page Purpose</div>
+      <div class="meta-value" style="font-weight:400;color:var(--text2)">The highest-converting pillar (34 conversions). This page is the platform comparison hub — helping readers choose the right tech to build their marketplace. It must position Shopify + Shipturtle as the recommended path while maintaining neutral, comparison-driven tone. Every comparison page and platform-specific child page links back here.</div>
+    </div>
+  </div>
+</div>
+
+<div class="h2-card open" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">1</div><div class="h2-info"><div class="h2-title">What Is a Marketplace Platform?</div><div class="h2-meta"><span>📝 250–300 words</span><span>🎯 AEO definition</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Definition (50 words, AEO): Software that enables businesses to build and run multi-vendor online marketplaces</li>
+      <li>3 categories: SaaS platforms, open-source solutions, custom development</li>
+      <li>Key capabilities a platform must provide: vendor management, product sync, order routing, payments, shipping</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">2</div><div class="h2-info"><div class="h2-title">Top Marketplace Platforms Compared (2026 Rankings)</div><div class="h2-meta"><span>📝 700–800 words</span><span>🎯 Comparison table (Comparison Schema)</span><span>📊 6+ platforms</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Feature comparison table: Shopify + Shipturtle, Sharetribe, CS-Cart, Mirakl, Arcadier, WooCommerce + Dokan</li>
+      <li>Columns: pricing, ease of setup, vendor limit, payment handling, shipping automation, API access, scalability</li>
+      <li>Each platform: 80–100 word summary with pros/cons</li>
+      <li>Clear positioning: Shipturtle for Shopify ecosystem, Sharetribe for standalone, CS-Cart for self-hosted</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #174 (Best Marketplace Software) — "full software rankings"</li>
+      <li>→ #173 (Tech Stack) — "marketplace technology stack"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">3</div><div class="h2-info"><div class="h2-title">Building a Marketplace on Shopify</div><div class="h2-meta"><span>📝 500–600 words</span><span>🎯 Shopify-specific hub</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Why Shopify is the #1 choice for marketplace builders (ecosystem, themes, apps, Shopify Payments)</li>
+      <li>Shopify native tools: Shopify Collective, Marketplace Kit</li>
+      <li>Shopify + Shipturtle: what you get (vendor sync, commissions, order routing, shipping)</li>
+      <li>Quick setup path: Shopify plan → theme → Shipturtle app → vendor onboarding</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #166 (Create Marketplace on Shopify, 392 clicks, 9 conv) — "step-by-step Shopify marketplace guide"</li>
+      <li>→ #155 (Shopify Themes, 560 clicks, 6 conv) — "best Shopify marketplace themes"</li>
+      <li>→ #162 (Shopify Collective) — "Shopify Collective explained"</li>
+      <li>→ #179 (Seller Sync, 182 clicks, 4 conv) — "connect vendor stores"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">4</div><div class="h2-info"><div class="h2-title">Building a Marketplace on WooCommerce</div><div class="h2-meta"><span>📝 350–400 words</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>WooCommerce as the #2 option: flexibility, WordPress ecosystem, self-hosted control</li>
+      <li>Plugin comparison: Dokan, WCFM, WC Vendors, Shipturtle for WooCommerce</li>
+      <li>Shopify vs WooCommerce for marketplaces — quick comparison table</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #170 (WooCommerce Multi-Vendor) — "WooCommerce marketplace guide"</li>
+      <li>→ #160 (WooCommerce Migration) — "migrating from WooCommerce"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">5</div><div class="h2-info"><div class="h2-title">Custom Development vs SaaS Platforms</div><div class="h2-meta"><span>📝 400–450 words</span><span>🎯 Build vs Buy framework</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Decision framework: When to go custom vs when SaaS is enough</li>
+      <li>Custom: full control, $50K–$500K+, 6–12 months, ongoing maintenance</li>
+      <li>SaaS: launch in days, $100–$500/mo, managed updates, limited customization</li>
+      <li>Hybrid architecture: Shopify frontend + custom backend via API</li>
+      <li>Comparison table: custom vs SaaS vs hybrid on 6 dimensions</li>
+    </ul>
+    <h4>Internal Links</h4>
+    <ul>
+      <li>→ #171 (Custom vs Off-the-Shelf, 43 clicks) — "complete build vs buy comparison"</li>
+      <li>→ #161 (Hybrid Architecture) — "hybrid marketplace architecture"</li>
+      <li>→ #177 (Hiring Developers) — "hiring marketplace developers"</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">6</div><div class="h2-info"><div class="h2-title">Shipturtle vs Competitors</div><div class="h2-meta"><span>📝 350–400 words</span><span>🎯 Comparison hub → vs pages</span></div></div></div>
+  <div class="h2-body">
+    <h4>Content Requirements</h4>
+    <ul>
+      <li>Brief comparison snapshot for each competitor: 40–50 words + link</li>
+      <li>Shipturtle vs Shopify Collective → #187 (113 clicks)</li>
+      <li>Shipturtle vs Sharetribe → #191 (33 clicks)</li>
+      <li>Shipturtle vs Syncio → #188 (55 clicks)</li>
+      <li>Shipturtle vs CS-Cart → #189 (29 clicks)</li>
+      <li>Shipturtle vs Onport → #190 (73 clicks)</li>
+      <li>Shipturtle vs Carro → #192 (11 clicks)</li>
+      <li>Summary table: Shipturtle feature advantages in 1 row per competitor</li>
+    </ul>
+  </div>
+</div>
+
+<div class="h2-card" onclick="this.classList.toggle('open')">
+  <div class="h2-header"><div class="h2-num" style="background:linear-gradient(135deg,#818cf8,#6366f1)">7</div><div class="h2-info"><div class="h2-title">FAQ — Marketplace Platform (8 Questions)</div><div class="h2-meta"><span>📝 400–480 words</span><span>🎯 FAQ Schema</span></div></div></div>
+  <div class="h2-body">
+    <h4>Questions</h4>
+    <ul>
+      <li>What is the best platform to build a marketplace?</li>
+      <li>Can I build a marketplace on Shopify?</li>
+      <li>How much does marketplace software cost?</li>
+      <li>What is the difference between Shopify Collective and Shipturtle?</li>
+      <li>Should I use WooCommerce or Shopify for a marketplace?</li>
+      <li>Do I need a developer to build a marketplace?</li>
+      <li>What marketplace features are essential for launch?</li>
+      <li>How do I migrate from one marketplace platform to another?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="style-card">
+  <h3>Writing & Tone Notes</h3>
+  <p><strong>Audience:</strong> Marketplace founder evaluating tech options — comparing platforms, reading reviews, making a decision.</p>
+  <p><strong>Tone:</strong> Analytical, comparison-driven, data-backed. This is the buying guide — honest and thorough.</p>
+  <p><strong>Shipturtle positioning:</strong> Present as the recommended Shopify path but acknowledge alternatives honestly. Neutral tone for comparisons. Let the feature table do the selling.</p>
+  <p><strong>Conversion priority:</strong> This pillar has 34 conversions — the highest. Every section needs a clear next-step CTA: "see the full guide," "try Shipturtle free," "compare platforms."</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PUBLISHING STEPS                                -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="pillar-section" id="sec-publish">
+<div style="margin-bottom:24px">
+  <h2 style="font-size:24px;font-weight:700;margin-bottom:8px">Publishing to GitHub Pages</h2>
+  <p style="color:var(--text2);font-size:14px">Steps to deploy the updated Command Center + Playbooks + Pillar Outlines to your GitHub Pages site.</p>
+</div>
+
+<div style="counter-reset:step">
+<div class="step-card">
+  <h3>Download All Files from Claude</h3>
+  <p>Download these files from the deliverables above:</p>
+  <p><code>Shipturtle_SEO_Command_Center_v2.html</code> — Updated hub page</p>
+  <p><code>Shipturtle_Pillar_Page_Outlines.html</code> — This document (all 5 outlines)</p>
+  <p><code>Shipturtle_Marketplace_Types_Playbook.html</code> — Types child page playbook</p>
+  <p><code>Shipturtle_How_To_Build_Playbook.html</code> — Build child page playbook</p>
+  <p><code>Shipturtle_Industry_Marketplaces_Playbook.html</code> — Industry child page playbook</p>
+  <p><code>Shipturtle_Marketplace_Ops_Playbook.html</code> — Ops child page playbook</p>
+  <p><code>Shipturtle_Marketplace_Platform_Playbook.html</code> — Platform child page playbook</p>
+</div>
+
+<div class="step-card">
+  <h3>Open Your GitHub Repository</h3>
+  <p>Go to <code>github.com/writernical/content-pruning-shipturtle</code></p>
+  <p>This is your existing GitHub Pages repo at <code>writernical.github.io/content-pruning-shipturtle/</code></p>
+</div>
+
+<div class="step-card">
+  <h3>Upload/Replace Files</h3>
+  <p>Click <code>Add file → Upload files</code> in the GitHub web UI.</p>
+  <p>Drag all 7 HTML files. GitHub will ask to replace existing files — confirm.</p>
+  <p>Alternatively, use Git CLI:</p>
+  <p><code>git add *.html && git commit -m "Update playbooks + add pillar outlines" && git push</code></p>
+</div>
+
+<div class="step-card">
+  <h3>Rename Command Center (Optional)</h3>
+  <p>If you want the Command Center as the landing page, rename it to <code>index.html</code></p>
+  <p>Then <code>writernical.github.io/content-pruning-shipturtle/</code> will load the Command Center directly.</p>
+</div>
+
+<div class="step-card">
+  <h3>Verify Deployment</h3>
+  <p>Go to <code>Settings → Pages</code> in your GitHub repo to confirm deployment status.</p>
+  <p>GitHub Pages typically deploys within 1–2 minutes after push.</p>
+  <p>Test all links between the Command Center and individual playbooks.</p>
+</div>
+
+<div class="step-card">
+  <h3>Your Updated Site Structure</h3>
+  <p><code>/index.html</code> → SEO Command Center (hub page)</p>
+  <p><code>/Shipturtle_Pillar_Page_Outlines.html</code> → Pillar content outlines (this doc)</p>
+  <p><code>/Shipturtle_Marketplace_Types_Playbook.html</code> → Types child page playbook</p>
+  <p><code>/Shipturtle_How_To_Build_Playbook.html</code> → Build child page playbook</p>
+  <p><code>/Shipturtle_Industry_Marketplaces_Playbook.html</code> → Industry child page playbook</p>
+  <p><code>/Shipturtle_Marketplace_Ops_Playbook.html</code> → Ops child page playbook</p>
+  <p><code>/Shipturtle_Marketplace_Platform_Playbook.html</code> → Platform child page playbook</p>
+  <p>Plus the original pruning audits remain at their existing URLs.</p>
+</div>
+</div>
+</div>
+
+
+<div class="footer">
+  Shipturtle SEO — Pillar Page Content Outlines — Generated Mar 2026
+</div>
+
+<script>
+function showPillar(id){
+  document.querySelectorAll('.pillar-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.pillar-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

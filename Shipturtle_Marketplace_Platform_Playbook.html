@@ -50,6 +50,34 @@
 .template-section .word-count{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface);padding:1px 6px;border-radius:3px;margin-left:8px}
 .schema-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.schema-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--surface3);color:var(--text2);border:1px solid var(--border)}
 .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:16px;text-decoration:none}.back-link:hover{color:var(--accent)}
+
+.tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px;padding:0;overflow-x:auto}
+.tab-btn{font-family:var(--font);font-size:14px;font-weight:600;padding:12px 20px;border:none;background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;border-bottom:2px solid transparent;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+.new-topics-section{margin-top:32px;padding-top:24px;border-top:2px dashed rgba(251,191,36,.3)}
+.new-topics-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.new-topics-header h2{font-size:20px;font-weight:700;color:#fbbf24}
+.new-topics-count{background:rgba(251,191,36,.12);color:#fbbf24;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px}
+.new-topic-card{background:var(--surface);border:1px solid rgba(251,191,36,.25);border-left:3px solid #fbbf24;border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .2s}
+.new-topic-card:hover{border-color:#fbbf24}
+.new-topic-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.new-badge{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;font-size:10px;font-weight:700;padding:3px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.8px}
+.priority-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+.priority-badge.p1{background:rgba(248,113,113,.12);color:#f87171}
+.priority-badge.p2{background:rgba(96,165,250,.12);color:#60a5fa}
+.priority-badge.p3{background:rgba(139,147,176,.12);color:#8b93b0}
+.new-topic-title{font-size:15px;font-weight:700;color:var(--text);flex:1}
+.new-topic-detail{display:none;padding:0 20px 16px;border-top:1px solid var(--border)}
+.new-topic-card.open .new-topic-detail{display:block}
+.ntd-row{display:grid;grid-template-columns:120px 1fr;gap:8px;padding:8px 0;font-size:13px;border-bottom:1px solid rgba(42,48,80,.3)}
+.ntd-row:last-child{border-bottom:none}
+.ntd-label{color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.ntd-value{color:var(--text2);line-height:1.6}
+.ntd-kw{display:inline-block;background:rgba(108,159,255,.08);border:1px solid rgba(108,159,255,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-family:var(--mono);color:var(--accent);margin:2px 4px 2px 0}
+.ntd-schema{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:4px;padding:1px 8px;font-size:11px;font-weight:600;color:#34d399;margin:2px 4px 2px 0}
 </style>
 </head>
 <body>
@@ -72,6 +100,14 @@
   <div class="stat-card exclude"><div class="label">Exclude</div><div class="value">8</div></div>
 </div>
 
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('pages')">All Pages</button>
+  <button class="tab-btn" onclick="showTab('clusters')">Sub-Category Clusters</button>
+  <button class="tab-btn" onclick="showTab('linkmap')">Pillar Link Map</button>
+  <button class="tab-btn" onclick="showTab('checklist')">Master Checklist</button>
+</div>
+
+<div class="tab-content active" id="tab-pages">
 <div class="controls">
   <span class="label">Filter:</span>
   <button class="filter-btn active" data-filter="all">All (38)</button>
@@ -2079,12 +2115,711 @@
   </div>
 </div>
 
+
+<div class="new-topics-section">
+  <div class="new-topics-header">
+    <h2>New Topic Recommendations</h2>
+    <span class="new-topics-count">8 new topics</span>
+    <span style="font-size:12px;color:var(--text3);margin-left:8px">3 P1 · 4 P2 · 1 P3</span>
+  </div>
+  <p style="color:var(--text2);font-size:13px;margin-bottom:16px;line-height:1.7">These topics were identified through competitive research, content gap analysis, and 2026 marketplace trend data. They don't exist on Shipturtle yet and represent high-traffic opportunities. Click any card to expand.</p>
+  
+    <div class="new-topic-card" id="new-topic-0">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1 ⭐</span>
+        <span class="new-topic-title">Best Shopify Multi-Vendor Marketplace Apps: Complete Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">No roundup page despite individual app pages. 'Shopify marketplace app' = #1 missing commercial page. People searching this should land on Shipturtle content.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">shopify marketplace app</span><span class="ntd-kw">best shopify multi vendor app</span><span class="ntd-kw">shopify multivendor marketplace app</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">Software Application Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-1">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">How to Build a Marketplace on Shopify: Definitive Guide</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Cross-pillar with Build — but Platform needs this as the Shopify-specific canonical. Step-by-step Shopify + Shipturtle tutorial.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,500–4,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">how to build a marketplace on shopify</span><span class="ntd-kw">shopify marketplace setup</span><span class="ntd-kw">create marketplace shopify</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-2">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p1">P1</span>
+        <span class="new-topic-title">Marketplace Platform Pricing Comparison (2026)</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Price comparison = #1 decision factor. No TCO comparison page exists across any pillar. High commercial intent.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace platform pricing</span><span class="ntd-kw">marketplace software cost comparison</span><span class="ntd-kw">cheapest marketplace platform</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-3">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Headless Marketplace Architecture: When & How to Go Headless</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">2026 trend — API-first, composable commerce. Developer audience. Positions Shipturtle's open API as an advantage.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">headless marketplace</span><span class="ntd-kw">headless commerce marketplace</span><span class="ntd-kw">api-first marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-4">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Open Source Marketplace Platforms Compared (2026)</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Growing interest in open-source options (Medusa, Mercur, Saleor). Comparison content captures evaluation-stage traffic.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">3,000–3,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">open source marketplace</span><span class="ntd-kw">open source multi vendor</span><span class="ntd-kw">medusa marketplace</span><span class="ntd-kw">mercur marketplace</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">Comparison Schema</span><span class="ntd-schema">FAQ Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-5">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Shopify Plus for Marketplaces: Is It Worth It?</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Shopify Plus-specific content gap. High commercial intent (Plus = $2K+/mo customers). Decision-stage content.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">shopify plus marketplace</span><span class="ntd-kw">shopify plus multi vendor</span><span class="ntd-kw">shopify plus worth it</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Comparison Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-6">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p2">P2</span>
+        <span class="new-topic-title">Marketplace API Integration Guide: Connect Any Vendor Store</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Technical content for developers evaluating Shipturtle. Showcases open API capabilities.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,500–3,000</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">marketplace api integration</span><span class="ntd-kw">connect vendor store api</span><span class="ntd-kw">marketplace api documentation</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">How-To Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+    <div class="new-topic-card" id="new-topic-7">
+      <div class="new-topic-header" onclick="toggleNewTopic(this)">
+        <span class="new-badge">NEW TOPIC</span>
+        <span class="priority-badge p3">P3</span>
+        <span class="new-topic-title">Embedded Commerce: Adding Marketplace to Your Existing SaaS</span>
+        <span style="color:var(--text3);font-size:12px">▾</span>
+      </div>
+      <div class="new-topic-detail">
+        <div class="ntd-row"><div class="ntd-label">Why This Topic</div><div class="ntd-value">Emerging 2026 trend — SaaS platforms embedding marketplace functionality. Positions Shipturtle API as enabler.</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Words</div><div class="ntd-value">2,000–2,500</div></div>
+        <div class="ntd-row"><div class="ntd-label">Target Keywords</div><div class="ntd-value"><span class="ntd-kw">embedded marketplace</span><span class="ntd-kw">saas marketplace</span><span class="ntd-kw">add marketplace to platform</span></div></div>
+        <div class="ntd-row"><div class="ntd-label">Schemas</div><div class="ntd-value"><span class="ntd-schema">FAQ Schema</span><span class="ntd-schema">Article Schema</span></div></div>
+      </div>
+    </div>
+</div></div>
+
+<div class="tab-content" id="tab-clusters">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#6c9fff;margin-bottom:4px">Shopify Themes <span style="color:var(--text3);font-size:13px;font-weight:400">(2 pages · 626 clicks · 7 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#155</span>
+              <span style="color:var(--text);flex:1">Top 7 Shopify Themes for Multi-Vendor Marketplaces [202…</span>
+              <span style="color:var(--text3)">560c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#156</span>
+              <span style="color:var(--text);flex:1">Best Shopify Themes For Multi-Vendor Marketplace [Updat…</span>
+              <span style="color:var(--text3)">66c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#34d399;margin-bottom:4px">Shopify Build <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 392 clicks · 9 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#166</span>
+              <span style="color:var(--text);flex:1">How To Create A Successful Multivendor Marketplace On S…</span>
+              <span style="color:var(--text3)">392c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f59e0b;margin-bottom:4px">Site: vs Page <span style="color:var(--text3);font-size:13px;font-weight:400">(7 pages · 370 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#187</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs Shopify Collective</span>
+              <span style="color:var(--text3)">113c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#190</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs Onport</span>
+              <span style="color:var(--text3)">73c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#186</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs Puppet Vendors</span>
+              <span style="color:var(--text3)">56c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#188</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs Syncio</span>
+              <span style="color:var(--text3)">55c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#191</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs Sharetribe</span>
+              <span style="color:var(--text3)">33c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#189</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs CS Cart</span>
+              <span style="color:var(--text3)">29c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#192</span>
+              <span style="color:var(--text);flex:1">Shipturtle vs Carro</span>
+              <span style="color:var(--text3)">11c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#ec4899;margin-bottom:4px">Seller Sync <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 182 clicks · 4 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#179</span>
+              <span style="color:var(--text);flex:1">Seller Sync Solution for Marketplace on Shopify</span>
+              <span style="color:var(--text3)">182c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#818cf8;margin-bottom:4px">Shopify Collective <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 126 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#162</span>
+              <span style="color:var(--text);flex:1">Top Benefits of Using Shopify Collective for Your Onlin…</span>
+              <span style="color:var(--text3)">126c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f87171;margin-bottom:4px">Shopify Evaluation <span style="color:var(--text3);font-size:13px;font-weight:400">(2 pages · 74 clicks · 5 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#159</span>
+              <span style="color:var(--text);flex:1">Is Shopify the Right Platform for Building a Marketplac…</span>
+              <span style="color:var(--text3)">41c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#165</span>
+              <span style="color:var(--text);flex:1">Is Shopify a Marketplace? Building A Marketplace On Sho…</span>
+              <span style="color:var(--text3)">33c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#fbbf24;margin-bottom:4px">Shopify No-Code <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 67 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#167</span>
+              <span style="color:var(--text);flex:1">How To Start A Multivendor Marketplace On Shopify Witho…</span>
+              <span style="color:var(--text3)">67c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#a78bfa;margin-bottom:4px">Inventory Sync <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 62 clicks · 3 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#176</span>
+              <span style="color:var(--text);flex:1">Marketplace Management Software: Top Apps for Syncing I…</span>
+              <span style="color:var(--text3)">62c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#38bdf8;margin-bottom:4px">Build vs Buy <span style="color:var(--text3);font-size:13px;font-weight:400">(3 pages · 56 clicks · 1 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#171</span>
+              <span style="color:var(--text);flex:1">Custom Marketplace Development vs Off-the-Shelf Softwar…</span>
+              <span style="color:var(--text3)">43c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#164</span>
+              <span style="color:var(--text);flex:1">Shopify vs. Custom Development: What&#x27;s Better for Your …</span>
+              <span style="color:var(--text3)">7c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#172</span>
+              <span style="color:var(--text);flex:1">Can Online Marketplace Creators Compete with Custom Dev…</span>
+              <span style="color:var(--text3)">6c</span>
+              <span class="action-badge merge" style="font-size:10px;padding:2px 8px">merge</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#fb923c;margin-bottom:4px">Tech Stack <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 54 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#173</span>
+              <span style="color:var(--text);flex:1">Technology for Online Marketplace: Multi-Vendor Platfor…</span>
+              <span style="color:var(--text3)">54c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#4ade80;margin-bottom:4px">WooCommerce <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 46 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#170</span>
+              <span style="color:var(--text);flex:1">How To Build A Powerful Multi Vendor Marketplace On Woo…</span>
+              <span style="color:var(--text3)">46c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#e879f9;margin-bottom:4px">Dev Companies <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 38 clicks · 2 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#178</span>
+              <span style="color:var(--text);flex:1">Online Marketplace Development Companies for Multivendo…</span>
+              <span style="color:var(--text3)">38c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#6c9fff;margin-bottom:4px">Shopify Plugins <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 33 clicks · 2 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#163</span>
+              <span style="color:var(--text);flex:1">14 Must-Have Shopify Plugins For Scaling Your Online Ma…</span>
+              <span style="color:var(--text3)">33c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#34d399;margin-bottom:4px">Shopify App Review <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 26 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#158</span>
+              <span style="color:var(--text);flex:1">Shopify Marketplace Connect App: Full Review, Pricing &amp;…</span>
+              <span style="color:var(--text3)">26c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f59e0b;margin-bottom:4px">Multi-Channel <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 21 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#168</span>
+              <span style="color:var(--text);flex:1">How to Connect Your Shopify Store to Multiple Marketpla…</span>
+              <span style="color:var(--text3)">21c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#ec4899;margin-bottom:4px">Integration <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 20 clicks · 1 conv)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#169</span>
+              <span style="color:var(--text);flex:1">How to Integrate Marketplace Management Software with S…</span>
+              <span style="color:var(--text3)">20c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#818cf8;margin-bottom:4px">Developer Hiring <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 20 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#177</span>
+              <span style="color:var(--text);flex:1">Hiring Multi-Vendor Marketplace Website Developers</span>
+              <span style="color:var(--text3)">20c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f87171;margin-bottom:4px">Software Comparison <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 18 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#174</span>
+              <span style="color:var(--text);flex:1">Best Marketplace Software Compared for 2025</span>
+              <span style="color:var(--text3)">18c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#fbbf24;margin-bottom:4px">Shopify Architecture <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 17 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#161</span>
+              <span style="color:var(--text);flex:1">Marketplace Technology: Shopify Outside, Custom Inside</span>
+              <span style="color:var(--text3)">17c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#a78bfa;margin-bottom:4px">Shopify Kit <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 11 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#181</span>
+              <span style="color:var(--text);flex:1">How Shipturtle Enhances Shipping Strategy Using Shopify…</span>
+              <span style="color:var(--text3)">11c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#38bdf8;margin-bottom:4px">Migration <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 10 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#160</span>
+              <span style="color:var(--text);flex:1">Shopify As Marketplace: Migrating From Woocommerce To S…</span>
+              <span style="color:var(--text3)">10c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#fb923c;margin-bottom:4px">Commission Tools <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 10 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#175</span>
+              <span style="color:var(--text);flex:1">Best Marketplace Commission Automation Tools</span>
+              <span style="color:var(--text3)">10c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#4ade80;margin-bottom:4px">Shopify Dev <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 8 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#157</span>
+              <span style="color:var(--text);flex:1">Shopify Marketplace Development Services: What&#x27;s Possib…</span>
+              <span style="color:var(--text3)">8c</span>
+              <span class="action-badge keep" style="font-size:10px;padding:2px 8px">keep</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#e879f9;margin-bottom:4px">Geo: EU <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#182</span>
+              <span style="color:var(--text);flex:1">How EU Riders Are Moving to a Real C2C Bike Marketplace</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge repillar" style="font-size:10px;padding:2px 8px">repillar</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#6c9fff;margin-bottom:4px">Geo: India <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#183</span>
+              <span style="color:var(--text);flex:1">How Indian Handmade Marketplaces Are Scaling Beyond Wor…</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge redirect" style="font-size:10px;padding:2px 8px">redirect</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#34d399;margin-bottom:4px">Geo: Indonesia <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#184</span>
+              <span style="color:var(--text);flex:1">The Infrastructure Behind Indonesia&#x27;s Service Booking M…</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge redirect" style="font-size:10px;padding:2px 8px">redirect</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#f59e0b;margin-bottom:4px">Geo: UAE <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#185</span>
+              <span style="color:var(--text);flex:1">The Hidden Engine Powering UAE&#x27;s Fastest Growing Gear R…</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge redirect" style="font-size:10px;padding:2px 8px">redirect</span>
+            </div></div>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#ec4899;margin-bottom:4px">Site: Features <span style="color:var(--text3);font-size:13px;font-weight:400">(1 pages · 0 clicks)</span></div>
+          <div style="margin-top:10px"><div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(42,48,80,.3);font-size:12px">
+              <span style="color:var(--text3);font-family:var(--mono);width:30px">#180</span>
+              <span style="color:var(--text);flex:1">All the features you need for a Successful Marketplace</span>
+              <span style="color:var(--text3)">0c</span>
+              <span class="action-badge exclude" style="font-size:10px;padding:2px 8px">exclude</span>
+            </div></div>
+        </div>
+</div>
+
+<div class="tab-content" id="tab-linkmap">
+<div style="margin-bottom:24px">
+      <h2 style="font-size:20px;margin-bottom:8px">Pillar Link Architecture</h2>
+      <p style="color:var(--text2);font-size:14px">Every <span style="color:var(--keep)">KEEP</span> page links to the pillar 2–3 times and to 3–5 sibling pages.</p>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px">
+      <h3 style="color:var(--accent);margin-bottom:16px;font-size:14px">PILLAR: /blog/marketplace-platform-comparison</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px"><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#155</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Top 7 Shopify Themes for Multi-Vendor Mark…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">560 clicks · 6 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 3x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #163, #167</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#166</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How To Create A Successful Multivendor Mar…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">392 clicks · 9 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 3x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #155, #163, #167, #179, #159</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#179</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Seller Sync Solution for Marketplace on Sh…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">182 clicks · 4 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #176, #167</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#162</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Top Benefits of Using Shopify Collective f…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">126 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #158, #166</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#167</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How To Start A Multivendor Marketplace On …</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">67 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #155, #179</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#176</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Marketplace Management Software: Top Apps …</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">62 clicks · 3 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #179, #174, #168</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#173</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Technology for Online Marketplace: Multi-V…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">54 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #161, #171, #174</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#170</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How To Build A Powerful Multi Vendor Marke…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">46 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #169, #160</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#171</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Custom Marketplace Development vs Off-the-…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">43 clicks · 1 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #173, #174, #177</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#159</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Is Shopify the Right Platform for Building…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">41 clicks · 3 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #170, #171</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#178</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Online Marketplace Development Companies f…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">38 clicks · 2 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #177, #171, #174</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#163</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">14 Must-Have Shopify Plugins For Scaling Y…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">33 clicks · 2 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #155, #166</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#158</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Shopify Marketplace Connect App: Full Revi…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">26 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #162, #166</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#168</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How to Connect Your Shopify Store to Multi…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">21 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #158, #176</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#169</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How to Integrate Marketplace Management So…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">20 clicks · 1 conv</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #170, #176</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#177</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Hiring Multi-Vendor Marketplace Website De…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">20 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #178, #171</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#174</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Best Marketplace Software Compared for 202…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">18 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #171, #173, #175</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#161</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Marketplace Technology: Shopify Outside, C…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">17 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #173, #171</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#181</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">How Shipturtle Enhances Shipping Strategy …</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">11 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 1x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #161</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#160</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Shopify As Marketplace: Migrating From Woo…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">10 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #170, #166</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#175</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Best Marketplace Commission Automation Too…</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">10 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #174, #176</div>
+        </div><div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-family:var(--mono);font-size:11px;color:var(--text3)">#157</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">Shopify Marketplace Development Services: …</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">8 clicks</div>
+          <div style="font-size:11px;color:var(--accent)">↑ 2x to pillar</div>
+          <div style="font-size:11px;color:var(--keep);margin-top:2px">→ #166, #161</div>
+        </div></div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px">
+      <h3 style="color:var(--merge);margin-bottom:16px;font-size:14px">TOP LINKING HUBS (Most Connected Pages)</h3>
+      <table class="link-table" style="font-size:13px">
+        <tr><th>Page</th><th>Inbound</th><th>Outbound</th><th>Role</th></tr>
+        <tr>
+          <td><strong>#166</strong> How To Create A Successful Multivendor Market…</td>
+          <td style="color:var(--keep)">12 incoming</td>
+          <td style="color:var(--accent)">5 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#171</strong> Custom Marketplace Development vs Off-the-She…</td>
+          <td style="color:var(--keep)">7 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#174</strong> Best Marketplace Software Compared for 2025…</td>
+          <td style="color:var(--keep)">6 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#155</strong> Top 7 Shopify Themes for Multi-Vendor Marketp…</td>
+          <td style="color:var(--keep)">4 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#167</strong> How To Start A Multivendor Marketplace On Sho…</td>
+          <td style="color:var(--keep)">4 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#161</strong> Marketplace Technology: Shopify Outside, Cust…</td>
+          <td style="color:var(--keep)">5 incoming</td>
+          <td style="color:var(--accent)">2 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#179</strong> Seller Sync Solution for Marketplace on Shopi…</td>
+          <td style="color:var(--keep)">4 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr><tr>
+          <td><strong>#176</strong> Marketplace Management Software: Top Apps for…</td>
+          <td style="color:var(--keep)">4 incoming</td>
+          <td style="color:var(--accent)">3 outgoing</td>
+          <td>Authority Hub</td>
+        </tr>
+      </table>
+    </div>
+</div>
+
+<div class="tab-content" id="tab-checklist">
+<div style="margin-bottom:24px">
+      <h2 style="font-size:20px;margin-bottom:8px">Execution Checklist</h2>
+      <p style="color:var(--text2);font-size:14px">Complete in this order: Redirects → Merges → Rewrites → Keep Refreshes.</p>
+    </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--redirect);margin-bottom:4px">Phase 1: Implement Redirects (3 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Quick wins. Implement 301 redirects to consolidate link equity.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>From</th><th>To</th><th>Done</th></tr><tr><td>#183</td><td style="color:var(--text)">How Indian Handmade Marketplaces Are Scaling Beyon…</td><td style="color:var(--keep)">→ 301 to #69</td><td>☐</td></tr><tr><td>#184</td><td style="color:var(--text)">The Infrastructure Behind Indonesia&#x27;s Service Book…</td><td style="color:var(--keep)">→ 301 to #55</td><td>☐</td></tr><tr><td>#185</td><td style="color:var(--text)">The Hidden Engine Powering UAE&#x27;s Fastest Growing G…</td><td style="color:var(--keep)">→ 301 to #6</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--merge);margin-bottom:4px">Phase 2: Execute Merges (4 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Extract unique content before redirecting. Preserve valuable angles as sections within winner pages.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Source</th><th>Target</th><th>Extracted</th><th>301 Set</th></tr><tr><td>#156</td><td style="color:var(--text)">Best Shopify Themes For Multi-Vendor Marketpl…</td><td style="color:var(--keep)">→ 301 to #155</td><td>☐</td><td>☐</td></tr><tr><td>#164</td><td style="color:var(--text)">Shopify vs. Custom Development: What&#x27;s Better…</td><td style="color:var(--keep)">→ Merge into #171</td><td>☐</td><td>☐</td></tr><tr><td>#165</td><td style="color:var(--text)">Is Shopify a Marketplace? Building A Marketpl…</td><td style="color:var(--keep)">→ 301 to #159</td><td>☐</td><td>☐</td></tr><tr><td>#172</td><td style="color:var(--text)">Can Online Marketplace Creators Compete with …</td><td style="color:var(--keep)">→ 301 to #171</td><td>☐</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:#a78bfa;margin-bottom:4px">Phase 2b: Re-Pillar (1 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Move to correct pillar and update internal linking.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Page</th><th>Move To</th><th>Done</th></tr><tr><td>#182</td><td style="color:var(--text)">How EU Riders Are Moving to a Real C2C Bike Market…</td><td style="color:var(--accent)">→ Move to Industry Marketplaces</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--keep);margin-bottom:4px">Phase 4: Refresh Existing Winners (22 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Update titles, add schemas, strengthen internal links. Protects existing rankings.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Page</th><th>Clicks</th><th>Conv</th><th>Title</th><th>Links</th><th>Schema</th></tr><tr><td>#155</td><td style="color:var(--text)">Top 7 Shopify Themes for Multi-Vendor Ma…</td><td>560</td><td>6</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#166</td><td style="color:var(--text)">How To Create A Successful Multivendor M…</td><td>392</td><td>9</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#179</td><td style="color:var(--text)">Seller Sync Solution for Marketplace on …</td><td>182</td><td>4</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#162</td><td style="color:var(--text)">Top Benefits of Using Shopify Collective…</td><td>126</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#167</td><td style="color:var(--text)">How To Start A Multivendor Marketplace O…</td><td>67</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#176</td><td style="color:var(--text)">Marketplace Management Software: Top App…</td><td>62</td><td>3</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#173</td><td style="color:var(--text)">Technology for Online Marketplace: Multi…</td><td>54</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#170</td><td style="color:var(--text)">How To Build A Powerful Multi Vendor Mar…</td><td>46</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#171</td><td style="color:var(--text)">Custom Marketplace Development vs Off-th…</td><td>43</td><td>1</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#159</td><td style="color:var(--text)">Is Shopify the Right Platform for Buildi…</td><td>41</td><td>3</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#178</td><td style="color:var(--text)">Online Marketplace Development Companies…</td><td>38</td><td>2</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#163</td><td style="color:var(--text)">14 Must-Have Shopify Plugins For Scaling…</td><td>33</td><td>2</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#158</td><td style="color:var(--text)">Shopify Marketplace Connect App: Full Re…</td><td>26</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#168</td><td style="color:var(--text)">How to Connect Your Shopify Store to Mul…</td><td>21</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#169</td><td style="color:var(--text)">How to Integrate Marketplace Management …</td><td>20</td><td>1</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#177</td><td style="color:var(--text)">Hiring Multi-Vendor Marketplace Website …</td><td>20</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#174</td><td style="color:var(--text)">Best Marketplace Software Compared for 2…</td><td>18</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#161</td><td style="color:var(--text)">Marketplace Technology: Shopify Outside,…</td><td>17</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#181</td><td style="color:var(--text)">How Shipturtle Enhances Shipping Strateg…</td><td>11</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#160</td><td style="color:var(--text)">Shopify As Marketplace: Migrating From W…</td><td>10</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#175</td><td style="color:var(--text)">Best Marketplace Commission Automation T…</td><td>10</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr><tr><td>#157</td><td style="color:var(--text)">Shopify Marketplace Development Services…</td><td>8</td><td>0</td><td>☐</td><td>☐</td><td>☐</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="font-size:16px;font-weight:700;color:var(--text3);margin-bottom:4px">Excluded from Pillar (8 pages)</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Site pages that need independent optimization, not pillar-cluster treatment.</div>
+          <table class="link-table" style="font-size:13px"><tr><th>#</th><th>Page</th><th>Clicks</th><th>Action</th></tr><tr><td>#186</td><td style="color:var(--text)">Shipturtle vs Puppet Vendors…</td><td>56</td><td>Optimize independently</td></tr><tr><td>#187</td><td style="color:var(--text)">Shipturtle vs Shopify Collective…</td><td>113</td><td>Optimize independently</td></tr><tr><td>#188</td><td style="color:var(--text)">Shipturtle vs Syncio…</td><td>55</td><td>Optimize independently</td></tr><tr><td>#189</td><td style="color:var(--text)">Shipturtle vs CS Cart…</td><td>29</td><td>Optimize independently</td></tr><tr><td>#190</td><td style="color:var(--text)">Shipturtle vs Onport…</td><td>73</td><td>Optimize independently</td></tr><tr><td>#191</td><td style="color:var(--text)">Shipturtle vs Sharetribe…</td><td>33</td><td>Optimize independently</td></tr><tr><td>#192</td><td style="color:var(--text)">Shipturtle vs Carro…</td><td>11</td><td>Optimize independently</td></tr><tr><td>#180</td><td style="color:var(--text)">All the features you need for a Successful Marketp…</td><td>0</td><td>Optimize independently</td></tr></table>
+        </div><div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+      <div style="font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px">Universal Quality Checklist (Apply to Every Keep/Rewrite Page)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;color:var(--text2)">
+        <div>
+          <h4 style="color:var(--text);font-size:13px;margin-bottom:8px">Content Structure</h4>
+          <div>☐ H1 contains primary keyword</div>
+          <div>☐ Title tag under 60 characters</div>
+          <div>☐ Meta description 140–160 characters</div>
+          <div>☐ Every H2 has direct-answer block (40–60 words)</div>
+          <div>☐ Paragraphs max 4 lines</div>
+          <div>☐ No filler content or vague claims</div>
+          <div>☐ Real examples included</div>
+          <div>☐ Comparison table present (where applicable)</div>
+        </div>
+        <div>
+          <h4 style="color:var(--text);font-size:13px;margin-bottom:8px">Linking & Schema</h4>
+          <div>☐ Links to pillar page 2–3 times</div>
+          <div>☐ Links to 3–5 sibling cluster pages</div>
+          <div>☐ Anchor text is varied (not repetitive)</div>
+          <div>☐ FAQ section has 5–8 questions</div>
+          <div>☐ FAQ schema markup implemented</div>
+          <div>☐ Article schema with dateModified</div>
+          <div>☐ Soft CTA present (not aggressive)</div>
+          <div>☐ Passes writing style rules (simple, no jargon)</div>
+        </div>
+      </div>
+    </div>
+</div>
+
 <script>
 function togglePage(id){const d=document.getElementById('detail-'+id);const c=document.getElementById('chev-'+id);d.classList.toggle('open');c.classList.toggle('open')}
 let currentFilter='all';
 document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterPages()})});
 document.getElementById('searchBox').addEventListener('input',filterPages);
 function filterPages(){const s=document.getElementById('searchBox').value.toLowerCase();document.querySelectorAll('.page-card').forEach(c=>{const matchFilter=currentFilter==='all'||c.dataset.action===currentFilter;const matchSearch=!s||c.dataset.search.includes(s);c.style.display=matchFilter&&matchSearch?'block':'none'})}
+
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleNewTopic(el) {
+  el.closest('.new-topic-card').classList.toggle('open');
+}
 </script>
 </body>
 </html>
